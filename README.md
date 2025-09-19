@@ -18,6 +18,7 @@ finnegans-salas-client/
 │   ├── vite-env.d.ts
 │   ├── assets/          # Archivos estáticos como imágenes, fuentes y estilos globales.
 │   ├── components/      # Componentes reutilizables de la interfaz de usuario, como botones, inputs, etc.
+│   │   └── IconButton/  # Componente de botón con ícono.
 │   ├── constants/       # Constantes globales del proyecto, como configuraciones o valores predefinidos.
 │   ├── hooks/           # Custom hooks para encapsular y reutilizar lógica de negocio.
 │   ├── interfaces/      # Definiciones de tipos e interfaces TypeScript para garantizar tipado estático.
@@ -35,12 +36,19 @@ finnegans-salas-client/
 └── vite.config.ts       # Configuración de Vite para el bundling y desarrollo del proyecto.
 ```
 
-## Requisitos Previos
+## Librerías Utilizadas
 
-Asegúrate de tener instalados los siguientes programas:
+### lucide-react
 
-- [Node.js](https://nodejs.org/) (versión 16 o superior)
-- Un gestor de paquetes como npm (incluido con Node.js) o yarn
+- **Descripción**: Una librería de íconos basada en React que proporciona íconos personalizables y ligeros.
+- **Uso**: Se utiliza para renderizar íconos en componentes como el `IconButton`.
+- **Instalación**: Ya incluida en el proyecto. Para más información, visita [lucide-react](https://lucide.dev/).
+
+### styled-components
+
+- **Descripción**: Una librería para escribir estilos CSS en JavaScript, permitiendo crear componentes estilizados reutilizables.
+- **Uso**: Se utiliza para estilizar componentes como el `IconButton`.
+- **Instalación**: Ya incluida en el proyecto. Para más información, visita [styled-components](https://styled-components.com/).
 
 ## Instalación
 
@@ -81,6 +89,53 @@ En el archivo `package.json` se encuentran definidos los siguientes scripts:
    npm run dev
    ```
 2. Abre tu navegador y accede a la URL que aparece en la consola (por defecto, `http://localhost:5173`).
+
+## Documentación de Componentes
+
+### IconButton
+
+- **Descripción**: Componente reutilizable que renderiza un botón con un ícono. Ideal para acciones rápidas en la interfaz de usuario.
+- **Props**:
+  - `children`: Componente que representa un ícono.
+  - `onClick`: Función que se ejecuta al hacer clic en el botón.
+  - `customStyle`: Estilo personalizado para el botón (opcional).
+- **Ejemplo de Uso**:
+
+  ```tsx
+  import { IconButton } from "./components/IconButton";
+  import { LucideIcon } from "lucide-react";
+
+  const Example = () => (
+    <IconButton onClick={() => alert("Clicked!")}>
+      <LucideIcon name="check" />
+    </IconButton>
+  );
+  ```
+
+- **Ejemplo con customStyle**:
+
+  ```tsx
+  import { LucideIcon } from "lucide-react";
+  import styled, { css } from "styled-components";
+  import { IconButton } from "./components/IconButton";
+
+  const ExampleWithStyle = () => (
+    <IconButton
+      customStyle={css`
+        background-color: #4285f4;
+        &:hover {
+          background-color: #6ea6ffff;
+        }
+        svg {
+          color: white;
+        }
+      `}
+      onClick={() => console.log("Settings clicked!")}
+    >
+      <LucideIcon />
+    </IconButton>
+  );
+  ```
 
 ## Contribuciones
 
