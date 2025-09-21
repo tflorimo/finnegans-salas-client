@@ -78,7 +78,7 @@ const VARIANT_STYLES = {
 };
 
 export const ButtonStyled = styled.button<ButtonProps>`
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   gap: ${({ $hasIcon }) => ($hasIcon ? "0.5rem" : "0")};
