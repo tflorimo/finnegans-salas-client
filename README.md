@@ -92,23 +92,29 @@ En el archivo `package.json` se encuentran definidos los siguientes scripts:
 
 ## Documentación de Componentes
 
-### IconButton
+### Button
 
-- **Descripción**: Componente reutilizable que renderiza un botón con un ícono. Ideal para acciones rápidas en la interfaz de usuario.
+- **Descripción**: Componente reutilizable que puede mostrar un ícono y/o texto, con estilos y variantes personalizables.
+
 - **Props**:
-  - `children`: Componente que representa un ícono.
+  - `icon`: Ícono opcional que se muestra dentro del botón.
+  - `text`: Texto opcional que se muestra dentro del botón.
+  - `customStyle`: Estilo personalizado para el botón.
+  - `variant`: Variante del botón (por ejemplo, `primary`, `secondary`).
   - `onClick`: Función que se ejecuta al hacer clic en el botón.
-  - `customStyle`: Estilo personalizado para el botón (opcional).
 - **Ejemplo de Uso**:
 
   ```tsx
-  import { IconButton } from "./components/IconButton";
+  import { Button } from "./components/Button";
   import { LucideIcon } from "lucide-react";
 
   const Example = () => (
-    <IconButton onClick={() => alert("Clicked!")}>
-      <LucideIcon name="check" />
-    </IconButton>
+    <Button
+      variant="secondary"
+      onClick={() => alert("Clicked!")}
+      text="Click Me"
+      icon={<LucideIcon />}
+    />
   );
   ```
 
@@ -117,23 +123,65 @@ En el archivo `package.json` se encuentran definidos los siguientes scripts:
   ```tsx
   import { LucideIcon } from "lucide-react";
   import styled, { css } from "styled-components";
-  import { IconButton } from "./components/IconButton";
+  import { Button } from "./components/Button";
 
   const ExampleWithStyle = () => (
-    <IconButton
+    <Button
+      text="Styled Button"
+      icon={<LucideIcon name="star" />}
+      onClick={() => alert("Styled Click!")}
+      customStyle={css`{ backgroundColor: "blue", color: "white", padding: "10px" }`}
+    />
+  );
+  ```
+
+### CardContainer
+
+- **Descripción**: Componente contenedor reutilizable que permite mostrar contenido dentro de un diseño estilizado. Ideal para mostrar tarjetas informativas o secciones destacadas en la interfaz de usuario.
+
+- **Props**:
+
+  - `children`: Contenido que se renderiza dentro del contenedor.
+  - `customStyle`: Estilo personalizado para el contenedor, utilizando `styled-components`.
+
+- **Ejemplo de Uso**:
+
+  ```tsx
+  import { CardContainer } from "./components/CardContainer/CardContainer";
+
+  const Example = () => (
+    <CardContainer>
+      <h1>Hola Mundo!!</h1>
+    </CardContainer>
+  );
+  ```
+
+- **Ejemplo con colores personalizados y onClick**:
+
+  ```tsx
+  import { CardContainer } from "./components/CardContainer/CardContainer";
+  import { css } from "styled-components";
+  import { SUCCESS_COLOR } from "./assets/colors/global-colors";
+
+  const ExampleWithColors = () => (
+    <CardContainer
+      onClick={() => alert("Salas Libres")}
       customStyle={css`
-        background-color: #4285f4;
-        &:hover {
-          background-color: #6ea6ffff;
+        width: 400px;
+        height: 80px;
+        h1 {
+          color: ${SUCCESS_COLOR};
+          margin: 0;
         }
-        svg {
-          color: white;
+        h4 {
+          color: ${"#8a96a8"};
+          margin: 0;
         }
       `}
-      onClick={() => console.log("Settings clicked!")}
     >
-      <LucideIcon />
-    </IconButton>
+      <h1>4</h1>
+      <h4>Salas Libres</h4>
+    </CardContainer>
   );
   ```
 
