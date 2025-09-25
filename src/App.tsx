@@ -1,9 +1,6 @@
-import './App.css'
 
 const App = () => {
-  return (
-    <div className="App">FINNEGANS APP</div>
-  )
-}
+  return <div style={{ color: "black" }}>Hola</div>;
+};
 
-export default App
+export default App;
