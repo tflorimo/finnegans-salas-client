@@ -1,4 +1,4 @@
-import type { RoomEventDetailsDTO } from "../../shared/types/types";
+import type { RoomEventDetailsDTO } from "../types/types";
 import { isAxiosError } from "axios";
 
 export const FIFTEEN_MINUTES_IN_MS = 15 * 60 * 1000;
