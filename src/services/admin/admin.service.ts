@@ -1,6 +1,6 @@
 import { ADMIN_ENDPOINTS, ADMIN_ERROR_MESSAGES } from "../../constants/admin.constants";
 import axiosInstance from "../axiosInstance";
-import type { EventsData } from "../rooms/types";
+import type { EventsData } from "../../shared/types/types";
 import { getErrorMessage } from "../rooms/utils";
 
 export const adminService = {

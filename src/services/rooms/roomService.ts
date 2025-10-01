@@ -1,4 +1,4 @@
-import type { RoomData, RoomsResponse } from "./types";
+import type { RoomData, RoomsResponse } from "../../shared/types/types";
 import { ROOM_ENDPOINTS, ROOM_ERROR_MESSAGES } from "../../constants/rooms.constants";
 import axiosInstance from "../axiosInstance";
 import { getErrorMessage } from "./utils";
