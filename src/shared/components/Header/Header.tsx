@@ -1,4 +1,4 @@
-import LogoFinnegans from "../../assets/images/logoFinnegans.svg";
+import LogoFinnegans from "../../../assets/images/logoFinnegans.svg";
 import {
   TopBar,
   TopBarInner,
