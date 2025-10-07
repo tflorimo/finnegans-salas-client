@@ -1,4 +1,4 @@
-export type roomStatusType = "available" | "occupied";
+export type roomStatusType = "available" | "occupied"  | "maintenance";
 export type eventStatusType = "booked" | "in-progress" | "completed";
 
 export interface RoomBaseDTO {
@@ -30,7 +30,6 @@ export type EventsData = {
 export interface RoomDetailsDTO extends RoomBaseDTO {
   description: string;
   equipment: string[];
-  amenities: string[];
   qrImageUrl: string;
   nextAvailableAt?: string;
   currentEvent?: RoomEventDTO;
