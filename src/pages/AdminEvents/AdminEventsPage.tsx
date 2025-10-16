@@ -1,6 +1,5 @@
 import { useMemo, useState } from "react";
 import { Eye, Edit2, Filter } from "lucide-react";
-import { css } from "styled-components";
 
 import { SideBar } from "../../shared/components/SideBar/SideBar";
 import { Button } from "../../components/Button/Button";
@@ -21,6 +20,9 @@ import {
   Table,
   IconBtn,
   EmptyState,
+  filterButtonStyle,
+  tableCardStyle,
+  attendeesTagStyle,
 } from "./stylesAdminEvents";
 
 // uso los datos del mock
@@ -60,13 +62,13 @@ export default function AdminEvents() {
     );
   }, []);
 
-  const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    if (!q) return allEvents;
+  const filteredEvents = useMemo(() => {
+    const searchTerm = query.trim().toLowerCase();
+    if (!searchTerm) return allEvents;
     return allEvents.filter((ev) =>
-      ev.title?.toLowerCase().includes(q) ||
-      ev.organizer?.toLowerCase().includes(q) ||
-      ev.roomName?.toLowerCase().includes(q)
+      ev.title?.toLowerCase().includes(searchTerm) ||
+      ev.organizer?.toLowerCase().includes(searchTerm) ||
+      ev.roomName?.toLowerCase().includes(searchTerm)
     );
   }, [allEvents, query]);
 
@@ -74,7 +76,7 @@ export default function AdminEvents() {
     <AdminEventsPageWrapper>
       <SideBar
         isCollapsed={isSidebarCollapsed}
-        onToggle={() => setIsSidebarCollapsed((v) => !v)}
+        onToggle={() => setIsSidebarCollapsed((prevState) => !prevState)}
       />
 
       <AdminEventsContainer $collapsed={isSidebarCollapsed}>
@@ -98,28 +100,11 @@ export default function AdminEvents() {
               icon={<Filter size={16} />}
               variant={ButtonVariant.light}
               onClick={() => {}}
-              customStyle={css`
-                height: 40px;
-                padding: 0 14px;
-                border: 1px solid #e2e8f0;
-                border-radius: 10px;
-                background: #fff;
-                color: #0f172a;
-                &:hover { background: #f8fafc; }
-              `}
+              customStyle={filterButtonStyle}
             />
           </Toolbar>
 
-          <CardContainer
-            customStyle={css`
-              padding: 0;
-              border: 1px solid #e5e7eb;
-              border-radius: 14px;
-              overflow: hidden;
-              align-items: stretch;
-              justify-content: flex-start;
-            `}
-          >
+          <CardContainer customStyle={tableCardStyle}>
             <Table>
               <thead>
                 <tr>
@@ -133,7 +118,7 @@ export default function AdminEvents() {
               </thead>
 
               <tbody>
-                {filtered.length === 0 && (
+                {filteredEvents.length === 0 && (
                   <tr>
                     <td colSpan={6}>
                       <EmptyState>
@@ -144,7 +129,7 @@ export default function AdminEvents() {
                   </tr>
                 )}
 
-                {filtered.map((ev) => (
+                {filteredEvents.map((ev) => (
                   <tr key={ev.id}>
                     <td>{ev.title}</td>
                     <td>{ev.roomName}</td>
@@ -154,13 +139,7 @@ export default function AdminEvents() {
                       <Tag
                         text={`${ev.attendees ?? ev.guests?.length ?? 0}`}
                         type={Tags.info}
-                        customStyle={css`
-                          min-width: 28px;
-                          height: 28px;
-                          padding: 0 8px;
-                          font-weight: 700;
-                          font-size: 12px;
-                        `}
+                        customStyle={attendeesTagStyle}
                       />
                     </td>
                     <td>

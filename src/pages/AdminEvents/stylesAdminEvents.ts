@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import {
   SIDEBAR_WIDTH,
   SIDEBAR_COLLAPSED_WIDTH,
@@ -119,4 +119,31 @@ export const EmptyState = styled.div`
     margin: 0;
     font-size: 14px;
   }
+`;
+
+export const filterButtonStyle = css`
+  height: 40px;
+  padding: 0 14px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background: #fff;
+  color: #0f172a;
+  &:hover { background: #f8fafc; }
+`;
+
+export const tableCardStyle = css`
+  padding: 0;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  overflow: hidden;
+  align-items: stretch;
+  justify-content: flex-start;
+`;
+
+export const attendeesTagStyle = css`
+  min-width: 28px;
+  height: 28px;
+  padding: 0 8px;
+  font-weight: 700;
+  font-size: 12px;
 `;
