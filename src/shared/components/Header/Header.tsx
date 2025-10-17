@@ -8,6 +8,11 @@ import {
 } from "./styles";
 import { Bell, Settings, User } from "lucide-react";
 
+/**
+ * @description Header component that displays the top navigation bar with logo and user controls.
+ * @export
+ * @return {JSX.Element}
+ */
 export const Header = () => {
   console.log("Header");
   return (
