@@ -189,110 +189,63 @@ En el archivo `package.json` se encuentran definidos los siguientes scripts:
   );
   ```
 
-### Input
+### GenericSelect
 
-- Descripción: Campo de entrada reutilizable con soporte para ícono opcional y estilos personalizables. Se usa como base de `InputSearch` e `InputFilter`.
+- **Descripción**: Componente de selección genérico y reutilizable que permite trabajar con diferentes tipos de datos. Incluye un ícono de flecha desplegable y soporta tanto valores simples como objetos complejos.
 
-- Props:
-  - `placeholder?`: Texto del placeholder.
-  - `value?`: Valor controlado del input.
-  - `icon?`: Ícono opcional que se renderiza al extremo derecho y que dispara `onClick`.
-  - `onChange? (e)`: Handler de cambio del input.
-  - `onKeyDown? (e)`: Handler de teclado del input.
-  - `onClick? ()`: Acción al hacer clic sobre el ícono o el input.
-  - `customStyle?`: Estilos adicionales vía `styled-components`.
-  - Además acepta todas las props nativas de `<input />`.
+- **Props**:
 
-- Ejemplo de Uso:
+  - `values`: Array de valores a mostrar en el select. Pueden ser strings o objetos con un campo `id`.
+  - `onChange`: Función que se ejecuta cuando se selecciona un nuevo valor.
+  - `formatLabel`: Función que determina cómo se muestra cada opción.
+  - `selected`: Valor seleccionado inicialmente (opcional).
+
+- **Ejemplo de Uso con strings**:
 
   ```tsx
-  import { Input } from "./components/Input/Input";
-  import { Search } from "lucide-react";
+  import { GenericSelect } from "./components/GenericSelect/GenericSelect";
 
-  const Example = () => (
-    <Input
-      placeholder="Buscar..."
-      value={search}
-      onChange={(e) => setSearch(e.target.value)}
-      onClick={() => console.log("Click en input o ícono")}
-      icon={<Search size={16} />}
-    />
-  );
-  ```
-
-- Notas de Accesibilidad:
-  - Mantiene un foco claro con `:focus-within` y `aria-label` por defecto al `placeholder` (puedes definir `aria-label` manualmente cuando sea necesario).
-
-### InputSearch
-
-- Descripción: Variante de `Input` para búsquedas. Ejecuta `onSearch` al presionar Enter o al hacer clic en el ícono.
-
-- Props:
-  - Hereda todas las props de `Input`.
-  - `onSearch? (term: string)`: Función llamada con el término actual al presionar Enter o al hacer clic en el ícono.
-
-- Ejemplo de Uso:
-
-  ```tsx
-  import { InputSearch } from "./components/InputSearch/InputSearch";
-  import { Search } from "lucide-react";
-
-  const ExampleSearch = () => {
-    const [term, setTerm] = useState("");
+  const Example = () => {
+    const options = ["Sala A", "Sala B", "Sala C"];
 
     return (
-      <InputSearch
-        placeholder="Buscar..."
-        value={term}
-        onChange={(e) => setTerm(e.target.value)}
-        onSearch={(q) => console.log("Buscar:", q)}
-        icon={<Search size={16} />}
+      <GenericSelect
+        values={options}
+        onChange={(value) => console.log(`Selected: ${value}`)}
+        formatLabel={(value) => value}
       />
     );
   };
   ```
 
-### InputFilter
-
-- Descripción: Campo de entrada de solo lectura que despliega un dropdown (listbox) con opciones filtrables y navegación por teclado. Ideal para seleccionar filtros rápidos.
-
-- Props:
-  - Hereda todas las props de `Input` y de `<input />` nativo (por ejemplo, `id`, `aria-*`).
-  - `options?: Array<{ id: string | number; label: string; value: string }>`: Lista de opciones.
-  - `onOptionSelect? (opt)`: Se ejecuta al seleccionar una opción del dropdown.
-  - `onSearch? (term: string)`: Cuando el dropdown está cerrado y se presiona Enter, dispara búsqueda con el valor actual.
-
-- Ejemplo de Uso:
+- **Ejemplo con objetos**:
 
   ```tsx
-  import { InputFilter } from "./components/InputFilter/InputFilter";
+  import { GenericSelect } from "./components/GenericSelect/GenericSelect";
 
-  const opciones = [
-    { id: 1, label: "Sala A", value: "A" },
-    { id: 2, label: "Sala B", value: "B" },
-    { id: 3, label: "Sala C", value: "C" },
-  ];
+  interface Room {
+    id: string;
+    name: string;
+    capacity: number;
+  }
 
-  const ExampleFilter = () => {
-    const [valor, setValor] = useState("");
+  const Example = () => {
+    const rooms: Room[] = [
+      { id: "1", name: "Sala Principal", capacity: 10 },
+      { id: "2", name: "Sala Pequeña", capacity: 4 },
+      { id: "3", name: "Sala de Reuniones", capacity: 8 },
+    ];
 
     return (
-      <InputFilter
-        placeholder="Filtrar salas"
-        value={valor}
-        onChange={(e) => setValor(e.target.value)}
-        options={opciones}
-        onOptionSelect={(opt) => console.log("Seleccion:", opt)}
-        onSearch={(term) => console.log("Buscar:", term)}
+      <GenericSelect<Room>
+        values={rooms}
+        onChange={(room) => console.log(`Selected room: ${room.name}`)}
+        formatLabel={(room) => `${room.name} (Cap: ${room.capacity})`}
+        selected={rooms[0]}
       />
     );
   };
   ```
-
-- Interacción y Accesibilidad:
-  - El input es `readOnly` y abre el dropdown al enfocar o hacer clic.
-  - Navegación por teclado: `ArrowUp/ArrowDown`, `Home/End`, `Enter` para seleccionar, `Escape`/`Tab` para cerrar.
-  - Usa `aria-haspopup="listbox"`, `aria-controls` y `aria-activedescendant` en el input, y `role="listbox"/"option"` en la lista.
 
 ## Contribuciones
 
