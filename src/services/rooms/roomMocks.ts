@@ -7,9 +7,11 @@ export const mockRoomData: RoomData = {
     floor: "2do Piso",
     capacity: 12,
     status: "available",
-    description: "Sala de reuniones equipada con tecnología de última generación.",
+    description:
+      "Sala de reuniones equipada con tecnología de última generación.",
     equipment: ["Proyector 4K", "WiFi de alta velocidad", "Sistema de audio"],
-    qrImageUrl: "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=sala-innovacion-01",
+    qrImageUrl:
+      "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=sala-innovacion-01",
     nextAvailableAt: "2025-10-01T16:00:00Z",
   },
   roomEvents: [
@@ -17,14 +19,14 @@ export const mockRoomData: RoomData = {
       id: "event-001",
       title: "Daily Frontend",
       organizer: "Ana García",
-      guests: ["ana@company.com","carlos@company.com"],
+      guests: ["ana@company.com", "carlos@company.com"],
       start: "2025-10-01T12:00:00Z",
       end: "2025-10-01T12:30:00Z",
       attendees: 5,
       status: "completed",
       roomId: "sala-innovacion-01",
       checkInStatus: true,
-      description: "Sincronización diaria"
+      description: "Sincronización diaria",
     },
     {
       id: "event-002",
@@ -36,9 +38,9 @@ export const mockRoomData: RoomData = {
       attendees: 8,
       status: "in-progress",
       roomId: "sala-innovacion-01",
-      checkInStatus: false
-    }
-  ]
+      checkInStatus: false,
+    },
+  ],
 };
 
 export const mockRoomsData: RoomData[] = [
@@ -49,10 +51,11 @@ export const mockRoomsData: RoomData[] = [
       name: "Sala Ejecutiva",
       floor: "3er Piso",
       capacity: 8,
-      status: "occupied",
+      status: "available",
       description: "Sala ejecutiva con tecnología premium.",
-      equipment: ["Monitor 55\"", "Videoconferencia"],
-      qrImageUrl: "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=sala-ejecutiva-02",
+      equipment: ['Monitor 55"', "Videoconferencia"],
+      qrImageUrl:
+        "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=sala-ejecutiva-02",
     },
     roomEvents: [
       {
@@ -65,8 +68,197 @@ export const mockRoomsData: RoomData[] = [
         attendees: 7,
         status: "booked",
         roomId: "sala-ejecutiva-02",
-        checkInStatus: false
-      }
-    ]
-  }
+        checkInStatus: false,
+      },
+    ],
+  },
+  {
+    roomDetails: {
+      id: "sala-ejecutiva-03",
+      name: "Sala Ejecutiva",
+      floor: "3er Piso",
+      capacity: 8,
+      status: "available",
+      description: "Sala ejecutiva con tecnología premium.",
+      equipment: ['Monitor 55"', "Videoconferencia"],
+      qrImageUrl:
+        "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=sala-ejecutiva-02",
+    },
+    roomEvents: [
+      {
+        id: "event-010",
+        title: "Retro Sprint",
+        organizer: "Carlos López",
+        guests: ["carlos@company.com"],
+        start: "2025-10-02T13:00:00Z",
+        end: "2025-10-02T14:00:00Z",
+        attendees: 7,
+        status: "booked",
+        roomId: "sala-ejecutiva-02",
+        checkInStatus: false,
+      },
+    ],
+  },
+  {
+    roomDetails: {
+      id: "sala-ejecutiva-04",
+      name: "Sala Ejecutiva",
+      floor: "3er Piso",
+      capacity: 8,
+      status: "maintenance",
+      description: "Sala ejecutiva con tecnología premium.",
+      equipment: ['Monitor 55"', "Videoconferencia"],
+      qrImageUrl:
+        "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=sala-ejecutiva-02",
+    },
+    roomEvents: [
+      {
+        id: "event-010",
+        title: "Retro Sprint",
+        organizer: "Carlos López",
+        guests: ["carlos@company.com"],
+        start: "2025-10-02T13:00:00Z",
+        end: "2025-10-02T14:00:00Z",
+        attendees: 7,
+        status: "booked",
+        roomId: "sala-ejecutiva-02",
+        checkInStatus: false,
+      },
+    ],
+  },
+  {
+    roomDetails: {
+      id: "sala-ejecutiva-05",
+      name: "Sala Ejecutiva",
+      floor: "3er Piso",
+      capacity: 8,
+      status: "occupied",
+      description: "Sala ejecutiva con tecnología premium.",
+      equipment: ['Monitor 55"', "Videoconferencia"],
+      qrImageUrl:
+        "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=sala-ejecutiva-02",
+    },
+    roomEvents: [
+      {
+        id: "event-010",
+        title: "Retro Sprint",
+        organizer: "Carlos López",
+        guests: ["carlos@company.com"],
+        start: "2025-10-02T13:00:00Z",
+        end: "2025-10-02T14:00:00Z",
+        attendees: 7,
+        status: "booked",
+        roomId: "sala-ejecutiva-02",
+        checkInStatus: false,
+      },
+    ],
+  },
+  {
+    roomDetails: {
+      id: "sala-ejecutiva-06",
+      name: "Sala Ejecutiva",
+      floor: "3er Piso",
+      capacity: 8,
+      status: "occupied",
+      description: "Sala ejecutiva con tecnología premium.",
+      equipment: ['Monitor 55"', "Videoconferencia"],
+      qrImageUrl:
+        "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=sala-ejecutiva-02",
+    },
+    roomEvents: [
+      {
+        id: "event-010",
+        title: "Retro Sprint",
+        organizer: "Carlos López",
+        guests: ["carlos@company.com"],
+        start: "2025-10-02T13:00:00Z",
+        end: "2025-10-02T14:00:00Z",
+        attendees: 7,
+        status: "booked",
+        roomId: "sala-ejecutiva-02",
+        checkInStatus: false,
+      },
+    ],
+  },
+  {
+    roomDetails: {
+      id: "sala-ejecutiva-07",
+      name: "Sala Ejecutiva",
+      floor: "3er Piso",
+      capacity: 8,
+      status: "occupied",
+      description: "Sala ejecutiva con tecnología premium.",
+      equipment: ['Monitor 55"', "Videoconferencia"],
+      qrImageUrl:
+        "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=sala-ejecutiva-02",
+    },
+    roomEvents: [
+      {
+        id: "event-010",
+        title: "Retro Sprint",
+        organizer: "Carlos López",
+        guests: ["carlos@company.com"],
+        start: "2025-10-02T13:00:00Z",
+        end: "2025-10-02T14:00:00Z",
+        attendees: 7,
+        status: "booked",
+        roomId: "sala-ejecutiva-02",
+        checkInStatus: false,
+      },
+    ],
+  },
+  {
+    roomDetails: {
+      id: "sala-ejecutiva-08",
+      name: "Sala Ejecutiva",
+      floor: "3er Piso",
+      capacity: 8,
+      status: "occupied",
+      description: "Sala ejecutiva con tecnología premium.",
+      equipment: ['Monitor 55"', "Videoconferencia"],
+      qrImageUrl:
+        "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=sala-ejecutiva-02",
+    },
+    roomEvents: [
+      {
+        id: "event-010",
+        title: "Retro Sprint",
+        organizer: "Carlos López",
+        guests: ["carlos@company.com"],
+        start: "2025-10-02T13:00:00Z",
+        end: "2025-10-02T14:00:00Z",
+        attendees: 7,
+        status: "booked",
+        roomId: "sala-ejecutiva-02",
+        checkInStatus: false,
+      },
+    ],
+  },
+  {
+    roomDetails: {
+      id: "sala-ejecutiva-09",
+      name: "Sala Ejecutiva",
+      floor: "3er Piso",
+      capacity: 8,
+      status: "occupied",
+      description: "Sala ejecutiva con tecnología premium.",
+      equipment: ['Monitor 55"', "Videoconferencia"],
+      qrImageUrl:
+        "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=sala-ejecutiva-02",
+    },
+    roomEvents: [
+      {
+        id: "event-010",
+        title: "Retro Sprint",
+        organizer: "Carlos López",
+        guests: ["carlos@company.com"],
+        start: "2025-10-02T13:00:00Z",
+        end: "2025-10-02T14:00:00Z",
+        attendees: 7,
+        status: "booked",
+        roomId: "sala-ejecutiva-02",
+        checkInStatus: false,
+      },
+    ],
+  },
 ];

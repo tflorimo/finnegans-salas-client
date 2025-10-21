@@ -1,12 +1,18 @@
+import {
+  ROOM_ENDPOINTS,
+  ROOM_ERROR_MESSAGES,
+} from "../../constants/rooms.constants";
 import type { RoomData, RoomsResponse } from "../../shared/types/types";
-import { ROOM_ENDPOINTS, ROOM_ERROR_MESSAGES } from "../../constants/rooms.constants";
-import axiosInstance from "../axiosInstance";
 import { getErrorMessage } from "../../shared/utils/utils";
+import axiosInstance from "../axiosInstance";
+import { mockRoomsData } from "./roomMocks";
 
 export const roomService = {
   getRoom: async (roomId: string): Promise<RoomData> => {
     try {
-      const { data } = await axiosInstance.get<RoomData>(ROOM_ENDPOINTS.getRoomById(roomId));
+      const { data } = await axiosInstance.get<RoomData>(
+        ROOM_ENDPOINTS.getRoomById(roomId)
+      );
       return data;
     } catch (error) {
       const message = getErrorMessage(error, ROOM_ERROR_MESSAGES.roomError);
@@ -16,8 +22,12 @@ export const roomService = {
 
   getRooms: async (): Promise<RoomsResponse> => {
     try {
-      const { data } = await axiosInstance.get<RoomsResponse>(ROOM_ENDPOINTS.getRooms());
-      return data;
+      // TODO: Eliminar cuando se integre con Backend
+      await new Promise((resolve) => setTimeout(resolve, 800));
+      return mockRoomsData;
+      // TODO: Implementación real (descomentar cuando se integre con Backend)
+      //const { data } = await axiosInstance.get<RoomsResponse>(ROOM_ENDPOINTS.getRooms());
+      //return data;
     } catch (error) {
       const message = getErrorMessage(error, ROOM_ERROR_MESSAGES.roomsError);
       throw new Error(message);
@@ -31,6 +41,5 @@ export const roomService = {
       const message = getErrorMessage(error, ROOM_ERROR_MESSAGES.checkInError);
       throw new Error(message);
     }
-  }
+  },
 };
-
