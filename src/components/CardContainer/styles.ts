@@ -12,6 +12,7 @@ export const CardContainerStyled = styled.div<CardContainerStyledProps>`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 100%;
   padding: 1.5rem;
   background-color: ${WHITE_COLOR};
   border-radius: 0.75rem;
