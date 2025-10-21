@@ -13,7 +13,8 @@ export enum Tags {
   danger = "danger",
   info = "info",
   succesOutput = "succesOutput",
-  dangerOutput = "dangerOutput"
-};
+  dangerOutput = "dangerOutput",
+  infoOutput = "infoOutput",
+}
 
-export type TagsTypes = keyof typeof Tags
+export type TagsTypes = keyof typeof Tags;
