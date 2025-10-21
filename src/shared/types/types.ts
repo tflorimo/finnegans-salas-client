@@ -1,4 +1,10 @@
-export type roomStatusType = "available" | "occupied"  | "maintenance";
+export enum RoomStatusEnum {
+  AVAILABLE = "available",
+  OCCUPIED = "occupied",
+  MAINTENANCE = "maintenance",
+}
+
+export type roomStatusType = "available" | "occupied" | "maintenance";
 export type eventStatusType = "booked" | "in-progress" | "completed";
 
 export interface RoomBaseDTO {
@@ -10,7 +16,7 @@ export interface RoomBaseDTO {
 }
 
 export interface RoomEventDTO {
-  id: string; 
+  id: string;
   title: string;
   start: string;
   end: string;
@@ -21,11 +27,11 @@ export type RoomsResponse = RoomData[];
 export type RoomData = {
   roomDetails: RoomDetailsDTO;
   roomEvents: RoomEventDetailsDTO[];
-}
+};
 
 export type EventsData = {
   roomsEvents: RoomEventDetailsDTO[];
-}
+};
 
 export interface RoomDetailsDTO extends RoomBaseDTO {
   description: string;
@@ -33,7 +39,7 @@ export interface RoomDetailsDTO extends RoomBaseDTO {
   qrImageUrl: string;
   nextAvailableAt?: string;
   currentEvent?: RoomEventDTO;
-};
+}
 
 export interface RoomEventDetailsDTO extends RoomEventDTO {
   id: string; // Id del backend del evento
@@ -41,14 +47,13 @@ export interface RoomEventDetailsDTO extends RoomEventDTO {
   organizer: string;
   guests: string[]; // Mails de los invitados al evento. Servirá para matchear con el botón de check-in
   attendees: number;
-  status: eventStatusType
+  status: eventStatusType;
   roomId: string;
   checkInStatus?: boolean;
   description?: string;
   details?: string[];
   tags?: string[];
   meetingLink?: string;
-};
+}
 
 export type RoomEventsResponse = RoomEventDetailsDTO[];
-
