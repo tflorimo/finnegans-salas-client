@@ -1,4 +1,4 @@
-export type logStatusType = "success" | "warning" | "info" | "error";
+export type logStatusType = "success" | "info" | "error";
 export type logActionType = // TODO: Definir con backend las acciones posibles
 "check-in" | 
 "reservation-cancelled" | 
