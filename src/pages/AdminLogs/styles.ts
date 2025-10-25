@@ -35,8 +35,6 @@ export const AdminLogsContainer = styled.div<{ $collapsed: boolean }>`
 
 export const PageInner = styled.div`
   width: 100%;
-  max-width: 100%;
-  margin: 0;
   display: flex;
   flex-direction: column;
   gap: 32px;
@@ -50,7 +48,6 @@ export const HeaderContent = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
 `;
 
 export const PageTitle = styled.h1`
@@ -73,6 +70,7 @@ export const ExportButton = styled.button`
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
+  margin-top: -35px;
 
   &:hover {
     background: #f9fafb;
@@ -83,7 +81,6 @@ export const ExportButton = styled.button`
     width: 16px;
     height: 16px;
   }
-  margin-top: -35px;
 `;
 
 export const MainContent = styled.main`
@@ -104,8 +101,6 @@ export const LogHeader = styled.div`
   display: flex;
   align-items: center;
   gap: 16px;
-  width: 100%;
-  padding: 0;
 `;
 
 export const TagContainer = styled.div`
