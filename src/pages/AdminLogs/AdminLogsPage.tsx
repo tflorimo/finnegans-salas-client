@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { Download } from 'lucide-react';
 import { SideBar } from '../../shared/components/SideBar/SideBar';
+import Header from '../../shared/components/Header/Header';
 import { useLogsFetch } from './hooks/useLogsFetch';
 import { LogItem } from './components/LogItem';
 import { ADMIN_LOGS_MESSAGES } from './constants/AdminLogs.constants';
 import {
   AdminLogsPageWrapper,
+  AdminHeaderWrapper,
   AdminLogsContainer,
   PageInner,
   PageHeader,
@@ -31,6 +33,9 @@ export const AdminLogsPage = () => {
         isCollapsed={isSidebarCollapsed}
         onToggle={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
       />
+      <AdminHeaderWrapper $collapsed={isSidebarCollapsed}>
+        <Header />
+      </AdminHeaderWrapper>
       <AdminLogsContainer $collapsed={isSidebarCollapsed}>
         <PageInner>
           <PageHeader>
