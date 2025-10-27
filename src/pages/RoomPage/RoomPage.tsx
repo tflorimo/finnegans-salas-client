@@ -88,10 +88,10 @@ export const RoomPage = () => {
     <>
       <RoomPageContainer>
         <PageInner>
-          <BackLink onClick={() => window.history.back()}>
+{/*           <BackLink onClick={() => window.history.back()}>
             <ArrowLeft size={18} />
             Volver a todas las salas
-          </BackLink>
+          </BackLink> */}
 
           <ContentGrid>
             <ColumnaPrincipal>
