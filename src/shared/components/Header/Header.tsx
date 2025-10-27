@@ -36,11 +36,12 @@ export const Header = () => {
         </TopBarCenter>
         {/* Derecha */}
         <TopBarRight>
-          <Bell size={20} />
+          {/* <Bell size={20} /> */}
           <NavLink
             to="/admin/logs"
             style={({ isActive, isPending, isTransitioning }) => {
               return {
+                marginTop: "5px",
                 fontWeight: isActive ? "bold" : "",
                 color: isPending ? "red" : "black",
                 viewTransitionName: isTransitioning ? "slide" : "",
@@ -49,7 +50,7 @@ export const Header = () => {
           >
             <Settings size={20} />
           </NavLink>
-          <User size={20} />
+          {/* <User size={20} /> */}
           <LogOut size={20} onClick={() => logout()} />
         </TopBarRight>
       </TopBarInner>
