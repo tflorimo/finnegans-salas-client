@@ -1,39 +1,37 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { Button } from "../../components/Button/Button";
-import { Header } from "../../shared/components/Header/Header";
-import { CardContainer } from "../../components/CardContainer/CardContainer";
-import { Tag } from "../../components/Tag/Tag";
-import { Tags } from "../../components/Tag/types";
-import { css } from "styled-components";
 import {
   ArrowLeft,
   AudioLines,
+  Clock,
   Monitor,
   MonitorPlay,
   QrCode,
   Users,
   Wifi,
-  Clock,
 } from "lucide-react";
-import {
-  BackLink,
-  ContentGrid,
-  ColumnaPrincipal,
-  ColumnaLateral,
-  FilaEstado,
-  QRBox,
-  RoomPageContainer,
-  PageInner,
-  ReservationItem,
-  ResLeft,
-  ResRight,
-  Avatar,
-  ResInfo,
-  ReservasLista,
-} from "./stylesRoomPage";
+import { useEffect, useState } from "react";
+import { css } from "styled-components";
+import { Button } from "../../components/Button/Button";
+import { CardContainer } from "../../components/CardContainer/CardContainer";
+import { Tag } from "../../components/Tag/Tag";
+import { Tags } from "../../components/Tag/types";
 import { roomService } from "../../services/rooms/roomService";
 import type { RoomData } from "../../shared/types/types";
+import {
+  Avatar,
+  BackLink,
+  ColumnaLateral,
+  ColumnaPrincipal,
+  ContentGrid,
+  FilaEstado,
+  PageInner,
+  QRBox,
+  ReservasLista,
+  ReservationItem,
+  ResInfo,
+  ResLeft,
+  ResRight,
+  RoomPageContainer,
+} from "./stylesRoomPage";
 
 function initials(name: string) {
   return name
@@ -54,21 +52,25 @@ function timeRange(start: string, end: string) {
 }
 
 export const RoomPage = () => {
-  const { roomId = "sala-innovacion-01" } = useParams();
+  /* const { roomId } = useParams(); */
   const [data, setData] = useState<RoomData | null>(null);
   const [loading, setLoading] = useState(true);
 
+
   useEffect(() => {
-    let alive = true;
     setLoading(true);
-    roomService
-      .getRoom(roomId)
-      .then((d) => alive && setData(d))
-      .finally(() => alive && setLoading(false));
-    return () => {
-      alive = false;
+    const fetchRooms = async () => {
+      try {
+        const data = await roomService.getRoom(/* roomId */);
+        setData(data);
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+        console.error('Error en la solicitud de consulta de Salas:', error);
+      }
     };
-  }, [roomId]);
+    fetchRooms();
+  }, [])
 
   const d = data?.roomDetails;
   const status = d?.status;
@@ -84,7 +86,6 @@ export const RoomPage = () => {
 
   return (
     <>
-      <Header />
       <RoomPageContainer>
         <PageInner>
           <BackLink onClick={() => window.history.back()}>
@@ -215,13 +216,13 @@ export const RoomPage = () => {
                     border: 1px solid #e2e8f0;
                     box-shadow: 0 2px 8px rgba(2, 8, 23, 0.05);
                     opacity: ${data?.roomEvents?.some(
-                      (x) => x.status !== "completed"
-                    )
+                    (x) => x.status !== "completed"
+                  )
                       ? 1
                       : 0.5};
                     pointer-events: ${data?.roomEvents?.some(
-                      (x) => x.status !== "completed"
-                    )
+                        (x) => x.status !== "completed"
+                      )
                       ? "auto"
                       : "none"};
                     &:hover {

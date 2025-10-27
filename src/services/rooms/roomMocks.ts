@@ -25,6 +25,7 @@ export const mockRoomData: RoomData = {
       attendees: 5,
       status: "completed",
       roomId: "sala-innovacion-01",
+      roomName: "Sala Innovación",
       checkInStatus: true,
       description: "Sincronización diaria",
     },
@@ -38,6 +39,7 @@ export const mockRoomData: RoomData = {
       attendees: 8,
       status: "in-progress",
       roomId: "sala-innovacion-01",
+      roomName: "Sala Innovación 2",
       checkInStatus: false,
     },
   ],
@@ -68,6 +70,7 @@ export const mockRoomsData: RoomData[] = [
         attendees: 7,
         status: "booked",
         roomId: "sala-ejecutiva-02",
+        roomName: "Sala Ejecutiva",
         checkInStatus: false,
       },
     ],
@@ -86,7 +89,7 @@ export const mockRoomsData: RoomData[] = [
     },
     roomEvents: [
       {
-        id: "event-010",
+        id: "event-011",
         title: "Retro Sprint",
         organizer: "Carlos López",
         guests: ["carlos@company.com"],
@@ -95,6 +98,7 @@ export const mockRoomsData: RoomData[] = [
         attendees: 7,
         status: "booked",
         roomId: "sala-ejecutiva-02",
+        roomName: "Sala Ejecutiva",
         checkInStatus: false,
       },
     ],
@@ -113,7 +117,7 @@ export const mockRoomsData: RoomData[] = [
     },
     roomEvents: [
       {
-        id: "event-010",
+        id: "event-012",
         title: "Retro Sprint",
         organizer: "Carlos López",
         guests: ["carlos@company.com"],
@@ -122,6 +126,7 @@ export const mockRoomsData: RoomData[] = [
         attendees: 7,
         status: "booked",
         roomId: "sala-ejecutiva-02",
+        roomName: "Sala Ejecutiva",
         checkInStatus: false,
       },
     ],
@@ -140,7 +145,7 @@ export const mockRoomsData: RoomData[] = [
     },
     roomEvents: [
       {
-        id: "event-010",
+        id: "event-013",
         title: "Retro Sprint",
         organizer: "Carlos López",
         guests: ["carlos@company.com"],
@@ -149,6 +154,7 @@ export const mockRoomsData: RoomData[] = [
         attendees: 7,
         status: "booked",
         roomId: "sala-ejecutiva-02",
+        roomName: "Sala Ejecutiva",
         checkInStatus: false,
       },
     ],
@@ -167,7 +173,7 @@ export const mockRoomsData: RoomData[] = [
     },
     roomEvents: [
       {
-        id: "event-010",
+        id: "event-014",
         title: "Retro Sprint",
         organizer: "Carlos López",
         guests: ["carlos@company.com"],
@@ -176,6 +182,7 @@ export const mockRoomsData: RoomData[] = [
         attendees: 7,
         status: "booked",
         roomId: "sala-ejecutiva-02",
+        roomName: "Sala Ejecutiva",
         checkInStatus: false,
       },
     ],
@@ -194,7 +201,7 @@ export const mockRoomsData: RoomData[] = [
     },
     roomEvents: [
       {
-        id: "event-010",
+        id: "event-015",
         title: "Retro Sprint",
         organizer: "Carlos López",
         guests: ["carlos@company.com"],
@@ -203,6 +210,7 @@ export const mockRoomsData: RoomData[] = [
         attendees: 7,
         status: "booked",
         roomId: "sala-ejecutiva-02",
+        roomName: "Sala Ejecutiva",
         checkInStatus: false,
       },
     ],
@@ -221,7 +229,7 @@ export const mockRoomsData: RoomData[] = [
     },
     roomEvents: [
       {
-        id: "event-010",
+        id: "event-016",
         title: "Retro Sprint",
         organizer: "Carlos López",
         guests: ["carlos@company.com"],
@@ -230,6 +238,7 @@ export const mockRoomsData: RoomData[] = [
         attendees: 7,
         status: "booked",
         roomId: "sala-ejecutiva-02",
+        roomName: "Sala Ejecutiva",
         checkInStatus: false,
       },
     ],
@@ -248,7 +257,7 @@ export const mockRoomsData: RoomData[] = [
     },
     roomEvents: [
       {
-        id: "event-010",
+        id: "event-017",
         title: "Retro Sprint",
         organizer: "Carlos López",
         guests: ["carlos@company.com"],
@@ -257,6 +266,7 @@ export const mockRoomsData: RoomData[] = [
         attendees: 7,
         status: "booked",
         roomId: "sala-ejecutiva-02",
+        roomName: "Sala Ejecutiva",
         checkInStatus: false,
       },
     ],
