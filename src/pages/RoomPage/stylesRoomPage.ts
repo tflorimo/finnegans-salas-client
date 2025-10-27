@@ -2,17 +2,33 @@ import styled from "styled-components";
 
 export const RoomPageContainer = styled.div`
   width: 100%;
-  padding: 30px 160px;
+  max-width: 100%;
+  padding: 30px 20px;
+  box-sizing: border-box;
+  overflow-x: hidden;
+
+  @media (min-width: 768px) {
+    padding: 30px 40px;
+  }
+
+  @media (min-width: 1024px) {
+    padding: 30px 80px;
+  }
+
+  @media (min-width: 1440px) {
+    padding: 30px 160px;
+  }
 `;
 
 export const PageInner = styled.div`
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0;
   display: flex;
   flex-direction: column;
   gap: 16px;
+  box-sizing: border-box;
 `;
 
 // volver a atras
@@ -20,7 +36,7 @@ export const BackLink = styled.button`
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  margin: 0;
+  margin: 20px auto 0;
   padding: 0;
   font-size: 14px;
   font-weight: 500;
@@ -28,9 +44,15 @@ export const BackLink = styled.button`
   background: none;
   border: none;
   cursor: pointer;
+  max-width: 1200px;
+  width: 100%;
+  padding-left: 1200px;
 
-  &:hover { text-decoration: underline; }
+  &:hover {
+    text-decoration: underline;
+  }
 `;
+
 // titulos de la card principal
 export const TitleRow = styled.div`
   align-items: left;
