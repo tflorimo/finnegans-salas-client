@@ -1,28 +1,27 @@
+import { Edit2, Eye, Filter } from "lucide-react";
 import { useMemo, useState } from "react";
-import { Eye, Edit2, Filter } from "lucide-react";
 
-import { SideBar } from "../../shared/components/SideBar/SideBar";
 import { Button } from "../../components/Button/Button";
 import { ButtonVariant } from "../../components/Button/types";
 import { CardContainer } from "../../components/CardContainer/CardContainer";
 import { Tag } from "../../components/Tag/Tag";
 import { Tags } from "../../components/Tag/types";
-import { InputSearch } from "../../components/InputSearch/InputSearch";
+import { SideBar } from "../../shared/components/SideBar/SideBar";
 
 import {
-  AdminEventsPageWrapper,
   AdminEventsContainer,
-  PageInner,
-  PageHeader,
-  HeaderContent,
-  PageTitle,
-  Toolbar,
-  Table,
-  IconBtn,
+  AdminEventsPageWrapper,
+  attendeesTagStyle,
   EmptyState,
   filterButtonStyle,
+  HeaderContent,
+  IconBtn,
+  PageHeader,
+  PageInner,
+  PageTitle,
+  Table,
   tableCardStyle,
-  attendeesTagStyle,
+  Toolbar,
 } from "./stylesAdminEvents";
 
 // uso los datos del mock
@@ -88,18 +87,19 @@ export default function AdminEvents() {
           </PageHeader>
 
           <Toolbar>
-            <InputSearch
+            {/* TODO: Se implementara nuevo Componente InputSearch */}
+            {/* <InputSearch
               placeholder="Buscar eventos..."
               value={query}
               onSearch={(term) => setQuery(term)}
               onChange={(e) => setQuery(e.target.value)}
-            />
+            /> */}
 
             <Button
               text="Filtrar"
               icon={<Filter size={16} />}
               variant={ButtonVariant.light}
-              onClick={() => {}}
+              onClick={() => { }}
               customStyle={filterButtonStyle}
             />
           </Toolbar>
