@@ -1,6 +1,5 @@
 ﻿import type { LogDTO } from './types';
 
-//TODO: A corroborar con backend
 export const mockLogsData: LogDTO[] = [
   {
     id: '1',
@@ -13,7 +12,7 @@ export const mockLogsData: LogDTO[] = [
     id: '2', 
     timestamp: '2024-03-15T10:25:00.000Z',
     action: 'Intento de login fallido',
-    status: 'warning',
+    status: 'error',
     userName: 'María González'
   },
   {
@@ -34,7 +33,7 @@ export const mockLogsData: LogDTO[] = [
     id: '5',
     timestamp: '2024-03-15T10:10:00.000Z',
     action: 'Reserva cancelada', 
-    status: 'warning',
+    status: 'error',
     userName: 'Ana Silva',
     roomName: 'Sala de Conferencias B'
   },

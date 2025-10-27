@@ -1,16 +1,17 @@
-import styled from "styled-components";
-import { SIDEBAR_WIDTH, SIDEBAR_COLLAPSED_WIDTH } from "../../shared/components/SideBar/styles";
+import styled, { css } from 'styled-components';
+import { SIDEBAR_WIDTH, SIDEBAR_COLLAPSED_WIDTH } from '../../shared/components/SideBar/styles';
 
 export const AdminLogsPageWrapper = styled.div`
   display: flex;
   min-height: 100vh;
   width: 100%;
   background: #f1f5f9;
+  overflow-x: hidden;
 `;
 
 export const AdminLogsContainer = styled.div<{ $collapsed: boolean }>`
-  flex: none;
-  width: ${({ $collapsed }) => 
+  flex: 1;
+  max-width: ${({ $collapsed }) => 
     `calc(100vw - ${$collapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_WIDTH}px)`};
   margin-left: ${({ $collapsed }) => 
     `${$collapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_WIDTH}px`};
@@ -19,7 +20,7 @@ export const AdminLogsContainer = styled.div<{ $collapsed: boolean }>`
   display: flex;
   flex-direction: column;
   gap: 32px;
-  transition: margin-left 0.25s ease, width 0.25s ease;
+  transition: margin-left 0.25s ease, max-width 0.25s ease;
 
   @media (max-width: 1200px) {
     padding: 40px 32px;
@@ -27,14 +28,13 @@ export const AdminLogsContainer = styled.div<{ $collapsed: boolean }>`
 
   @media (max-width: 768px) {
     margin-left: 0;
-    width: 100vw;
+    max-width: 100vw;
     padding: 32px 20px;
   }
 `;
 
 export const PageInner = styled.div`
   width: 100%;
-  margin: 0;
   display: flex;
   flex-direction: column;
   gap: 32px;
@@ -48,7 +48,6 @@ export const HeaderContent = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
 `;
 
 export const PageTitle = styled.h1`
@@ -71,6 +70,7 @@ export const ExportButton = styled.button`
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
+  margin-top: -35px;
 
   &:hover {
     background: #f9fafb;
@@ -81,7 +81,6 @@ export const ExportButton = styled.button`
     width: 16px;
     height: 16px;
   }
-  margin-top: -35px;
 `;
 
 export const MainContent = styled.main`
@@ -94,16 +93,14 @@ export const MainContent = styled.main`
 export const LogsGrid = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 12px;
   width: 100%;
 `;
 
 export const LogHeader = styled.div`
   display: flex;
   align-items: center;
-  gap: 1rem;
-  width: 100%;
-  padding: 0;
+  gap: 16px;
 `;
 
 export const TagContainer = styled.div`
@@ -113,11 +110,10 @@ export const TagContainer = styled.div`
   width: 80px;
   min-width: 80px;
   
-  /* Hacer los tags más pequeños */
   button {
-    padding: 0.25rem 0.5rem;
-    font-size: 0.75rem;
-    border-radius: 0.375rem;
+    padding: 4px 8px;
+    font-size: 12px;
+    border-radius: 6px;
     min-height: auto;
   }
 `;
@@ -126,27 +122,28 @@ export const LogInfo = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
-  margin-left: 0.5rem;
+  gap: 4px;
+  margin-left: 8px;
 `;
 
 export const LogTitle = styled.h3`
-  font-size: 1rem;
+  font-size: 16px;
   font-weight: 600;
-  color: #111827;
+  color: #1f2937;
   margin: 0;
-  line-height: 1.25;
+  line-height: 1.5;
 `;
 
 export const LogUser = styled.p`
-  font-size: 0.875rem;
+  font-size: 14px;
+  font-weight: 400;
   color: #6b7280;
   margin: 0;
-  line-height: 1.25;
+  line-height: 1.5;
 `;
 
 export const LogTimestamp = styled.span`
-  font-size: 0.75rem;
+  font-size: 12px;
   color: #9ca3af;
   font-weight: 500;
   white-space: nowrap;
@@ -181,4 +178,9 @@ export const EmptyState = styled.div`
     font-size: 14px;
     margin: 0;
   }
+`;
+
+export const LogItemCardStyle = css`
+  padding: 16px 20px;
+  align-items: stretch;
 `;
