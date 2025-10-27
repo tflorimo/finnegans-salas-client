@@ -1,12 +1,16 @@
+import { Bell, LogOut, Settings, User } from "lucide-react";
+import { useContext } from "react";
+import { NavLink } from "react-router-dom";
+
 import LogoFinnegans from "../../../assets/images/logoFinnegans.svg";
+import { AuthContext } from "../../../context/auth/authContext";
 import {
   TopBar,
+  TopBarCenter,
   TopBarInner,
   TopBarLeft,
-  TopBarCenter,
   TopBarRight,
 } from "./styles";
-import { Bell, Settings, User } from "lucide-react";
 
 /**
  * @description Header component that displays the top navigation bar with logo and user controls.
@@ -14,7 +18,8 @@ import { Bell, Settings, User } from "lucide-react";
  * @return {JSX.Element}
  */
 export const Header = () => {
-  console.log("Header");
+
+  const { logout } = useContext(AuthContext)
   return (
     <TopBar>
       <TopBarInner>
@@ -32,8 +37,20 @@ export const Header = () => {
         {/* Derecha */}
         <TopBarRight>
           <Bell size={20} />
-          <Settings size={20} />
+          <NavLink
+            to="/admin/logs"
+            style={({ isActive, isPending, isTransitioning }) => {
+              return {
+                fontWeight: isActive ? "bold" : "",
+                color: isPending ? "red" : "black",
+                viewTransitionName: isTransitioning ? "slide" : "",
+              };
+            }}
+          >
+            <Settings size={20} />
+          </NavLink>
           <User size={20} />
+          <LogOut size={20} onClick={() => logout()} />
         </TopBarRight>
       </TopBarInner>
     </TopBar>

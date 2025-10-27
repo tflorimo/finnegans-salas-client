@@ -18,6 +18,7 @@ export enum ButtonVariant {
   info = "info",
   light = "light",
   dark = "dark",
+  white = "white",
 }
 
 export type ButtonVariantType = keyof typeof ButtonVariant;

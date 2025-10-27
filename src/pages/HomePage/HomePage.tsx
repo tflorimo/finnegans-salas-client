@@ -4,7 +4,7 @@ import { CardContainer } from "../../components/CardContainer/CardContainer";
 import { GenericSelect } from "../../components/GenericSelect/GenericSelect";
 import { RoomItem } from "./components/RoomItem";
 import { ROOM_SELECT_OPTIONS } from "./constants/HomePage.constants";
-import { useGetRooms } from "./hooks/useRoomsFetch";
+import { useGetRooms } from "./hooks/useGetRooms";
 import { AllRoomsCardContainerStyles, FreeRoomsCardContainerStyles, HomePageStyled, OccupiedRoomsCardContainerStyles, ROOM_PAGE_COLORS, RoomListContainer, RoomStatusContainer, SelectFilterContainer } from "./styles";
 import { RoomStatusOptionsEnum } from "./types/RoomPage.types";
 
