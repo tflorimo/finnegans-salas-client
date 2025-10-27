@@ -50,10 +50,10 @@ export const HeaderContent = styled.div`
 `;
 
 export const PageTitle = styled.h1`
-  margin: 0;
-  font-size: 28px;
-  font-weight: 800;
-  color: #0f172a;
+  font-size: 1.5rem;
+  font-weight: 750;
+  color: #111827;
+  margin-top: -25px;
 `;
 
 export const Toolbar = styled.div`
