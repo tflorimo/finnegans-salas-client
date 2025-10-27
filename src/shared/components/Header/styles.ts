@@ -37,6 +37,7 @@ export const TopBarLeft = styled.div`
     color: #64748b; /* gris */
     margin: 0;
   }
+    margin-left: -60px;
 `;
 
 export const TopBarCenter = styled.div`

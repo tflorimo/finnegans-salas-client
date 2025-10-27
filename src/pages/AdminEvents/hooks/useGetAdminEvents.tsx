@@ -11,7 +11,7 @@ export const useGetAdminEvents = () => {
             try {
                 // Llamar al servicio para obtener los eventos
                 const response = await adminService.getAllEventsAdmin();
-                setRoomEvents(response.roomsEvents);
+                setRoomEvents(response.flatMap(room => room.roomEvents));
             } catch (error) {
                 console.error("Error fetching admin events:", error);
             }

@@ -7,11 +7,13 @@ import { CardContainer } from "../../components/CardContainer/CardContainer";
 import { Tag } from "../../components/Tag/Tag";
 import { Tags } from "../../components/Tag/types";
 import { SideBar } from "../../shared/components/SideBar/SideBar";
+import Header from "../../shared/components/Header/Header";
 //import { InputSearch } from "../../components/InputSearch/InputSearch";
 
 import {
   AdminEventsContainer,
   AdminEventsPageWrapper,
+  AdminHeaderWrapper,
   attendeesTagStyle,
   EmptyState,
   filterButtonStyle,
@@ -67,6 +69,10 @@ export default function AdminEvents() {
         isCollapsed={isSidebarCollapsed}
         onToggle={() => setIsSidebarCollapsed((prevState) => !prevState)}
       />
+      
+      <AdminHeaderWrapper $collapsed={isSidebarCollapsed}>
+        <Header />
+      </AdminHeaderWrapper>
 
       <AdminEventsContainer $collapsed={isSidebarCollapsed}>
         <PageInner>

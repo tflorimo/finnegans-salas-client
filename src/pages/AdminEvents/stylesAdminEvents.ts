@@ -8,7 +8,21 @@ export const AdminEventsPageWrapper = styled.div`
   display: flex;
   min-height: 100vh;
   width: 100%;
-  background: #f6f7f9;
+`;
+
+export const AdminHeaderWrapper = styled.div<{ $collapsed: boolean }>`
+  position: fixed;
+  top: 0;
+  left: ${({ $collapsed }) => `${$collapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_WIDTH}px`};
+  right: 0;
+  width: ${({ $collapsed }) => `calc(100% - ${$collapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_WIDTH}px)`};
+  z-index: 100;
+  transition: left 0.25s ease, width 0.25s ease;
+
+  @media (max-width: 768px) {
+    left: 0;
+    width: 100%;
+  }
 `;
 
 export const AdminEventsContainer = styled.div<{ $collapsed: boolean }>`
@@ -17,14 +31,15 @@ export const AdminEventsContainer = styled.div<{ $collapsed: boolean }>`
     `calc(100vw - ${$collapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_WIDTH}px)`};
   margin-left: ${({ $collapsed }) =>
     `${$collapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_WIDTH}px`};
-  padding: 40px 56px;
+  margin-top: 0;
+  padding: 24px 56px 40px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   gap: 24px;
   transition: margin-left 0.25s ease, width 0.25s ease;
 
-  @media (max-width: 1200px) { padding: 32px; }
+  @media (max-width: 1200px) { padding: 24px 32px 32px; }
   @media (max-width: 768px)  {
     margin-left: 0;
     width: 100vw;
@@ -50,10 +65,10 @@ export const HeaderContent = styled.div`
 `;
 
 export const PageTitle = styled.h1`
-  margin: 0;
-  font-size: 28px;
-  font-weight: 800;
-  color: #0f172a;
+  font-size: 1.5rem;
+  font-weight: 750;
+  color: #111827;
+  margin-top: -25px;
 `;
 
 export const Toolbar = styled.div`

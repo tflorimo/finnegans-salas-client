@@ -5,8 +5,22 @@ export const AdminLogsPageWrapper = styled.div`
   display: flex;
   min-height: 100vh;
   width: 100%;
-  background: #f1f5f9;
   overflow-x: hidden;
+`;
+
+export const AdminHeaderWrapper = styled.div<{ $collapsed: boolean }>`
+  position: fixed;
+  top: 0;
+  left: ${({ $collapsed }) => `${$collapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_WIDTH}px`};
+  right: 0;
+  width: ${({ $collapsed }) => `calc(100% - ${$collapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_WIDTH}px)`};
+  z-index: 100;
+  transition: left 0.25s ease, width 0.25s ease;
+
+  @media (max-width: 768px) {
+    left: 0;
+    width: 100%;
+  }
 `;
 
 export const AdminLogsContainer = styled.div<{ $collapsed: boolean }>`
@@ -15,7 +29,8 @@ export const AdminLogsContainer = styled.div<{ $collapsed: boolean }>`
     `calc(100vw - ${$collapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_WIDTH}px)`};
   margin-left: ${({ $collapsed }) => 
     `${$collapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_WIDTH}px`};
-  padding: 48px 64px;
+  margin-top: 0;
+  padding: 32px 64px 48px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -23,13 +38,13 @@ export const AdminLogsContainer = styled.div<{ $collapsed: boolean }>`
   transition: margin-left 0.25s ease, max-width 0.25s ease;
 
   @media (max-width: 1200px) {
-    padding: 40px 32px;
+    padding: 28px 32px 40px;
   }
 
   @media (max-width: 768px) {
     margin-left: 0;
     max-width: 100vw;
-    padding: 32px 20px;
+    padding: 26px 20px 32px;
   }
 `;
 
