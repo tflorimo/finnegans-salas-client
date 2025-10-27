@@ -5,15 +5,19 @@ import {
 import type { RoomData, RoomsResponse } from "../../shared/types/types";
 import { getErrorMessage } from "../../shared/utils/utils";
 import axiosInstance from "../axiosInstance";
-import { mockRoomsData } from "./roomMocks";
+import { mockRoomData, mockRoomsData } from "./roomMocks";
 
 export const roomService = {
-  getRoom: async (roomId: string): Promise<RoomData> => {
+  getRoom: async (/* roomId: string */): Promise<RoomData> => {
     try {
-      const { data } = await axiosInstance.get<RoomData>(
+      // TODO: Implementación real (descomentar cuando se integre con Backend)
+      /* const { data } = await axiosInstance.get<RoomData>(
         ROOM_ENDPOINTS.getRoomById(roomId)
       );
-      return data;
+      return data; */
+      // TODO: Eliminar cuando se integre con Backend
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      return mockRoomData;
     } catch (error) {
       const message = getErrorMessage(error, ROOM_ERROR_MESSAGES.roomError);
       throw new Error(message);

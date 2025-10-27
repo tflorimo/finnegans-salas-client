@@ -1,32 +1,32 @@
+import { Edit2, Eye, Filter } from "lucide-react";
 import { useMemo, useState } from "react";
-import { Eye, Edit2, Filter } from "lucide-react";
 
-import { SideBar } from "../../shared/components/SideBar/SideBar";
 import { Button } from "../../components/Button/Button";
 import { ButtonVariant } from "../../components/Button/types";
 import { CardContainer } from "../../components/CardContainer/CardContainer";
 import { Tag } from "../../components/Tag/Tag";
 import { Tags } from "../../components/Tag/types";
-import { InputSearch } from "../../components/InputSearch/InputSearch";
+import { SideBar } from "../../shared/components/SideBar/SideBar";
+//import { InputSearch } from "../../components/InputSearch/InputSearch";
 
 import {
-  AdminEventsPageWrapper,
   AdminEventsContainer,
-  PageInner,
-  PageHeader,
-  HeaderContent,
-  PageTitle,
-  Toolbar,
-  Table,
-  IconBtn,
+  AdminEventsPageWrapper,
+  attendeesTagStyle,
   EmptyState,
   filterButtonStyle,
+  HeaderContent,
+  IconBtn,
+  PageHeader,
+  PageInner,
+  PageTitle,
+  Table,
   tableCardStyle,
-  attendeesTagStyle,
+  Toolbar,
 } from "./stylesAdminEvents";
 
 // uso los datos del mock
-import { mockRoomsData } from "../../services/rooms/roomMocks";
+import { useGetAdminEvents } from "./hooks/useGetAdminEvents";
 
 type FlatEvent = {
   id: string;
@@ -47,30 +47,19 @@ const fmtTime = (iso: string) =>
   new Date(iso).toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit" });
 
 export default function AdminEvents() {
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
-  const [query, setQuery] = useState("");
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(false);
+  const [eventSearched, setEventSearched] = useState<string>("");
 
-  const allEvents: FlatEvent[] = useMemo(() => {
-    const nameById = new Map(
-      mockRoomsData.map((r) => [r.roomDetails.id, r.roomDetails.name])
-    );
-    return mockRoomsData.flatMap((r) =>
-      (r.roomEvents ?? []).map((ev) => ({
-        ...ev,
-        roomName: nameById.get(ev.roomId ?? r.roomDetails.id) ?? r.roomDetails.name,
-      }))
-    );
-  }, []);
+  const { roomEvents } = useGetAdminEvents()
 
   const filteredEvents = useMemo(() => {
-    const searchTerm = query.trim().toLowerCase();
-    if (!searchTerm) return allEvents;
-    return allEvents.filter((ev) =>
+    const searchTerm = eventSearched.trim().toLowerCase();
+    if (!searchTerm) return roomEvents;
+    return roomEvents.filter((ev) =>
       ev.title?.toLowerCase().includes(searchTerm) ||
-      ev.organizer?.toLowerCase().includes(searchTerm) ||
       ev.roomName?.toLowerCase().includes(searchTerm)
     );
-  }, [allEvents, query]);
+  }, [eventSearched, roomEvents]);
 
   return (
     <AdminEventsPageWrapper>
@@ -88,18 +77,19 @@ export default function AdminEvents() {
           </PageHeader>
 
           <Toolbar>
-            <InputSearch
+            {/* TODO: Descomentar cuando se implemente el componente InputSearch*/}
+            {/* <InputSearch
               placeholder="Buscar eventos..."
               value={query}
-              onSearch={(term) => setQuery(term)}
-              onChange={(e) => setQuery(e.target.value)}
-            />
+              onSearch={(term) => setEventSearched(term)}
+              onChange={(e) => setEventSearched(e.target.value)}
+            /> */}
 
             <Button
               text="Filtrar"
               icon={<Filter size={16} />}
               variant={ButtonVariant.light}
-              onClick={() => {}}
+              onClick={() => { }}
               customStyle={filterButtonStyle}
             />
           </Toolbar>

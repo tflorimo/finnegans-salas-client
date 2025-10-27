@@ -1,8 +1,7 @@
 import styled from "styled-components";
 
 export const TopBar = styled.header`
-  position: fixed;
-    width: 100%;
+  width: 100%;
   top: 0;
   z-index: 100;
   background: #fff;
@@ -11,13 +10,13 @@ export const TopBar = styled.header`
 `;
 
 export const TopBarInner = styled.div`
-  max-width: 1200px;
+  max-width: auto;
   margin: 0 auto;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 20px;
+  padding: 0 5rem;
 `;
 
 export const TopBarLeft = styled.div`
@@ -62,4 +61,3 @@ export const TopBarRight = styled.div`
     }
   }
 `;
-

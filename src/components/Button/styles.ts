@@ -18,7 +18,7 @@ interface ButtonProps {
   $hasIcon?: boolean;
 }
 
-const VARIANT_STYLES = {
+export const VARIANT_STYLES = {
   [ButtonVariant.primary]: css`
     background-color: ${PRIMARY_COLOR};
     color: ${WHITE_COLOR};
@@ -73,6 +73,13 @@ const VARIANT_STYLES = {
     color: ${WHITE_COLOR};
     &:hover {
       background-color: #111827;
+    }
+  `,
+  [ButtonVariant.white]: css`
+    background-color: ${WHITE_COLOR};
+    color: ${DARK_COLOR};
+    &:hover {
+      background-color: #f3f4f6;
     }
   `,
 };

@@ -49,6 +49,7 @@ export interface RoomEventDetailsDTO extends RoomEventDTO {
   attendees: number;
   status: eventStatusType;
   roomId: string;
+  roomName: string;
   checkInStatus?: boolean;
   description?: string;
   details?: string[];

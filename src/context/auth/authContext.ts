@@ -1,9 +1,8 @@
 import { createContext } from "react";
-import type { AuthContextProps, UserDTO } from "./types";
+import type { AuthContextProps } from "./types";
 
 export const AuthContext = createContext<AuthContextProps>({
-  user: undefined,
   logged: false,
-  login: (user: UserDTO) => void user,
+  login: (token: string) => void token,
   logout: () => {},
 });
