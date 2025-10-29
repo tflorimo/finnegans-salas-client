@@ -6,13 +6,19 @@ export const mockRoomData: RoomData = {
     name: "Sala Innovación",
     floor: "2do Piso",
     capacity: 12,
-    status: "available",
+    status: "occupied",
     description:
       "Sala de reuniones equipada con tecnología de última generación.",
     equipment: ["Proyector 4K", "WiFi de alta velocidad", "Sistema de audio"],
     qrImageUrl:
       "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=sala-innovacion-01",
     nextAvailableAt: "2025-10-01T16:00:00Z",
+    currentEvent: {
+      id: "event-002",
+      title: "Presentación ABC",
+      start: "2025-10-01T17:00:00Z",
+      end: "2025-10-01T18:30:00Z",
+    },
   },
   roomEvents: [
     {
@@ -33,7 +39,7 @@ export const mockRoomData: RoomData = {
       id: "event-002",
       title: "Presentación ABC",
       organizer: "Roberto Martínez",
-      guests: ["rob@company.com"],
+      guests: ["rob@company.com", "ana@company.com", "carlos@company.com"],
       start: "2025-10-01T17:00:00Z",
       end: "2025-10-01T18:30:00Z",
       attendees: 8,
