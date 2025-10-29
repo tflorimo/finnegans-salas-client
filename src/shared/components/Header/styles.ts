@@ -40,14 +40,6 @@ export const TopBarLeft = styled.div`
     margin-left: -60px;
 `;
 
-export const TopBarCenter = styled.div`
-  h2 {
-    font-size: 16px;
-    font-weight: 600;
-    color: #111827;
-  }
-`;
-
 export const TopBarRight = styled.div`
   display: flex;
   align-items: center;
