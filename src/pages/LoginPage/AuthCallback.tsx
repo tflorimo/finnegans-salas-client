@@ -9,13 +9,18 @@ export const AuthCallback = () => {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const token = params.get("token");
-
-    if (!token) {
-      navigate("/login", { replace: true })
+    const email = params.get("email");
+    
+    if (!token || !email) {
+      navigate("/login", { replace: true });
       return;
     }
+    
     localStorage.setItem("token", token);
-    login(token);
+    localStorage.setItem("userEmail", email);
+    
+    login(token, email);
+    
     navigate("/home", { replace: true });
   }, [login, navigate]);
 
