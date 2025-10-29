@@ -1,0 +1,45 @@
+import { CardContainer } from "../../../components/CardContainer/CardContainer";
+import type { RoomEventDetailsDTO } from "../../../shared/types/types";
+import { ADMIN_EVENTS_MESSAGES, TABLE_HEADERS } from "../constants/AdminEvents.constants";
+import { EmptyState, Table, tableCardStyle } from "../styles";
+import { EventTableRow } from "./EventTableRow";
+
+interface EventsTableProps {
+  events: RoomEventDetailsDTO[];
+}
+
+export const EventsTable = ({ events }: EventsTableProps) => {
+  return (
+    <CardContainer customStyle={tableCardStyle}>
+      <Table>
+        <thead>
+          <tr>
+            <th>{TABLE_HEADERS.EVENT}</th>
+            <th>{TABLE_HEADERS.ROOM}</th>
+            <th>{TABLE_HEADERS.DATE}</th>
+            <th>{TABLE_HEADERS.TIME}</th>
+            <th>{TABLE_HEADERS.ATTENDEES}</th>
+            <th>{TABLE_HEADERS.ACTIONS}</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {events.length === 0 && (
+            <tr>
+              <td colSpan={6}>
+                <EmptyState>
+                  <h3>{ADMIN_EVENTS_MESSAGES.EMPTY_TITLE}</h3>
+                  <p>{ADMIN_EVENTS_MESSAGES.EMPTY_DESCRIPTION}</p>
+                </EmptyState>
+              </td>
+            </tr>
+          )}
+
+          {events.map((ev) => (
+            <EventTableRow key={ev.id} event={ev} />
+          ))}
+        </tbody>
+      </Table>
+    </CardContainer>
+  );
+};

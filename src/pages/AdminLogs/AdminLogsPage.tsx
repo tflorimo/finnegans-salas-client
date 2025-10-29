@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Download } from 'lucide-react';
 import { SideBar } from '../../shared/components/SideBar/SideBar';
 import Header from '../../shared/components/Header/Header';
+import { BackButton } from '../../shared/components/BackButton/BackButton';
 import { useLogsFetch } from './hooks/useLogsFetch';
 import { LogItem } from './components/LogItem';
 import { ADMIN_LOGS_MESSAGES } from './constants/AdminLogs.constants';
@@ -38,6 +39,7 @@ export const AdminLogsPage = () => {
       </AdminHeaderWrapper>
       <AdminLogsContainer $collapsed={isSidebarCollapsed}>
         <PageInner>
+          <BackButton />
           <PageHeader>
             <HeaderContent>
               <PageTitle>{ADMIN_LOGS_MESSAGES.PAGE_TITLE}</PageTitle>
