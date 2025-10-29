@@ -11,9 +11,13 @@ export const AdminLogsPageWrapper = styled.div`
 export const AdminHeaderWrapper = styled.div<{ $collapsed: boolean }>`
   position: fixed;
   top: 0;
-  left: ${({ $collapsed }) => `${$collapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_WIDTH}px`};
+  left: ${({ $collapsed }) =>
+    `${$collapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_WIDTH}px`};
   right: 0;
-  width: ${({ $collapsed }) => `calc(100% - ${$collapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_WIDTH}px)`};
+  width: ${({ $collapsed }) =>
+    `calc(100% - ${
+      $collapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_WIDTH
+    }px)`};
   z-index: 100;
   transition: left 0.25s ease, width 0.25s ease;
 
@@ -25,26 +29,28 @@ export const AdminHeaderWrapper = styled.div<{ $collapsed: boolean }>`
 
 export const AdminLogsContainer = styled.div<{ $collapsed: boolean }>`
   flex: 1;
-  max-width: ${({ $collapsed }) => 
-    `calc(100vw - ${$collapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_WIDTH}px)`};
-  margin-left: ${({ $collapsed }) => 
+  max-width: ${({ $collapsed }) =>
+    `calc(100vw - ${
+      $collapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_WIDTH
+    }px)`};
+  margin-left: ${({ $collapsed }) =>
     `${$collapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_WIDTH}px`};
   margin-top: 0;
-  padding: 32px 64px 48px;
+  padding: 16px 56px 40px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 24px;
   transition: margin-left 0.25s ease, max-width 0.25s ease;
 
   @media (max-width: 1200px) {
-    padding: 28px 32px 40px;
+    padding: 16px 32px 32px;
   }
 
   @media (max-width: 768px) {
     margin-left: 0;
     max-width: 100vw;
-    padding: 26px 20px 32px;
+    padding: 16px 16px;
   }
 `;
 
@@ -52,24 +58,28 @@ export const PageInner = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 24px;
 `;
 
 export const PageHeader = styled.header`
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
 `;
 
 export const HeaderContent = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
 `;
 
 export const PageTitle = styled.h1`
   font-size: 1.5rem;
   font-weight: 750;
   color: #111827;
-  margin-top: -25px;
+  margin: -20px 0 0 0;
+  line-height: 1.2;
 `;
 
 export const ExportButton = styled.button`
@@ -85,7 +95,6 @@ export const ExportButton = styled.button`
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
-  margin-top: -35px;
 
   &:hover {
     background: #f9fafb;

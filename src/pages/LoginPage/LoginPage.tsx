@@ -1,14 +1,14 @@
-import { css } from "styled-components";
-
 import LogoFinnegans from "../../assets/images/logoFinnegans.svg";
 import { Button } from "../../components/Button/Button";
 import { CardContainer } from "../../components/CardContainer/CardContainer";
 import {
+  GoogleButtonStyle,
   ImageFinnegans,
+  LoginCardStyle,
   LoginFooter,
   LoginHeader,
   LoginPageContainer,
-} from "./stylesLoginPage.ts";
+} from "./styles.ts";
 
 export const LoginPage = () => {
   const handleGoogleLogin = () => {
@@ -36,20 +36,7 @@ export const LoginPage = () => {
       </LoginHeader>
 
       {/* Card */}
-      <CardContainer
-        customStyle={css`
-          width: 450px;
-          color: #0f172a;
-          h2 {
-            color: #0f172a;
-            margin: 0 0 0.5rem;
-          }
-          p.instruction {
-            color: #64748b;
-            font-size: 14px;
-          }
-        `}
-      >
+      <CardContainer customStyle={LoginCardStyle}>
         <h2 className="welcome">Bienvenido de vuelta</h2>
         <p className="instruction">Inicia sesión para acceder al sistema</p>
 
@@ -65,18 +52,7 @@ export const LoginPage = () => {
             />
           }
           onClick={() => handleGoogleLogin()}
-          customStyle={css`
-            width: 100%;
-            justify-content: center;
-            gap: 10px;
-            background: #fff;
-            color: #0f172a;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 2px 8px rgba(2, 8, 23, 0.05);
-            &:hover {
-              background: #f8fafc;
-            }
-          `}
+          customStyle={GoogleButtonStyle}
         />
 
         {/* Footer */}

@@ -3,7 +3,7 @@ import {
   ROOM_ERROR_MESSAGES,
 } from "../../constants/rooms.constants";
 import type { RoomData, RoomsResponse } from "../../shared/types/types";
-import { getErrorMessage } from "../../shared/utils/utils";
+import { getErrorMessage } from "../../shared/utils/axios.utils";
 import axiosInstance from "../axiosInstance";
 import { mockRoomData, mockRoomsData } from "./roomMocks";
 
@@ -38,9 +38,9 @@ export const roomService = {
     }
   },
 
-  checkInEvent: async (eventId: string): Promise<void> => {
+  checkInCurrentEvent: async (roomId: string, userId: string): Promise<void> => {
     try {
-      await axiosInstance.patch(ROOM_ENDPOINTS.checkInEvent(eventId));
+      await axiosInstance.patch(ROOM_ENDPOINTS.checkInCurrentEvent(roomId), { userId });
     } catch (error) {
       const message = getErrorMessage(error, ROOM_ERROR_MESSAGES.checkInError);
       throw new Error(message);

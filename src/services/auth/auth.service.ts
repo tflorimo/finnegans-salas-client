@@ -1,6 +1,6 @@
 import { AUTH_ENDPOINTS } from "../../constants/auth.constants";
 import { ROOM_ERROR_MESSAGES } from "../../constants/rooms.constants";
-import { getErrorMessage } from "../../shared/utils/utils";
+import { getErrorMessage } from "../../shared/utils/axios.utils";
 import axiosInstance from "../axiosInstance";
 
 interface AuthTokens {
@@ -29,20 +29,16 @@ export interface AuthResponse {
 export const authService = {
   loginApp: async (): Promise<AuthResponse> => {
     try {
-      console.log("AUTH_ENDPOINTS.loginApp()", AUTH_ENDPOINTS.loginApp());
-      // TODO: Implementación real (descomentar cuando se integre con Backend)
       const { data } = await axiosInstance.get(AUTH_ENDPOINTS.loginApp());
-      console.log("data", data);
 
       return data;
-      // TODO: Eliminar cuando se integre con Backend
-      /* await new Promise((resolve) => setTimeout(resolve, 1000));
-      return mockRoomData; */
+
     } catch (error) {
       const message = getErrorMessage(error, ROOM_ERROR_MESSAGES.roomError);
       throw new Error(message);
     }
   },
+  
   // TODO: Se implementará para solicitar datos iniciales del usuario
   /* checkAuth: async (): Promise<{ user: AuthUser; authenticated: boolean }> => {
     try {

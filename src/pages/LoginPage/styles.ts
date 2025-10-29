@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const LoginPageContainer = styled.div`
   position: fixed;
@@ -58,3 +58,33 @@ export const LoginFooter = styled.footer`
     text-decoration: underline;
   }
 `;
+
+export const LoginCardStyle = css`
+  width: 450px;
+  color: #0f172a;
+  
+  h2 {
+    color: #0f172a;
+    margin: 0 0 0.5rem;
+  }
+  
+  p.instruction {
+    color: #64748b;
+    font-size: 14px;
+  }
+`;
+
+export const GoogleButtonStyle = css`
+  width: 100%;
+  justify-content: center;
+  gap: 10px;
+  background: #fff;
+  color: #0f172a;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 8px rgba(2, 8, 23, 0.05);
+  
+  &:hover {
+    background: #f8fafc;
+  }
+`;
+

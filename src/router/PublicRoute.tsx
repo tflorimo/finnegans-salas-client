@@ -4,7 +4,6 @@ import { Navigate } from "react-router-dom";
 import { AuthContext } from "../context/auth/authContext";
 import type { PublicRouteProps } from "./types";
 
-
 /**
  * @description Componente de ruta pública que verifica si el usuario está autenticado.
  * @export
@@ -14,5 +13,5 @@ import type { PublicRouteProps } from "./types";
 export const PublicRoute = ({ children }: PublicRouteProps) => {
     const { logged } = useContext(AuthContext);
 
-    return logged ? <Navigate to="/home" /> : <>{children}</>;
+    return logged ? <Navigate to="/home" replace /> : <>{children}</>;
 };

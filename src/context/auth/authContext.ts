@@ -3,6 +3,7 @@ import type { AuthContextProps } from "./types";
 
 export const AuthContext = createContext<AuthContextProps>({
   logged: false,
-  login: (token: string) => void token,
+  userEmail: null,
+  login: (token: string, email: string) => { void token; void email; },
   logout: () => {},
 });

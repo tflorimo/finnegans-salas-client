@@ -1,8 +1,5 @@
 import styled, { css } from "styled-components";
-import {
-  SIDEBAR_WIDTH,
-  SIDEBAR_COLLAPSED_WIDTH,
-} from "../../shared/components/SideBar/styles";
+import { SIDEBAR_WIDTH, SIDEBAR_COLLAPSED_WIDTH } from "../../shared/components/SideBar/styles";
 
 export const AdminEventsPageWrapper = styled.div`
   display: flex;
@@ -13,9 +10,11 @@ export const AdminEventsPageWrapper = styled.div`
 export const AdminHeaderWrapper = styled.div<{ $collapsed: boolean }>`
   position: fixed;
   top: 0;
-  left: ${({ $collapsed }) => `${$collapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_WIDTH}px`};
+  left: ${({ $collapsed }) =>
+    `${$collapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_WIDTH}px`};
   right: 0;
-  width: ${({ $collapsed }) => `calc(100% - ${$collapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_WIDTH}px)`};
+  width: ${({ $collapsed }) =>
+    `calc(100% - ${$collapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_WIDTH}px)`};
   z-index: 100;
   transition: left 0.25s ease, width 0.25s ease;
 
@@ -32,18 +31,21 @@ export const AdminEventsContainer = styled.div<{ $collapsed: boolean }>`
   margin-left: ${({ $collapsed }) =>
     `${$collapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_WIDTH}px`};
   margin-top: 0;
-  padding: 24px 56px 40px;
+  padding: 16px 56px 40px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   gap: 24px;
   transition: margin-left 0.25s ease, width 0.25s ease;
 
-  @media (max-width: 1200px) { padding: 24px 32px 32px; }
-  @media (max-width: 768px)  {
+  @media (max-width: 1200px) {
+    padding: 16px 32px 32px;
+  }
+
+  @media (max-width: 768px) {
     margin-left: 0;
     width: 100vw;
-    padding: 24px 16px;
+    padding: 16px 16px;
   }
 `;
 
@@ -51,11 +53,14 @@ export const PageInner = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 24px;
 `;
 
 export const PageHeader = styled.header`
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
 `;
 
 export const HeaderContent = styled.div`
@@ -68,7 +73,8 @@ export const PageTitle = styled.h1`
   font-size: 1.5rem;
   font-weight: 750;
   color: #111827;
-  margin-top: -25px;
+  margin: -8px 0 0 0;
+  line-height: 1.2;
 `;
 
 export const Toolbar = styled.div`
@@ -99,8 +105,13 @@ export const Table = styled.table`
     vertical-align: middle;
   }
 
-  tbody tr:hover { background: #fbfdff; }
-  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover {
+    background: #fbfdff;
+  }
+
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
 `;
 
 export const IconBtn = styled.button`
@@ -109,31 +120,23 @@ export const IconBtn = styled.button`
   justify-content: center;
   width: 34px;
   height: 34px;
-  margin-right: 6px;
+  margin-right: 10px;
   border-radius: 10px;
   border: 1px solid #e2e8f0;
   background: #fff;
   color: #0f172a;
   cursor: pointer;
-
   &:hover { background: #f8fafc; }
   &:last-child { margin-right: 0; }
+  margin-left: 10px;
 `;
 
 export const EmptyState = styled.div`
   padding: 24px;
   text-align: center;
   color: #64748b;
-
-  h3 {
-    margin: 0 0 6px 0;
-    font-size: 16px;
-    color: #475569;
-  }
-  p {
-    margin: 0;
-    font-size: 14px;
-  }
+  h3 { margin: 0 0 6px 0; font-size: 16px; color: #475569; }
+  p { margin: 0; font-size: 14px; }
 `;
 
 export const filterButtonStyle = css`
