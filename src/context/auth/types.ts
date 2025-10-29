@@ -5,6 +5,7 @@ export const ACTION_TYPES = {
 
 export type AuthState = {
   logged: boolean;
+  userEmail: string | null;
 };
 
 // TODO: Se modificará cuando se defina el UserDTO
@@ -14,6 +15,6 @@ export type UserDTO = {
 };
 
 export type AuthContextProps = AuthState & {
-  login: (token: string) => void;
+  login: (token: string, email: string) => void;
   logout: () => void;
 };
