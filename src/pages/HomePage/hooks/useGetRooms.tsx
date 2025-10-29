@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { roomService } from "../../../services/rooms/roomService";
+import { roomService } from "../../../services/rooms/room.service";
 import type { RoomData } from "../../../shared/types/types";
 
 export const useGetRooms = () => {
