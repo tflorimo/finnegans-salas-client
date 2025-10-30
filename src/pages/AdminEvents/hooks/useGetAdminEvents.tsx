@@ -1,24 +1,56 @@
-import { useEffect, useState } from "react";
-import { adminService } from "../../../services/admin/adminService";
-import type { RoomEventDetailsDTO } from "../../../shared/types/types";
+import { useEffect, useMemo, useState } from "react";
+import { adminService } from "../../../services/admin/admin.service";
+import type { EventResponseDTO, FlatEvent } from "../../../services/admin/events/types";
+import { mapToFlatEvent } from "../utils/eventsMapper";
 
 export const useGetAdminEvents = () => {
-    // Consumir servicio que me retorna todos los eventos
-    const [roomEvents, setRoomEvents] = useState<RoomEventDetailsDTO[]>([]);
+    const [events, setevents] = useState<EventResponseDTO[]>([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<unknown>(null);
+
+    const eventsFlat: FlatEvent[] = useMemo(
+        () => events.map(mapToFlatEvent),
+        [events]
+    );
+
+    const getAllEvents = async (): Promise<EventResponseDTO[]> => {
+        try {
+            setLoading(true);
+            setError(null);
+
+            const response = await adminService.getAllEventsAdmin();
+            const events = (Array.isArray(response) ? response : []) as EventResponseDTO[];
+
+            if (!events.length) {
+                return [];
+            }
+
+            const parsedEvents = events.map(e => ({
+                ...e,
+                date: new Date(e.startTime).toISOString().split("T")[0],
+                startTime: new Date(e.startTime),
+                endTime: new Date(e.endTime),
+            }));
+
+            setevents(parsedEvents);
+            return parsedEvents;
+        } catch (err) {
+            setError(err);
+            return [];
+        } finally {
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
-        const fetchEvents = async () => {
-            try {
-                // Llamar al servicio para obtener los eventos
-                const response = await adminService.getAllEventsAdmin();
-                setRoomEvents(response.flatMap(room => room.roomEvents));
-            } catch (error) {
-                console.error("Error fetching admin events:", error);
-            }
-        };
-
-        fetchEvents();
+        void getAllEvents();
     }, []);
-    // Retornar array de eventos
-    return { roomEvents }
-}
+
+    return {
+        events,        // para el modal (ojo)
+        eventsFlat,    // para la tabla
+        loading,
+        error,
+        getAllEvents,  // refrescar desde cualquier componente
+    };
+};
