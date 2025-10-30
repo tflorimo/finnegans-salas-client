@@ -1,27 +1,38 @@
 import { useState, type ReactNode } from "react";
 import { AuthContext } from "./authContext";
+import {
+  clearAuthToken,
+  clearStoredUserEmail,
+  getAuthToken,
+  getStoredUserEmail,
+  setAuthToken,
+  setStoredUserEmail,
+} from "./utils";
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const [logged, setLogged] = useState(() => !!localStorage.getItem("token"));
-    const [userEmail, setUserEmail] = useState<string | null>(localStorage.getItem("userEmail"));
+  const [authToken, setAuthTokenState] = useState<string | null>(getAuthToken());
+  const [logged, setLogged] = useState<boolean>(() => authToken !== null);
+  const [userEmail, setUserEmail] = useState<string | null>(getStoredUserEmail());
 
-    const login = (token: string, email: string) => {
-        localStorage.setItem("token", token);
-        localStorage.setItem("userEmail", email);
-        setLogged(true);
-        setUserEmail(email);
-    };
+  const login = (token: string, email: string) => {
+    setAuthToken(token);
+    setStoredUserEmail(email);
+    setAuthTokenState(token);
+    setLogged(true);
+    setUserEmail(email);
+  };
 
-    const logout = () => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("userEmail");
-        setLogged(false);
-        setUserEmail(null);
-    };
+  const logout = () => {
+    clearAuthToken();
+    clearStoredUserEmail();
+    setAuthTokenState(null);
+    setLogged(false);
+    setUserEmail(null);
+  };
 
-    return (
-        <AuthContext.Provider value={{ logged, userEmail, login, logout }}>
-            {children}
-        </AuthContext.Provider>
-    );
+  return (
+    <AuthContext.Provider value={{ logged, userEmail, authToken, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
