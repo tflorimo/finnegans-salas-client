@@ -3,8 +3,8 @@ import {
   ROOM_ERROR_MESSAGES,
 } from "../../constants/rooms.constants";
 import type { RoomData, RoomsResponse } from "../../shared/types/types";
-import { getErrorMessage } from "../../shared/utils/axios.utils";
-import axiosInstance from "../axiosInstance";
+import { getErrorMessage } from "../../api/axios/axios.utils";
+import axiosInstance from "../../api/axios/axios.instance";
 import { mockRoomData, mockRoomsData } from "./roomMocks";
 
 export const roomService = {
