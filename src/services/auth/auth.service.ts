@@ -3,6 +3,14 @@ import { ROOM_ERROR_MESSAGES } from "../../constants/rooms.constants";
 import { getErrorMessage } from "../../shared/utils/axios.utils";
 import type { AuthResponse } from "./types";
 import axiosInstance from "../axiosInstance";
+import type { AxiosRequestConfig } from "axios";
+import { clearAuthToken, clearStoredUserEmail, setAuthToken } from "../../context/auth/utils";
+
+const AUTH_HEADER = (token: string) => `Bearer ${token}`;
+const REFRESH_REQUEST_CONFIG: AxiosRequestConfig = {
+  withCredentials: true,
+  headers: { "x-skip-auth-refresh": "true" },
+};
 
 export const authService = {
   loginApp: async (): Promise<AuthResponse> => {
@@ -16,16 +24,17 @@ export const authService = {
     }
   },
 
-  async logoutApp(): Promise<void> {
+  logoutApp: async (): Promise<void> => {
     try {
       await axiosInstance.post(AUTH_ENDPOINTS.logoutApp());
-      localStorage.removeItem("token");
-    } catch (error) {
-      const message = getErrorMessage(error, ROOM_ERROR_MESSAGES.roomError);
-      throw new Error(message);
+    } finally {
+      // Aunque falle la llamada, vaciamos la sesión del front.
+      clearAuthToken();
+      clearStoredUserEmail();
+      delete axiosInstance.defaults.headers.common.Authorization;
     }
   },
-    // TODO: Se implementará para solicitar datos iniciales del usuario
+    // TODO: Se implementará para solicitar datos iniciales del usuario (Ya está implementado en backend)
   /* checkAuth: async (): Promise<{ user: AuthUser; authenticated: boolean }> => {
     try {
       const { data } = await axiosInstance.get<{
@@ -39,29 +48,30 @@ export const authService = {
     }
   }, */
 
-  async refreshAccessToken(): Promise<string | null> {
+  refreshAccessToken: async (): Promise<string | null> => {
     try {
-      const { data } = await axiosInstance.post<{ accessToken: string }>(
+      const { data } = await axiosInstance.post<{ accessToken: string | null }>(
         AUTH_ENDPOINTS.refresh(),
         {},
-        {
-          withCredentials: true,
-          headers: { "x-skip-auth-refresh": "true" },
-        }
+        REFRESH_REQUEST_CONFIG,
       );
 
       const newToken = data.accessToken ?? null;
 
       if (newToken) {
-        localStorage.setItem("token", newToken);
-        axiosInstance.defaults.headers.common.Authorization = `Bearer ${newToken}`;
+        setAuthToken(newToken);
+        axiosInstance.defaults.headers.common.Authorization = AUTH_HEADER(newToken);
+      } else {
+        clearAuthToken();
+        delete axiosInstance.defaults.headers.common.Authorization;
       }
 
       return newToken;
     } catch (error) {
       console.error("Error al refrescar token:", error);
-      localStorage.removeItem("token");
+      clearAuthToken();
+      delete axiosInstance.defaults.headers.common.Authorization;
       return null;
     }
-  }
+  },
 };
