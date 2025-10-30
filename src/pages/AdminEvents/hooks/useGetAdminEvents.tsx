@@ -36,7 +36,7 @@ export const useGetAdminEvents = () => {
             return parsedEvents;
         } catch (err) {
             setError(err);
-            return [];
+            return []; // Retorna array vacío en caso de error para evitar fallos en la UI
         } finally {
             setLoading(false);
         }

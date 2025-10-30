@@ -17,7 +17,7 @@ export const adminService = {
     } catch (error) {
       if (axios.isAxiosError(error) && error.response?.status === 401) {
         localStorage.removeItem("token");
-        return [];
+        return []; // Retorna array vacío para evitar errores en la UI
       }
 
       throw error;
