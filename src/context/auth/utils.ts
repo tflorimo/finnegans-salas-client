@@ -22,3 +22,4 @@ export const setStoredUserEmail = (email: string): void => {
 export const clearStoredUserEmail = (): void => {
   localStorage.removeItem(USER_EMAIL_STORAGE_KEY);
 };
+
