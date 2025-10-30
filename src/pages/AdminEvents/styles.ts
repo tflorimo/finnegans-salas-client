@@ -165,3 +165,98 @@ export const attendeesTagStyle = css`
   font-weight: 700;
   font-size: 12px;
 `;
+
+// EventDetailsModal styles
+// TODO: Centrar información de manera correcta
+export const Overlay = styled.div`
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  text-align: center;
+`;
+
+export const ModalBody = styled.div`
+  width: 640px;
+  max-width: 95vw;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  text-align: center;
+`;
+
+export const ModalHeader = styled.div`
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  padding: 16px 20px 0;
+  text-align: center;
+  margin-left: 30px;
+
+  h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #111827;
+  }
+`;
+
+export const CloseBtn = styled.button`
+  position: relative;
+  right: -210px;
+  top: -25px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+  color: #000; 
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.06);
+  }
+
+  svg {
+    stroke: currentColor; 
+  }
+`;
+
+
+export const Field = styled.div`
+  margin: 8px 20px;
+
+  label {
+    display: block;
+    font-size: 0.8rem;
+    color: #6b7280;
+    margin-bottom: 4px;
+  }
+
+  div {
+    font-size: 0.95rem;
+    color: #111827;
+  }
+`;
+
+export const AttendeeList = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 12px 0;
+  text-align: right;
+
+  li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 20px;
+    border-bottom: 1px solid #eef2f7;
+    color: #111827; 
+    background-color: #ffffff; 
+  }
+`;
+
