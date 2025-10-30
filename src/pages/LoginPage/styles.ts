@@ -15,9 +15,9 @@ export const LoginPageContainer = styled.div`
 `;
 
 export const ImageFinnegans = styled.img`
-    width: 80px;
-    height: 80px;
-    margin-bottom: 16px;
+  width: 80px;
+  height: 80px;
+  margin-bottom: 16px;
 `;
 
 export const LoginHeader = styled.header`
@@ -62,12 +62,12 @@ export const LoginFooter = styled.footer`
 export const LoginCardStyle = css`
   width: 450px;
   color: #0f172a;
-  
+
   h2 {
     color: #0f172a;
     margin: 0 0 0.5rem;
   }
-  
+
   p.instruction {
     color: #64748b;
     font-size: 14px;
@@ -82,9 +82,43 @@ export const GoogleButtonStyle = css`
   color: #0f172a;
   border: 1px solid #e2e8f0;
   box-shadow: 0 2px 8px rgba(2, 8, 23, 0.05);
-  
+
   &:hover {
     background: #f8fafc;
   }
 `;
 
+export const AuthErrorOverlay = styled.div`
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+`;
+
+export const AuthErrorModal = styled.div`
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 28px 32px;
+  width: min(420px, 90vw);
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  text-align: center;
+`;
+
+export const AuthErrorTitle = styled.h3`
+  margin: 0;
+  font-size: 20px;
+  color: #000000ff;
+`;
+
+export const AuthErrorText = styled.p`
+  margin: 0;
+  color: #475569;
+  font-size: 15px;
+  line-height: 1.4;
+`;
