@@ -1,26 +1,30 @@
-import { /*ADMIN_ENDPOINTS,*/ ADMIN_ERROR_MESSAGES } from "../../constants/admin.constants";
+import { /*ADMIN_ENDPOINTS,*/ ADMIN_ENDPOINTS, ADMIN_ERROR_MESSAGES } from "../../constants/admin.constants";
 //import axiosInstance from "../axiosInstance";
-import type { /*EventsData,*/ RoomData } from "../../shared/types/types";
+//import type { /*EventsData,*/ EventsData, RoomData } from "../../shared/types/types";
 import type { LogsResponse } from "./logs/types";
 import { mockLogsData } from "./logs/logsMocks"; // Eliminar cuando se integre con Backend
 import { getErrorMessage } from "../../shared/utils/axios.utils";
-import { mockRoomsData } from "../rooms/roomMocks";
+//import { mockRoomsData } from "../rooms/roomMocks";
+import axiosInstance from "../axiosInstance";
+import type { EventResponseDTO } from "./events/types";
+import axios from "axios";
 
-//TODO: Revisar respuesta de getAllEventsAdmin cuando se integre con Backend
 export const adminService = {
-  getAllEventsAdmin: async (): Promise<RoomData[]> => {
+  async getAllEventsAdmin(): Promise<EventResponseDTO[]> {
     try {
-      await new Promise(resolve => setTimeout(resolve, 800));
-      return mockRoomsData;
-/*       const { data } = await axiosInstance.get<EventsData>(ADMIN_ENDPOINTS.getAllEventsAdmin());
-      return data; */
+      const { data } = await axiosInstance.get<EventResponseDTO[]>(ADMIN_ENDPOINTS.getAllEventsAdmin());
+      return data;
     } catch (error) {
-      const message = getErrorMessage(error, ADMIN_ERROR_MESSAGES.eventsError);
-      throw new Error(message);
+      if (axios.isAxiosError(error) && error.response?.status === 401) {
+        localStorage.removeItem("token");
+        return [];
+      }
+
+      throw error;
     }
   },
 
-  getLogs: async (): Promise<LogsResponse> => {
+  async getLogs(): Promise<LogsResponse> {
     try {
       // MOCKS (Comentar cuando se integre con Backend)
       await new Promise(resolve => setTimeout(resolve, 800));
