@@ -166,97 +166,145 @@ export const attendeesTagStyle = css`
   font-size: 12px;
 `;
 
-// EventDetailsModal styles
-// TODO: Centrar información de manera correcta
+// EventDetailsModal styles (Quizá lo correcto sea modularizar los styles también)
 export const Overlay = styled.div`
   position: fixed;
   inset: 0;
+  padding: 32px;
   background: rgba(15, 23, 42, 0.45);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 999;
-  text-align: center;
+  box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    padding: 16px;
+  }
 `;
 
 export const ModalBody = styled.div`
   width: 640px;
-  max-width: 95vw;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  text-align: center;
+  max-width: 100%;
+  max-height: calc(100vh - 64px);
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 24px 48px rgba(15, 23, 42, 0.16);
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(148, 163, 184, 0.5);
+    border-radius: 999px;
+  }
+`;
+
+export const ModalCardStyle = css`
+  width: 100%;
+  padding: 32px 36px 36px;
+  box-sizing: border-box;
+  border: none;
+  box-shadow: none;
+  align-items: stretch;
+  gap: 24px;
+
+  @media (max-width: 768px) {
+    padding: 24px 20px 28px;
+  }
 `;
 
 export const ModalHeader = styled.div`
+  position: relative;
   display: flex;
-  align-items: start;
-  justify-content: space-between;
-  margin-bottom: 12px;
-  padding: 16px 20px 0;
-  text-align: center;
-  margin-left: 30px;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
 
   h3 {
     margin: 0;
-    font-size: 1.25rem;
+    font-size: 1.35rem;
     font-weight: 600;
     color: #111827;
+    text-align: center;
   }
 `;
 
 export const CloseBtn = styled.button`
-  position: relative;
-  right: -210px;
-  top: -25px;
+  position: absolute;
+  top: -6px;
+  right: -6px;
   border: none;
   background: transparent;
   cursor: pointer;
   padding: 6px;
   border-radius: 8px;
+  color: #0f172a;
   transition: background 0.2s ease;
-  color: #000; 
 
   &:hover {
-    background: rgba(0, 0, 0, 0.06);
+    background: rgba(15, 23, 42, 0.08);
   }
 
   svg {
-    stroke: currentColor; 
+    stroke: currentColor;
   }
 `;
 
+export const FieldsWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-items: center;
+`;
 
 export const Field = styled.div`
-  margin: 8px 20px;
+  width: 100%;
+  max-width: 440px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
 
   label {
-    display: block;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     color: #6b7280;
-    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
   }
 
   div {
-    font-size: 0.95rem;
+    font-size: 1rem;
     color: #111827;
+    word-break: break-word;
   }
 `;
 
 export const AttendeeList = styled.ul`
+  width: 100%;
   list-style: none;
+  margin: 0;
   padding: 0;
-  margin: 8px 0 12px 0;
-  text-align: right;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 
   li {
+    padding: 12px 18px;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    background: #ffffff;
     display: flex;
+    flex-direction: column;
+    gap: 8px;
     align-items: center;
-    justify-content: space-between;
-    padding: 6px 20px;
-    border-bottom: 1px solid #eef2f7;
-    color: #111827; 
-    background-color: #ffffff; 
+    color: #111827;
   }
 `;
+
 
