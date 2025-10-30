@@ -26,6 +26,10 @@ const TYPE_STYLES = {
     background-color: ${LIGHT_COLOR};
     color: ${DARK_COLOR};
   `,
+  warning: css`
+    background-color: #facc15;
+    color: ${DARK_COLOR};
+  `,
   succesOutput: css`
     background-color: ${"#edfdf3"};
     color: ${"#16a249"};
