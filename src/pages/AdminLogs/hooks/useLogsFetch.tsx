@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { adminService } from '../../../services/admin/adminService';
+import { adminService } from '../../../services/admin/admin.service';
 import type { LogDTO } from '../../../services/admin/logs/types';
 
 export const useLogsFetch = () => {
