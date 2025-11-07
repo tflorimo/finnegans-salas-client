@@ -3,10 +3,11 @@ import { SideBar } from "../../shared/components/SideBar/SideBar";
 import Header from "../../shared/components/Header/Header";
 import { BackButton } from "../../shared/components/BackButton/BackButton";
 import { useGetAdminEvents } from "./hooks/useGetAdminEvents";
-import { useFilteredEvents } from "./hooks/useFilteredEvents";
+//import { useFilteredEvents } from "./hooks/useFilteredEvents";
 import { EventsTable } from "./components/EventsTable";
 import { EventsToolbar } from "./components/EventsToolbar";
 import { ADMIN_EVENTS_MESSAGES } from "./constants/AdminEvents.constants";
+import type { EventResponseDTO } from "../../services/admin/events/types";
 import {
   AdminEventsContainer,
   AdminEventsPageWrapper,
@@ -16,13 +17,14 @@ import {
   PageInner,
   PageTitle,
 } from "./styles";
+import { EventDetailsModal } from "./components/EventDetailsModal";
 
 export const AdminEventsPage = () => {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(false);
-  const [eventSearched, /*setEventSearched*/] = useState<string>("");
-
-  const { roomEvents } = useGetAdminEvents();
-  const filteredEvents = useFilteredEvents(roomEvents, eventSearched);
+  //const [eventSearched, setEventSearched] = useState<string>("");
+  const [selectedEvent, setSelectedEvent] = useState<EventResponseDTO | null>(null);
+  const { events } = useGetAdminEvents();
+  //const filteredEvents = useFilteredEvents(events, eventSearched);
 
   return (
     <AdminEventsPageWrapper>
@@ -46,9 +48,19 @@ export const AdminEventsPage = () => {
 
           <EventsToolbar />
 
-          <EventsTable events={filteredEvents} />
+          <EventsTable
+            events={events}
+            onView={(ev) => setSelectedEvent(ev)}
+          />
+
+          {selectedEvent && (
+            <EventDetailsModal
+              event={selectedEvent}
+              onClose={() => setSelectedEvent(null)}
+            />
+          )}
         </PageInner>
       </AdminEventsContainer>
     </AdminEventsPageWrapper>
   );
-}
+};

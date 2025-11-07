@@ -15,7 +15,7 @@ export interface RoomBaseDTO {
   status: roomStatusType;
 }
 
-export interface RoomEventDTO {
+export interface RoomEventResponseDTO {
   id: string;
   title: string;
   start: string;
@@ -38,10 +38,10 @@ export interface RoomDetailsDTO extends RoomBaseDTO {
   equipment: string[];
   qrImageUrl: string;
   nextAvailableAt?: string;
-  currentEvent?: RoomEventDTO;
+  currentEvent?: RoomEventResponseDTO;
 }
 
-export interface RoomEventDetailsDTO extends RoomEventDTO {
+export interface RoomEventDetailsDTO extends RoomEventResponseDTO {
   id: string; // Id del backend del evento
   title: string;
   organizer: string;

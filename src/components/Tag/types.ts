@@ -12,6 +12,7 @@ export enum Tags {
   success = "success",
   danger = "danger",
   info = "info",
+  warning = "warning",
   succesOutput = "succesOutput",
   dangerOutput = "dangerOutput",
   infoOutput = "infoOutput",

@@ -6,6 +6,7 @@ export const ACTION_TYPES = {
 export type AuthState = {
   logged: boolean;
   userEmail: string | null;
+  authToken: string | null;
 };
 
 // TODO: Se modificará cuando se defina el UserDTO

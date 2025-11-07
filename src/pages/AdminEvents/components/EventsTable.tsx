@@ -1,14 +1,15 @@
 import { CardContainer } from "../../../components/CardContainer/CardContainer";
-import type { RoomEventDetailsDTO } from "../../../shared/types/types";
+import type { EventResponseDTO } from "../../../services/admin/events/types";
 import { ADMIN_EVENTS_MESSAGES, TABLE_HEADERS } from "../constants/AdminEvents.constants";
 import { EmptyState, Table, tableCardStyle } from "../styles";
 import { EventTableRow } from "./EventTableRow";
 
 interface EventsTableProps {
-  events: RoomEventDetailsDTO[];
+  events: EventResponseDTO[];
+  onView: (event: EventResponseDTO) => void;
 }
 
-export const EventsTable = ({ events }: EventsTableProps) => {
+export const EventsTable = ({ events, onView }: EventsTableProps) => {
   return (
     <CardContainer customStyle={tableCardStyle}>
       <Table>
@@ -36,7 +37,7 @@ export const EventsTable = ({ events }: EventsTableProps) => {
           )}
 
           {events.map((ev) => (
-            <EventTableRow key={ev.id} event={ev} />
+            <EventTableRow key={ev.id} event={ev} onView={() => onView(ev)} />
           ))}
         </tbody>
       </Table>
