@@ -9,9 +9,7 @@ import axiosInstance from "../../api/axios/axios.instance";
 export const roomService = {
   getRoom: async (roomEmail: string): Promise<RoomResponseDTO> => {
     try {
-      const { data } = await axiosInstance.get<RoomResponseDTO>(ROOM_ENDPOINTS.getRoomById(roomEmail)
-      );
-      console.log("Room data:", data);
+      const { data } = await axiosInstance.get<RoomResponseDTO>(ROOM_ENDPOINTS.getRoomById(roomEmail));
       return data;
     } catch (error) {
       const message = getErrorMessage(error, ROOM_ERROR_MESSAGES.roomError);
@@ -22,7 +20,6 @@ export const roomService = {
   getRooms: async (): Promise<RoomResponseDTO[]> => {
     try {
       const { data } = await axiosInstance.get<RoomResponseDTO[]>(ROOM_ENDPOINTS.getRooms());
-      console.log("Roomsssssssssss data:", data);
       return data;
     } catch (error) {
       const message = getErrorMessage(error, ROOM_ERROR_MESSAGES.roomsError);
@@ -30,9 +27,9 @@ export const roomService = {
     }
   },
 
-  checkInCurrentEvent: async (roomId: string, userId: string): Promise<void> => {
+  checkInCurrentEvent: async (roomId: string, userEmail: string): Promise<void> => {
     try {
-      await axiosInstance.patch(ROOM_ENDPOINTS.checkInCurrentEvent(roomId), { userId });
+      await axiosInstance.patch(ROOM_ENDPOINTS.checkInCurrentEvent(roomId), { userEmail });
     } catch (error) {
       const message = getErrorMessage(error, ROOM_ERROR_MESSAGES.checkInError);
       throw new Error(message);

@@ -12,13 +12,12 @@ import { useGetRoom } from "./hooks/useGetRoom";
 import { renderStatusTag } from "./utils/RoomPageUtils";
 import {
   CheckInButtonStyle,
-  CheckInTitle,
   ColumnaLateral,
   ColumnaPrincipal,
   ContentGrid,
   CurrentStatusCardStyle,
   EquipmentContainer,
-  EquipmentTitle,
+  TitleStyle,
   FilaEstado,
   PageInner,
   QRCardStyle,
@@ -30,13 +29,13 @@ import {
 
 export const RoomPage = () => {
   const { loading, roomData } = useGetRoom();
-/*   const { handleCheckIn, isCheckInAvailable } = useCheckIn();
+  const { handleCheckIn, isCheckInAvailable } = useCheckIn();
 
   const getCheckInButtonStyle = (isAvailable: boolean) => css`
     ${CheckInButtonStyle}
     opacity: ${isAvailable ? 1 : 0.5};
     pointer-events: ${isAvailable ? "auto" : "none"};
-  `; */
+  `;
 
   return (
     <RoomPageContainer>
@@ -52,7 +51,7 @@ export const RoomPage = () => {
                 loading={loading}
               />
 
-              <EquipmentTitle>{ROOM_PAGE_MESSAGES.EQUIPMENT_TITLE}</EquipmentTitle>
+              <TitleStyle>{ROOM_PAGE_MESSAGES.EQUIPMENT_TITLE}</TitleStyle>
 
               <EquipmentContainer>
                 {(roomData?.resources ?? []).map((item) => (
@@ -61,17 +60,17 @@ export const RoomPage = () => {
               </EquipmentContainer>
             </CardContainer>
 
-{/*             <CardContainer>
-              <CheckInTitle>{ROOM_PAGE_MESSAGES.QR_TITLE}</CheckInTitle>
+            <CardContainer>
+              <TitleStyle>{ROOM_PAGE_MESSAGES.QR_TITLE}</TitleStyle>
               <Button
                 text={ROOM_PAGE_MESSAGES.CHECK_IN_BUTTON}
-                onClick={() => handleCheckIn(roomData.)}
+                onClick={() => handleCheckIn(roomData)}
                 customStyle={getCheckInButtonStyle(isCheckInAvailable(roomData))}
               />
-            </CardContainer> */}
+            </CardContainer>
 
             <CardContainer customStyle={ReservationsCardStyle}>
-              <h1>{ROOM_PAGE_MESSAGES.RESERVATIONS_TITLE}</h1>
+              <TitleStyle>{ROOM_PAGE_MESSAGES.RESERVATIONS_TITLE}</TitleStyle>
               <ReservasLista>
                 {(roomData?.events ?? []).map((event) => (
                   <ReservationItemComponent
@@ -88,7 +87,7 @@ export const RoomPage = () => {
 
           <ColumnaLateral>
             <CardContainer customStyle={CurrentStatusCardStyle}>
-              <h3>{ROOM_PAGE_MESSAGES.CURRENT_STATUS_TITLE}</h3>
+              <TitleStyle>{ROOM_PAGE_MESSAGES.CURRENT_STATUS_TITLE}</TitleStyle>
               <FilaEstado>
                 <span>{ROOM_PAGE_MESSAGES.STATUS_LABEL}</span>
                 {renderStatusTag(loading, roomData?.is_busy)}
@@ -109,7 +108,7 @@ export const RoomPage = () => {
             </CardContainer>
 
             <CardContainer customStyle={QRCardStyle}>
-              <h3>{ROOM_PAGE_MESSAGES.QR_SECTION_TITLE}</h3>
+              <TitleStyle>{ROOM_PAGE_MESSAGES.QR_SECTION_TITLE}</TitleStyle>
               <p>{ROOM_PAGE_MESSAGES.QR_SECTION_DESCRIPTION}</p>
               <QRCodeSection
                 //TODO: A desarrollar

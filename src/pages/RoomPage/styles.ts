@@ -140,21 +140,18 @@ export const QRCardStyle = css`
   p { margin: 0 0 16px; color: #64748b; font-size: 14px; }
 `;
 
-export const EquipmentTitle = styled.h2`
+export const TitleStyle = styled.h2`
   color: rgba(0, 0, 0, 1);
   margin-bottom: 8px;
+  margin-top: -8px; 
+  font-size: 20px; 
+  font-weight: 700;
 `;
 
 export const EquipmentContainer = styled.div`
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
-`;
-
-export const CheckInTitle = styled.h1`
-  color: rgba(0, 0, 0, 1);
-  margin-bottom: 8px;
-  font-size: 24px;
 `;
 
 export const CheckInButtonStyle = css`

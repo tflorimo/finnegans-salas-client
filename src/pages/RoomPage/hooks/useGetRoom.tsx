@@ -3,13 +3,13 @@ import type { RoomResponseDTO } from "../../../shared/types/room.types";
 
 interface UseGetRoomReturn {
   loading: boolean;
-  roomData: RoomResponseDTO | null;
+  roomData: RoomResponseDTO | undefined;
   error: string | null;
 }
 
 export const useGetRoom = (): UseGetRoomReturn => {
   const location = useLocation();
-  const roomData = (location.state as { room?: RoomResponseDTO })?.room ?? null;
+  const roomData = (location.state as { room?: RoomResponseDTO })?.room ?? undefined;
   const loading = false;
   const error = roomData ? null : "No se encontró información de la sala";
 

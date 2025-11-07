@@ -20,13 +20,13 @@ import { useRoomFormattedTimes } from "../hooks/useRoomFormattedTimes";
 
 export const RoomItem = ({ room }: RoomItemProps) => {
   const navigate = useNavigate();
-  const roomWithFormattedTimes = useRoomFormattedTimes(room);
+  const roomTimes = useRoomFormattedTimes(room);
 
   const handleClick = () => {
-    navigate(`/room/${room.email}`, { state: { room: roomWithFormattedTimes } });
+    navigate(`/room/${room.email}`, { state: { room: roomTimes } });
   };
 
-  if (!roomWithFormattedTimes) return null;
+  if (!roomTimes) return null;
 
   return (
     <CardContainer
@@ -34,16 +34,16 @@ export const RoomItem = ({ room }: RoomItemProps) => {
       customStyle={RoomListContainerStyles}
     >
       <RoomStatusSectionStyles>
-        <h2>{roomWithFormattedTimes.name}</h2>
+        <h2>{roomTimes.name}</h2>
         <Tag
-          text={getRoomStatusText(roomWithFormattedTimes.is_busy)}
-          type={getRoomStatusConfig(roomWithFormattedTimes.is_busy)}
+          text={getRoomStatusText(roomTimes.is_busy)}
+          type={getRoomStatusConfig(roomTimes.is_busy)}
         />
       </RoomStatusSectionStyles>
 
       <RoomInfoSectionStyles>
         <UsersIcon size={16} color={ROOM_PAGE_COLORS.roomText} />
-        <p>{`Capacidad: ${roomWithFormattedTimes.capacity} personas`}</p>
+        <p>{`Capacidad: ${roomTimes.capacity} personas`}</p>
       </RoomInfoSectionStyles>
 
       <RoomInfoSectionStyles>
@@ -52,7 +52,7 @@ export const RoomItem = ({ room }: RoomItemProps) => {
       </RoomInfoSectionStyles>
 
       <RoomEventsSectionStyles>
-        {roomWithFormattedTimes.events.slice(0, 3).map((event) => (
+        {roomTimes.events.slice(0, 3).map((event) => (
           <RoomEventItem key={event.id} event={event} />
         ))}
       </RoomEventsSectionStyles>
