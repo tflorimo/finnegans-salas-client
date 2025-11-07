@@ -22,6 +22,6 @@ export const isTokenExpiringSoon = (jwt: string, skewSeconds = 10): boolean => {
     const now = Math.floor(Date.now() / 1000);
     return !exp || exp - now <= skewSeconds;
   } catch {
-    return true; 
+    throw new Error("Invalid JWT token");
   }
 };

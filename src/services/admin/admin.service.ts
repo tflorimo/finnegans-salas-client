@@ -8,15 +8,17 @@ import { getErrorMessage } from "../../api/axios/axios.utils";
 import axiosInstance from "../../api/axios/axios.instance";
 import type { EventResponseDTO } from "./events/types";
 import axios from "axios";
-
+import { clearAuthToken } from "../../shared/utils/localStorage.utils";
+// TODO: Conectar con backend
 export const adminService = {
+
   async getAllEventsAdmin(): Promise<EventResponseDTO[]> {
     try {
       const { data } = await axiosInstance.get<EventResponseDTO[]>(ADMIN_ENDPOINTS.getAllEventsAdmin());
       return data;
     } catch (error) {
       if (axios.isAxiosError(error) && error.response?.status === 401) {
-        localStorage.removeItem("token");
+        clearAuthToken();
         return []; // Retorna array vacío para evitar errores en la UI
       }
 

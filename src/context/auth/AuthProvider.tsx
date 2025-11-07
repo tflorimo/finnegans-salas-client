@@ -7,7 +7,9 @@ import {
   getStoredUserEmail,
   setAuthToken,
   setStoredUserEmail,
-} from "./utils";
+} from "../../shared/utils/localStorage.utils";
+import { authService } from "../../services/auth/auth.service";
+import { useCallback } from "react";
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [authToken, setAuthTokenState] = useState<string | null>(getAuthToken());
@@ -17,18 +19,25 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const login = (token: string, email: string) => {
     setAuthToken(token);
     setStoredUserEmail(email);
+    console.log("AuthProvider - login - token:", token);
     setAuthTokenState(token);
     setLogged(true);
     setUserEmail(email);
   };
 
-  const logout = () => {
-    clearAuthToken();
-    clearStoredUserEmail();
-    setAuthTokenState(null);
-    setLogged(false);
-    setUserEmail(null);
-  };
+  const logout = useCallback(async () => {
+    try {
+      await authService.logoutApp();
+    } catch (error) {
+      console.error("Error en logout:", error);
+    } finally {
+      clearAuthToken();
+      clearStoredUserEmail();
+      setAuthTokenState(null);
+      setLogged(false);
+      setUserEmail(null);
+    }
+  }, []);
 
   return (
     <AuthContext.Provider value={{ logged, userEmail, authToken, login, logout }}>

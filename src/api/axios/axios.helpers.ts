@@ -15,9 +15,7 @@ const ensureAxiosHeaders = (headers: HeaderInput): AxiosHeaders =>
   headers instanceof AxiosHeaders ? headers : AxiosHeaders.from(headers ?? {});
 
 export const shouldSkipAuthRefresh = (headers: HeaderInput): boolean => {
-  if (!headers) return false;
-  if (headers instanceof AxiosHeaders) return headers.get(SKIP_REFRESH_HEADER) === "true";
-  return headers[SKIP_REFRESH_HEADER] === "true";
+  return (headers instanceof AxiosHeaders) ? Boolean(headers.get(SKIP_REFRESH_HEADER)) : false;
 };
 
 export const applyAuthorizationHeader = (
@@ -32,6 +30,6 @@ export const applyAuthorizationHeader = (
 export { isTokenExpiringSoon };
 
 export const isRefreshCall = (config: InternalAxiosRequestConfig): boolean => {
-  const url = (config.url ?? "").toLowerCase();
+  const url = config.url ? config.url.toLowerCase() : "";
   return url.includes("/auth/refresh") || shouldSkipAuthRefresh(config.headers);
 };

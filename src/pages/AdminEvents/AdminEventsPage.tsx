@@ -19,6 +19,7 @@ import {
 } from "./styles";
 import { EventDetailsModal } from "./components/EventDetailsModal";
 
+// TODO: Implementar búsqueda y filtrado de eventos
 export const AdminEventsPage = () => {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(false);
   //const [eventSearched, setEventSearched] = useState<string>("");
