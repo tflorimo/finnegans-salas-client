@@ -16,4 +16,6 @@ export interface EventResponseDTO {
     checkedIn: boolean;
     attendees: AttendeeDTO[];
     roomName: string;
+    date: Date;
+    creatorName: string;
 }

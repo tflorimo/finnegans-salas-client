@@ -9,7 +9,7 @@ import { RoomHeader } from "./components/RoomHeader";
 import { ROOM_PAGE_MESSAGES } from "./constants/RoomPage.constants";
 import { useCheckIn } from "./hooks/useCheckIn";
 import { useGetRoom } from "./hooks/useGetRoom";
-import { renderStatusTag } from "./utils/roomUtils";
+import { renderStatusTag } from "./utils/RoomPageUtils";
 import {
   CheckInButtonStyle,
   CheckInTitle,
@@ -30,13 +30,13 @@ import {
 
 export const RoomPage = () => {
   const { loading, roomData } = useGetRoom();
-  const { handleCheckIn, isCheckInAvailable } = useCheckIn();
+/*   const { handleCheckIn, isCheckInAvailable } = useCheckIn();
 
   const getCheckInButtonStyle = (isAvailable: boolean) => css`
     ${CheckInButtonStyle}
     opacity: ${isAvailable ? 1 : 0.5};
     pointer-events: ${isAvailable ? "auto" : "none"};
-  `;
+  `; */
 
   return (
     <RoomPageContainer>
@@ -48,7 +48,7 @@ export const RoomPage = () => {
               <RoomHeader
                 name={roomData?.name}
                 capacity={roomData?.capacity}
-                status={roomData?.is_busy}
+                isBusy={roomData?.is_busy}
                 loading={loading}
               />
 
@@ -61,14 +61,14 @@ export const RoomPage = () => {
               </EquipmentContainer>
             </CardContainer>
 
-            <CardContainer>
+{/*             <CardContainer>
               <CheckInTitle>{ROOM_PAGE_MESSAGES.QR_TITLE}</CheckInTitle>
               <Button
                 text={ROOM_PAGE_MESSAGES.CHECK_IN_BUTTON}
-                onClick={() => handleCheckIn(roomData)}
+                onClick={() => handleCheckIn(roomData.)}
                 customStyle={getCheckInButtonStyle(isCheckInAvailable(roomData))}
               />
-            </CardContainer>
+            </CardContainer> */}
 
             <CardContainer customStyle={ReservationsCardStyle}>
               <h1>{ROOM_PAGE_MESSAGES.RESERVATIONS_TITLE}</h1>
@@ -76,9 +76,10 @@ export const RoomPage = () => {
                 {(roomData?.events ?? []).map((event) => (
                   <ReservationItemComponent
                     key={event.id}
-                    organizer={event.creatorMail}
+                    organizer={event.creatorName}
                     start={event.startTime}
                     end={event.endTime}
+                    date={event.date}
                   />
                 ))}
               </ReservasLista>
@@ -102,13 +103,7 @@ export const RoomPage = () => {
               <FilaEstado>
                 <span>{ROOM_PAGE_MESSAGES.TODAY_RESERVATIONS_LABEL}</span>
                 <strong>
-                  {
-                    (roomData?.events ?? []).filter((ev) => {
-                      const s = new Date(ev.startTime);
-                      const n = new Date();
-                      return s.toDateString() === n.toDateString();
-                    }).length
-                  }
+                  {roomData?.events.length ?? 0}
                 </strong>
               </FilaEstado>
             </CardContainer>
@@ -117,7 +112,8 @@ export const RoomPage = () => {
               <h3>{ROOM_PAGE_MESSAGES.QR_SECTION_TITLE}</h3>
               <p>{ROOM_PAGE_MESSAGES.QR_SECTION_DESCRIPTION}</p>
               <QRCodeSection
-                //qrImageUrl={roomData?.qrImageUrl} TODO: A desarrollar
+                //TODO: A desarrollar
+                qrImageUrl="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=sala-ejecutiva-02"
                 roomName={roomData?.name}
               />
             </CardContainer>

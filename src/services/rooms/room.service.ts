@@ -22,6 +22,7 @@ export const roomService = {
   getRooms: async (): Promise<RoomResponseDTO[]> => {
     try {
       const { data } = await axiosInstance.get<RoomResponseDTO[]>(ROOM_ENDPOINTS.getRooms());
+      console.log("Roomsssssssssss data:", data);
       return data;
     } catch (error) {
       const message = getErrorMessage(error, ROOM_ERROR_MESSAGES.roomsError);

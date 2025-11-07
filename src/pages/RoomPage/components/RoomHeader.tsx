@@ -11,11 +11,11 @@ import {
 interface RoomHeaderProps {
   name?: string;
   capacity?: number;
-  status?: boolean | undefined;
+  isBusy?: boolean | undefined;
   loading: boolean;
 }
 
-export const RoomHeader = ({ name, capacity, status, loading }: RoomHeaderProps) => {
+export const RoomHeader = ({ name, capacity, isBusy, loading }: RoomHeaderProps) => {
   return (
     <RoomHeaderContainer>
       <RoomHeaderInfo>
@@ -30,7 +30,7 @@ export const RoomHeader = ({ name, capacity, status, loading }: RoomHeaderProps)
           </span>
         </RoomCapacityInfo>
       </RoomHeaderInfo>
-      <RoomStatusTag isBusy={status} loading={loading} />
+      <RoomStatusTag isBusy={isBusy} loading={loading} />
     </RoomHeaderContainer>
   );
 };

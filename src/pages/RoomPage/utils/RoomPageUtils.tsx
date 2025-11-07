@@ -11,16 +11,14 @@ export function initials(name: string): string {
     .toUpperCase();
 }
 
-export function timeRange(start: Date, end: Date): string {
-  const f = new Intl.DateTimeFormat(undefined, {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-  return `${f.format(start)} - ${f.format(end)}`;
-}
-
 export const renderStatusTag = (loading: boolean, is_bussy?: boolean) => {
   if (loading) return <Tag text="…" type={Tags.info} />;
-  if (is_bussy) return <Tag text="Libre" type={Tags.success} />;
+  if (!is_bussy) return <Tag text="Libre" type={Tags.success} />;
   else return <Tag text="Ocupada" type={Tags.info} />;
 };
+
+export function getDayName(dateInput: string | Date): string {
+  const date = new Date(dateInput);
+  const days = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+  return days[date.getDay()];
+}
