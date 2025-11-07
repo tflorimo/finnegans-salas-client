@@ -36,7 +36,7 @@ export const LoginPage = () => {
 
   const handleGoogleLogin = () => {
     setErrorMessage(null);
-    window.location.href = "http://localhost:3000/api/auth/google";
+    window.location.href = import.meta.env.VITE_GOOGLE_AUTH_URL;
   };
 
   return (

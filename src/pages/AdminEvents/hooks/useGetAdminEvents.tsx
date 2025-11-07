@@ -43,7 +43,7 @@ export const useGetAdminEvents = () => {
     };
 
     useEffect(() => {
-        void getAllEvents();
+        getAllEvents();
     }, []);
 
     return {
