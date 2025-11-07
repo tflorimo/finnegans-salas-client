@@ -1,19 +1,19 @@
 import { useContext } from "react";
 import { AuthContext } from "../../../context/auth/authContext";
 import { roomService } from "../../../services/rooms/room.service";
-import type { RoomDetailsDTO } from "../../../shared/types/types";
+import type { RoomResponseDTO } from "../../../shared/types/room.types";
 
 export const useCheckIn = () => {
   const { userEmail } = useContext(AuthContext);
 
-  const handleCheckIn = (roomDetails: RoomDetailsDTO | undefined) => {
-    if (!roomDetails?.currentEvent || !userEmail) return;
+  const handleCheckIn = (room: RoomResponseDTO | undefined) => {
+    if (!room?.current_event || !userEmail) return;
 
-    roomService.checkInCurrentEvent(roomDetails.id, userEmail);
+    roomService.checkInCurrentEvent(room.email, userEmail);
   };
 
-  const isCheckInAvailable = (roomDetails: RoomDetailsDTO | undefined): boolean => {
-    return !!(roomDetails?.currentEvent && userEmail);
+  const isCheckInAvailable = (room: RoomResponseDTO | undefined): boolean => {
+    return !!(room?.current_event && userEmail);
   };
 
   return { handleCheckIn, isCheckInAvailable };

@@ -4,8 +4,8 @@ import { initials, timeRange } from "../utils/roomUtils";
 
 interface ReservationItemComponentProps {
   organizer: string;
-  start: string;
-  end: string;
+  start: Date;
+  end: Date;
 }
 
 export const ReservationItemComponent = ({
@@ -15,7 +15,7 @@ export const ReservationItemComponent = ({
 }: ReservationItemComponentProps) => {
   const weekday = new Intl.DateTimeFormat(undefined, {
     weekday: "long",
-  }).format(new Date(start));
+  }).format(start);
 
   return (
     <ReservationItem>

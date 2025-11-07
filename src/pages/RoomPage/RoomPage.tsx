@@ -32,9 +32,6 @@ export const RoomPage = () => {
   const { loading, roomData } = useGetRoom();
   const { handleCheckIn, isCheckInAvailable } = useCheckIn();
 
-  const roomDetails = roomData?.roomDetails;
-  const roomEvents = roomData?.roomEvents;
-
   const getCheckInButtonStyle = (isAvailable: boolean) => css`
     ${CheckInButtonStyle}
     opacity: ${isAvailable ? 1 : 0.5};
@@ -49,16 +46,16 @@ export const RoomPage = () => {
           <ColumnaPrincipal>
             <CardContainer customStyle={RoomInfoCardStyle}>
               <RoomHeader
-                name={roomDetails?.name}
-                capacity={roomDetails?.capacity}
-                status={roomDetails?.status}
+                name={roomData?.name}
+                capacity={roomData?.capacity}
+                status={roomData?.is_busy}
                 loading={loading}
               />
 
               <EquipmentTitle>{ROOM_PAGE_MESSAGES.EQUIPMENT_TITLE}</EquipmentTitle>
 
               <EquipmentContainer>
-                {(roomDetails?.equipment ?? []).map((item) => (
+                {(roomData?.resources ?? []).map((item) => (
                   <EquipmentItem key={item} item={item} />
                 ))}
               </EquipmentContainer>
@@ -68,20 +65,20 @@ export const RoomPage = () => {
               <CheckInTitle>{ROOM_PAGE_MESSAGES.QR_TITLE}</CheckInTitle>
               <Button
                 text={ROOM_PAGE_MESSAGES.CHECK_IN_BUTTON}
-                onClick={() => handleCheckIn(roomDetails)}
-                customStyle={getCheckInButtonStyle(isCheckInAvailable(roomDetails))}
+                onClick={() => handleCheckIn(roomData)}
+                customStyle={getCheckInButtonStyle(isCheckInAvailable(roomData))}
               />
             </CardContainer>
 
             <CardContainer customStyle={ReservationsCardStyle}>
               <h1>{ROOM_PAGE_MESSAGES.RESERVATIONS_TITLE}</h1>
               <ReservasLista>
-                {(roomEvents ?? []).map((event) => (
+                {(roomData?.events ?? []).map((event) => (
                   <ReservationItemComponent
                     key={event.id}
-                    organizer={event.organizer}
-                    start={event.start}
-                    end={event.end}
+                    organizer={event.creatorMail}
+                    start={event.startTime}
+                    end={event.endTime}
                   />
                 ))}
               </ReservasLista>
@@ -93,12 +90,12 @@ export const RoomPage = () => {
               <h3>{ROOM_PAGE_MESSAGES.CURRENT_STATUS_TITLE}</h3>
               <FilaEstado>
                 <span>{ROOM_PAGE_MESSAGES.STATUS_LABEL}</span>
-                {renderStatusTag(loading, roomDetails?.status)}
+                {renderStatusTag(loading, roomData?.is_busy)}
               </FilaEstado>
               <FilaEstado>
                 <span>{ROOM_PAGE_MESSAGES.CAPACITY_LABEL}</span>
                 <strong>
-                  {loading ? ROOM_PAGE_MESSAGES.LOADING : roomDetails?.capacity ?? "-"}{" "}
+                  {loading ? ROOM_PAGE_MESSAGES.LOADING : roomData?.capacity ?? "-"}{" "}
                   {ROOM_PAGE_MESSAGES.CAPACITY_UNIT}
                 </strong>
               </FilaEstado>
@@ -106,8 +103,8 @@ export const RoomPage = () => {
                 <span>{ROOM_PAGE_MESSAGES.TODAY_RESERVATIONS_LABEL}</span>
                 <strong>
                   {
-                    (roomEvents ?? []).filter((ev) => {
-                      const s = new Date(ev.start);
+                    (roomData?.events ?? []).filter((ev) => {
+                      const s = new Date(ev.startTime);
                       const n = new Date();
                       return s.toDateString() === n.toDateString();
                     }).length
@@ -120,8 +117,8 @@ export const RoomPage = () => {
               <h3>{ROOM_PAGE_MESSAGES.QR_SECTION_TITLE}</h3>
               <p>{ROOM_PAGE_MESSAGES.QR_SECTION_DESCRIPTION}</p>
               <QRCodeSection
-                qrImageUrl={roomDetails?.qrImageUrl}
-                roomName={roomDetails?.name}
+                //qrImageUrl={roomData?.qrImageUrl} TODO: A desarrollar
+                roomName={roomData?.name}
               />
             </CardContainer>
           </ColumnaLateral>

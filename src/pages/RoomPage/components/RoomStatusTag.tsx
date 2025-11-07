@@ -1,21 +1,20 @@
 import { Tag } from "../../../components/Tag/Tag";
-import { ROOM_STATUS_LABELS, ROOM_STATUS_TAG_TYPES } from "../constants/RoomPage.constants";
-import type { roomStatusType } from "../../../shared/types/types";
+import { getRoomStatusConfig, getRoomStatusText } from "../../HomePage/constants/HomePage.constants";
 
 interface RoomStatusTagProps {
-  status: roomStatusType | undefined;
+  isBusy: boolean | undefined;
   loading: boolean;
 }
 
-export const RoomStatusTag = ({ status, loading }: RoomStatusTagProps) => {
+export const RoomStatusTag = ({ isBusy, loading }: RoomStatusTagProps) => {
   if (loading) {
-    return <Tag text="…" type={ROOM_STATUS_TAG_TYPES.occupied} />;
+    return <Tag text="…" type={getRoomStatusConfig(true)} />;
   }
 
-  if (!status) return null;
+  if (isBusy === undefined) return null;
 
-  const label = ROOM_STATUS_LABELS[status];
-  const tagType = ROOM_STATUS_TAG_TYPES[status];
+  const label = getRoomStatusText(isBusy);
+  const tagType = getRoomStatusConfig(isBusy);
 
   return <Tag text={label} type={tagType} />;
 };

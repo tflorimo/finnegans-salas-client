@@ -11,19 +11,16 @@ export function initials(name: string): string {
     .toUpperCase();
 }
 
-export function timeRange(start: string, end: string): string {
+export function timeRange(start: Date, end: Date): string {
   const f = new Intl.DateTimeFormat(undefined, {
     hour: "2-digit",
     minute: "2-digit",
   });
-  return `${f.format(new Date(start))} - ${f.format(new Date(end))}`;
+  return `${f.format(start)} - ${f.format(end)}`;
 }
 
-export const renderStatusTag = (loading: boolean, status?: string) => {
+export const renderStatusTag = (loading: boolean, is_bussy?: boolean) => {
   if (loading) return <Tag text="…" type={Tags.info} />;
-  if (status === "available") return <Tag text="Libre" type={Tags.success} />;
-  if (status === "occupied") return <Tag text="Ocupada" type={Tags.info} />;
-  if (status === "maintenance")
-    return <Tag text="Mantenimiento" type={Tags.danger} />;
-  return null;
+  if (is_bussy) return <Tag text="Libre" type={Tags.success} />;
+  else return <Tag text="Ocupada" type={Tags.info} />;
 };
