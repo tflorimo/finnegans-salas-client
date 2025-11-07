@@ -41,6 +41,14 @@ export const RoomPage = () => {
     pointer-events: ${isAvailable ? "auto" : "none"};
   `;
 
+  // aca arme la la URL del front
+  const roomId = roomDetails?.id;
+  const frontendBaseUrl = window.location.origin; // ej: http://localhost:5173
+  const qrUrl = roomId
+  ? `${frontendBaseUrl}/room/${roomId}`
+  : `${frontendBaseUrl}/room/not-found`; // fallback
+
+
   return (
     <RoomPageContainer>
       <BackButton />
@@ -119,10 +127,12 @@ export const RoomPage = () => {
             <CardContainer customStyle={QRCardStyle}>
               <h3>{ROOM_PAGE_MESSAGES.QR_SECTION_TITLE}</h3>
               <p>{ROOM_PAGE_MESSAGES.QR_SECTION_DESCRIPTION}</p>
-              <QRCodeSection
-                qrImageUrl={roomDetails?.qrImageUrl}
-                roomName={roomDetails?.name}
-              />
+              {roomId && (
+                <QRCodeSection
+                  value={qrUrl}
+                  roomName={roomDetails?.name}
+                />
+              )}
             </CardContainer>
           </ColumnaLateral>
         </ContentGrid>
