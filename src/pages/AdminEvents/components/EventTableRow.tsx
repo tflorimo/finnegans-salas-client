@@ -1,10 +1,9 @@
 import { Eye } from "lucide-react";
 import { Tag } from "../../../components/Tag/Tag";
 import { Tags } from "../../../components/Tag/types";
-import type { EventResponseDTO } from "../../../services/admin/events/types";
+import type { EventResponseDTO } from "../../../shared/types/event.types";
 import { formatDate, formatTimeRange } from "../utils/dateUtils";
 import { attendeesTagStyle, IconBtn } from "../styles";
-
 interface EventTableRowProps {
   event: EventResponseDTO;
   onView: () => void;

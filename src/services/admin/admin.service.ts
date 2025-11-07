@@ -1,15 +1,12 @@
-import { /*ADMIN_ENDPOINTS,*/ ADMIN_ENDPOINTS, ADMIN_ERROR_MESSAGES } from "../../constants/admin.constants";
-//import axiosInstance from "../axiosInstance";
-//import type { /*EventsData,*/ EventsData, RoomData } from "../../shared/types/types";
+import { ADMIN_ENDPOINTS, ADMIN_ERROR_MESSAGES } from "../../constants/admin.constants";
 import type { LogsResponse } from "./logs/types";
-import { mockLogsData } from "./logs/logsMocks"; // Eliminar cuando se integre con Backend
+import { mockLogsData } from "./logs/logsMocks"; 
 import { getErrorMessage } from "../../api/axios/axios.utils";
-//import { mockRoomsData } from "../rooms/roomMocks";
 import axiosInstance from "../../api/axios/axios.instance";
-import type { EventResponseDTO } from "./events/types";
+import type { EventResponseDTO } from "../../shared/types/event.types";
 import axios from "axios";
 import { clearAuthToken } from "../../shared/utils/localStorage.utils";
-// TODO: Conectar con backend
+
 export const adminService = {
 
   async getAllEventsAdmin(): Promise<EventResponseDTO[]> {
@@ -26,9 +23,10 @@ export const adminService = {
     }
   },
 
+  // TODO: Conectar Auditorías con backend
   async getLogs(): Promise<LogsResponse> {
     try {
-      // MOCKS (Comentar cuando se integre con Backend)
+      // MOCKS (Eliminar cuando se integre con Backend)
       await new Promise(resolve => setTimeout(resolve, 800));
       return mockLogsData;
 

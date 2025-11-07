@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { adminService } from "../../../services/admin/admin.service";
-import type { EventResponseDTO, FlatEvent } from "../../../services/admin/events/types";
+import type { FlatEvent } from "../../../services/admin/events/types";
+import type { EventResponseDTO } from "../../../shared/types/event.types";
 import { mapToFlatEvent } from "../utils/eventsMapper";
 
 export const useGetAdminEvents = () => {

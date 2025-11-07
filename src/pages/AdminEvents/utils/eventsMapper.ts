@@ -1,4 +1,5 @@
-import type { EventResponseDTO, FlatEvent } from "../../../services/admin/events/types";
+import type { EventResponseDTO } from "../../../shared/types/event.types";
+import type { FlatEvent } from "../../../services/admin/events/types";
 
 export const mapToFlatEvent = (event: EventResponseDTO): FlatEvent => {
   const date = new Date(event.startTime).toISOString().split("T")[0];

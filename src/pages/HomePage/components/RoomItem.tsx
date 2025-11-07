@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { CardContainer } from "../../../components/CardContainer/CardContainer";
 import { Tag } from "../../../components/Tag/Tag";
 import {
-  ROOM_STATUS_CONFIG,
-  ROOM_TEXT_CONFIG,
+  getRoomStatusConfig,
+  getRoomStatusText,
 } from "../constants/HomePage.constants";
 import {
   ROOM_PAGE_COLORS,
@@ -21,20 +21,20 @@ export const RoomItem = ({ room }: RoomItemProps) => {
 
   return (
     <CardContainer
-      onClick={() => navigate(`/room/${room.roomDetails.id}`)}
+      onClick={() => navigate(`/room/${room.email}`)}
       customStyle={RoomListContainerStyles}
     >
       <RoomStatusSectionStyles>
-        <h2>{room.roomDetails.name}</h2>
+        <h2>{room.name}</h2>
         <Tag
-          text={ROOM_TEXT_CONFIG[room.roomDetails.status]}
-          type={ROOM_STATUS_CONFIG[room.roomDetails.status]}
+          text={getRoomStatusText(room.is_busy)}
+          type={getRoomStatusConfig(room.is_busy)}
         />
       </RoomStatusSectionStyles>
 
       <RoomInfoSectionStyles>
         <UsersIcon size={16} color={ROOM_PAGE_COLORS.roomText} />
-        <p>{`Capacidad: ${room.roomDetails.capacity} personas`}</p>
+        <p>{`Capacidad: ${room.capacity} personas`}</p>
       </RoomInfoSectionStyles>
 
       <RoomInfoSectionStyles>
@@ -43,7 +43,7 @@ export const RoomItem = ({ room }: RoomItemProps) => {
       </RoomInfoSectionStyles>
 
       <RoomEventsSectionStyles>
-        {room.roomEvents.map((event) => (
+        {room.events.map((event) => (
           <RoomEventItem key={event.id} event={event} />
         ))}
       </RoomEventsSectionStyles>
