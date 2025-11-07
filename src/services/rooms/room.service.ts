@@ -9,9 +9,9 @@ import axiosInstance from "../../api/axios/axios.instance";
 export const roomService = {
   getRoom: async (roomEmail: string): Promise<RoomResponseDTO> => {
     try {
-      const { data } = await axiosInstance.get<RoomResponseDTO>(
-        ROOM_ENDPOINTS.getRoomById(roomEmail)
+      const { data } = await axiosInstance.get<RoomResponseDTO>(ROOM_ENDPOINTS.getRoomById(roomEmail)
       );
+      console.log("Room data:", data);
       return data;
     } catch (error) {
       const message = getErrorMessage(error, ROOM_ERROR_MESSAGES.roomError);

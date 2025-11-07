@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { CardContainer } from "../../../components/CardContainer/CardContainer";
 import { Tag } from "../../../components/Tag/Tag";
 import {
+  EVENTOS_SEMANA,
   getRoomStatusConfig,
   getRoomStatusText,
 } from "../constants/HomePage.constants";
@@ -39,11 +40,11 @@ export const RoomItem = ({ room }: RoomItemProps) => {
 
       <RoomInfoSectionStyles>
         <Calendar size={16} color={ROOM_PAGE_COLORS.roomText} />
-        <p>Eventos esta semana</p>
+        <p>{EVENTOS_SEMANA}</p>
       </RoomInfoSectionStyles>
 
       <RoomEventsSectionStyles>
-        {room.events.map((event) => (
+        {room.events.slice(0, 3).map((event) => (
           <RoomEventItem key={event.id} event={event} />
         ))}
       </RoomEventsSectionStyles>

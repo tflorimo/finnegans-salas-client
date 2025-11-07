@@ -19,6 +19,8 @@ export const ROOM_SELECT_OPTIONS = [
   },
 ];
 
+export const EVENTOS_SEMANA = "Eventos esta semana";
+
 export const getRoomStatusConfig = (isBusy: boolean) => 
   isBusy ? Tags.dangerOutput : Tags.succesOutput;
 
