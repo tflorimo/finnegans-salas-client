@@ -1,11 +1,12 @@
-import type { RoomData, RoomEventResponseDTO } from "../../../shared/types/types";
+import type { EventResponseDTO } from "../../../shared/types/event.types";
+import type { RoomResponseDTO } from "../../../shared/types/room.types";
 
 export type RoomItemProps = {
-  room: RoomData;
+  room: RoomResponseDTO;
 };
 
 export type RoomEventItemProps = {
-  event: RoomEventResponseDTO;
+  event: EventResponseDTO;
 };
 
 export type RoomSelectOptionsType = {
