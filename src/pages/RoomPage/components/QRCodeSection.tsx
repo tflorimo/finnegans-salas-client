@@ -1,25 +1,16 @@
-import { QrCode } from "lucide-react";
+import QRCode from "react-qr-code";
 import { QRBox } from "../styles";
 
 interface QRCodeSectionProps {
-  qrImageUrl?: string;
+  value: string;      // aca recibimos el valor del QR
   roomName?: string;
 }
 
-export const QRCodeSection = ({ qrImageUrl, roomName }: QRCodeSectionProps) => {
+export const QRCodeSection = ({ value, roomName }: QRCodeSectionProps) => {
   return (
     <QRBox>
-      {qrImageUrl ? (
-        <img
-          src={qrImageUrl}
-          alt={`QR ${roomName}`}
-          width={120}
-          height={120}
-          style={{ borderRadius: 8 }}
-        />
-      ) : (
-        <QrCode size={56} />
-      )}
+      <QRCode value={value} size={140} />
+      {roomName && <p style={{ marginTop: 8 }}>{roomName}</p>}
     </QRBox>
   );
 };
