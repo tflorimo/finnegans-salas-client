@@ -1,5 +1,5 @@
 import axios, { AxiosError, type InternalAxiosRequestConfig } from "axios";
-import { getAuthToken } from "../../context/auth/utils";
+import { getAuthToken } from "../../shared/utils/localStorage.utils";
 import { authService } from "../../services/auth/auth.service";
 import {
   applyAuthorizationHeader,
