@@ -14,6 +14,7 @@ import {
   Field,
   AttendeeList,
 } from "../styles";
+import { EVENT_MODAL } from "../constants/AdminEvents.constants";
 
 interface EventDetailsModalProps {
   event: EventResponseDTO;
@@ -37,13 +38,19 @@ const statusTag = (status: ResponseStatus): Tags => {
 export const EventDetailsModal = ({ event, onClose }: EventDetailsModalProps) => {
   const handleOverlayClick: React.MouseEventHandler<HTMLDivElement> = () => onClose();
   const stop: React.MouseEventHandler<HTMLDivElement> = (e) => e.stopPropagation();
+  //TODO: Modularizar truncamiento de texto
+  const maxTitleLength = 10;
+  const truncatedTitle =
+    event.title.length > maxTitleLength
+      ? `${event.title.slice(0, maxTitleLength)}...`
+      : event.title;
 
   return (
     <Overlay onClick={handleOverlayClick} aria-modal="true" role="dialog">
       <ModalBody onClick={stop}>
         <CardContainer customStyle={ModalCardStyle}>
           <ModalHeader>
-            <h3>{event.title}</h3>
+            <h3>{truncatedTitle}</h3>
             <CloseBtn aria-label="Cerrar" onClick={onClose}>
               <X size={18} />
             </CloseBtn>
@@ -51,44 +58,49 @@ export const EventDetailsModal = ({ event, onClose }: EventDetailsModalProps) =>
 
           <FieldsWrapper>
             <Field>
-              <label>Fecha</label>
+              <label>{EVENT_MODAL.DATE}</label>
               <div>{formatDate(event.startTime)}</div>
             </Field>
 
             <Field>
-              <label>Horario</label>
+              <label>{EVENT_MODAL.TIME}</label>
               <div>{formatTimeRange(event.startTime, event.endTime)}</div>
             </Field>
 
             <Field>
-              <label>Sala</label>
+              <label>{EVENT_MODAL.ROOM}</label>
               <div>{event.roomName}</div>
             </Field>
 
             <Field>
-              <label>Mail de la sala</label>
+              <label>{EVENT_MODAL.ID}</label>
               <div>{event.roomEmail}</div>
             </Field>
 
             <Field>
-              <label>Responsable</label>
+              <label>{EVENT_MODAL.CREATOR_MAIL}</label>
               <div>{event.creatorMail}</div>
             </Field>
 
             <Field>
-              <label>Check-in</label>
+              <label>{EVENT_MODAL.CREATOR_NAME}</label>
+              <div>{event.creatorName}</div>
+            </Field>
+
+            <Field>
+              <label>{EVENT_MODAL.CHECK_IN}</label>
               <div>
                 <Tag
-                  text={event.checkedIn ? "Realizado" : "No Realizado"}
+                  text={event.checkedIn ? EVENT_MODAL.CHECK_IN_DONE : EVENT_MODAL.CHECK_IN_PENDING}
                   type={event.checkedIn ? Tags.success : Tags.warning}
                 />
               </div>
             </Field>
 
             <Field>
-              <label>Asistentes</label>
+              <label>{EVENT_MODAL.ATTENDEES}</label>
               {event.attendees.length === 0 ? (
-                <div>Sin asistentes</div>
+                <div>{EVENT_MODAL.WITHOUT_ATTENDEES}</div>
               ) : (
                 <AttendeeList>
                   {event.attendees.map((attendee) => (

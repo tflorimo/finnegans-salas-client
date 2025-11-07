@@ -166,7 +166,7 @@ export const attendeesTagStyle = css`
   font-size: 12px;
 `;
 
-// EventDetailsModal styles (Quizá lo correcto sea modularizar los styles también)
+//TODO: EventDetailsModal styles (Quizá lo correcto sea modularizar los styles también)
 export const Overlay = styled.div`
   position: fixed;
   inset: 0;
