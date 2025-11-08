@@ -1,20 +1,15 @@
 import { Clock } from "lucide-react";
 import { ROOM_PAGE_COLORS, RoomEventItemStyles, RoomEventTimeSectionStyles } from "../styles";
 import type { RoomEventTimeProps } from "../utils/formatTime.utils";
+import { truncateText } from "../../RoomPage/utils/textUtils";
 
 export const RoomEventItem = ({ event }: RoomEventTimeProps) => {
   const startTime = event.startTime; 
   const endTime = event.endTime;     
 
-  const maxTitleLength = 25;
-  const truncatedTitle =
-    event.title.length > maxTitleLength
-      ? `${event.title.slice(0, maxTitleLength)}...`
-      : event.title;
-
   return (
     <RoomEventItemStyles>
-      <p title={event.title}>{truncatedTitle}</p>
+      <p title={event.title}>{truncateText(event.title, 25)}</p>
       <RoomEventTimeSectionStyles>
         <Clock 
           size={14} 

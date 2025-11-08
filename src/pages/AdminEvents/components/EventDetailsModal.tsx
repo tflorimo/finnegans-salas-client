@@ -15,6 +15,7 @@ import {
   AttendeeList,
 } from "../styles";
 import { EVENT_MODAL } from "../constants/AdminEvents.constants";
+import { truncateText } from "../../RoomPage/utils/textUtils";
 
 interface EventDetailsModalProps {
   event: EventResponseDTO;
@@ -38,19 +39,13 @@ const statusTag = (status: ResponseStatus): Tags => {
 export const EventDetailsModal = ({ event, onClose }: EventDetailsModalProps) => {
   const handleOverlayClick: React.MouseEventHandler<HTMLDivElement> = () => onClose();
   const stop: React.MouseEventHandler<HTMLDivElement> = (e) => e.stopPropagation();
-  //TODO: Modularizar truncamiento de texto
-  const maxTitleLength = 10;
-  const truncatedTitle =
-    event.title.length > maxTitleLength
-      ? `${event.title.slice(0, maxTitleLength)}...`
-      : event.title;
 
   return (
     <Overlay onClick={handleOverlayClick} aria-modal="true" role="dialog">
       <ModalBody onClick={stop}>
         <CardContainer customStyle={ModalCardStyle}>
           <ModalHeader>
-            <h3>{truncatedTitle}</h3>
+            <h3>{truncateText(event.title, 10)}</h3>
             <CloseBtn aria-label="Cerrar" onClick={onClose}>
               <X size={18} />
             </CloseBtn>

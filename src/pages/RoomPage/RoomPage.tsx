@@ -79,6 +79,7 @@ export const RoomPage = () => {
                     start={event.startTime}
                     end={event.endTime}
                     date={event.date}
+                    title={event.title}
                   />
                 ))}
               </ReservasLista>
