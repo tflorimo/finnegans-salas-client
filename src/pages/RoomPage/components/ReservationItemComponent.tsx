@@ -24,7 +24,7 @@ export const ReservationItemComponent = ({
         <Avatar>{initials(organizer)}</Avatar>
         <ResInfo>
           <span>
-            {organizer} - {truncateText(title)}
+            {organizer} - {truncateText(title, 30)}
           </span>
           <small>{getDayName(date)}</small>
         </ResInfo>

@@ -22,3 +22,4 @@ export function getDayName(dateInput: string | Date): string {
   const days = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
   return days[date.getDay()];
 }
+

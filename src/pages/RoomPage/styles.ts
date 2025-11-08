@@ -204,3 +204,56 @@ export const EquipmentTagStyle = css`
   padding: 8px 12px;
   gap: 6px;
 `;
+
+export const CheckInSubtitle = styled.p`
+  font-size: 0.875rem;
+  color: #666;
+  margin-bottom: 1rem;
+`;
+
+export const CheckInModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+`;
+
+export const CheckInModalContent = styled.div<{ $isSuccess: boolean }>`
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  border-left: 4px solid ${({ $isSuccess }) => $isSuccess ? '#28a745' : '#dc3545'};
+  text-align: center;
+`;
+
+export const CheckInMessageText = styled.p`
+  margin: 0 0 1.5rem 0;
+  font-size: 1rem;
+  color: #343a40;
+  text-align: center;
+`;
+
+export const CheckInCloseButton = styled.button`
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 0.5rem 1.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 0.9;
+  }
+`;

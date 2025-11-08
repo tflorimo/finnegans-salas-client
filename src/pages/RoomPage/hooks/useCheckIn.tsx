@@ -2,6 +2,8 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../../../context/auth/authContext";
 import { roomService } from "../../../services/rooms/room.service";
 import type { RoomResponseDTO } from "../../../shared/types/room.types";
+import { canCheckIn } from "../utils/CheckIn.utils";
+
 interface CheckInState {
   isLoading: boolean;
   message: string | null;
@@ -17,7 +19,11 @@ export const useCheckIn = () => {
   });
 
   const isCheckInAvailable = (room: RoomResponseDTO | undefined): boolean => {
-    return !!(room && userEmail);
+    if (!room || !userEmail) {
+      return false;
+    }
+
+    return canCheckIn(room.current_event, userEmail);
   };
 
   const handleCheckIn = async (room: RoomResponseDTO | undefined) => {

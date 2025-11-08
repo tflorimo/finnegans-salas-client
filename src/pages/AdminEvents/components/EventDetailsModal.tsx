@@ -1,8 +1,7 @@
 import { X } from "lucide-react";
 import { CardContainer } from "../../../components/CardContainer/CardContainer";
 import { Tag } from "../../../components/Tag/Tag";
-import { Tags } from "../../../components/Tag/types";
-import type { EventResponseDTO, ResponseStatus } from "../../../shared/types/event.types";
+import type { EventResponseDTO } from "../../../shared/types/event.types";
 import { formatDate, formatTimeRange } from "../utils/dateUtils";
 import {
   Overlay,
@@ -14,7 +13,11 @@ import {
   Field,
   AttendeeList,
 } from "../styles";
-import { EVENT_MODAL } from "../constants/AdminEvents.constants";
+import { 
+  EVENT_MODAL, 
+  ATTENDEE_STATUS_TAG_MAP, 
+  CHECK_IN_STATUS_TAG_MAP 
+} from "../constants/AdminEvents.constants";
 import { truncateText } from "../../RoomPage/utils/textUtils";
 
 interface EventDetailsModalProps {
@@ -22,30 +25,18 @@ interface EventDetailsModalProps {
   onClose: () => void;
 }
 
-const statusTag = (status: ResponseStatus): Tags => {
-  switch (status) {
-    case "accepted":
-      return Tags.success;
-    case "declined":
-      return Tags.danger;
-    case "tentative":
-      return Tags.warning;
-    case "needsAction":
-    default:
-      return Tags.info;
-  }
-};
-
 export const EventDetailsModal = ({ event, onClose }: EventDetailsModalProps) => {
   const handleOverlayClick: React.MouseEventHandler<HTMLDivElement> = () => onClose();
   const stop: React.MouseEventHandler<HTMLDivElement> = (e) => e.stopPropagation();
+
+  const checkInTag = CHECK_IN_STATUS_TAG_MAP[event.checkInStatus];
 
   return (
     <Overlay onClick={handleOverlayClick} aria-modal="true" role="dialog">
       <ModalBody onClick={stop}>
         <CardContainer customStyle={ModalCardStyle}>
           <ModalHeader>
-            <h3>{truncateText(event.title, 10)}</h3>
+            <h3>{truncateText(event.title, 30)}</h3>
             <CloseBtn aria-label="Cerrar" onClick={onClose}>
               <X size={18} />
             </CloseBtn>
@@ -86,11 +77,18 @@ export const EventDetailsModal = ({ event, onClose }: EventDetailsModalProps) =>
               <label>{EVENT_MODAL.CHECK_IN}</label>
               <div>
                 <Tag
-                  text={event.checkedIn ? EVENT_MODAL.CHECK_IN_DONE : EVENT_MODAL.CHECK_IN_PENDING}
-                  type={event.checkedIn ? Tags.success : Tags.warning}
+                  text={checkInTag.text}
+                  type={checkInTag.type}
                 />
               </div>
             </Field>
+
+            {event.deletedAt && (
+              <Field>
+                <label>{EVENT_MODAL.DELETED_AT}</label>
+                <div>{formatDate(event.deletedAt)}</div>
+              </Field>
+            )}
 
             <Field>
               <label>{EVENT_MODAL.ATTENDEES}</label>
@@ -103,7 +101,7 @@ export const EventDetailsModal = ({ event, onClose }: EventDetailsModalProps) =>
                       <span>{attendee.email}</span>
                       <Tag
                         text={attendee.responseStatus}
-                        type={statusTag(attendee.responseStatus)}
+                        type={ATTENDEE_STATUS_TAG_MAP[attendee.responseStatus]}
                       />
                     </li>
                   ))}

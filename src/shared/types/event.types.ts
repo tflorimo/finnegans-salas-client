@@ -1,5 +1,7 @@
 export type ResponseStatus = 'accepted' | 'declined' | 'tentative' | 'needsAction';
 
+export type CheckInStatus = 'pending' | 'checked_in' | 'expired';
+
 export interface AttendeeDTO {
     email: string;
     responseStatus: ResponseStatus;
@@ -13,9 +15,10 @@ export interface EventResponseDTO {
     startTime: Date;
     title: string;
     endTime: Date;
-    checkedIn: boolean;
+    checkInStatus: CheckInStatus;
     attendees: AttendeeDTO[];
     roomName: string;
     date: Date;
     creatorName: string;
+    deletedAt?: Date | null;
 }

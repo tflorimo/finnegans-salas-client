@@ -1,17 +1,21 @@
 import { css } from "styled-components";
 import { Button } from "../../components/Button/Button";
 import { CardContainer } from "../../components/CardContainer/CardContainer";
+import { Tag } from "../../components/Tag/Tag";
 import { BackButton } from "../../shared/components/BackButton/BackButton";
 import { EquipmentItem } from "./components/EquipmentItem";
 import { QRCodeSection } from "./components/QRCodeSection";
 import { ReservationItemComponent } from "./components/ReservationItemComponent";
 import { RoomHeader } from "./components/RoomHeader";
-import { ROOM_PAGE_MESSAGES } from "./constants/RoomPage.constants";
+import { CheckInMessageModal } from "./components/CheckInMessageModal";
+import { ROOM_PAGE_MESSAGES, CHECK_IN_STATUS_DISPLAY } from "./constants/RoomPage.constants";
 import { useCheckIn } from "./hooks/useCheckIn";
 import { useGetRoom } from "./hooks/useGetRoom";
 import { renderStatusTag } from "./utils/RoomPageUtils";
+import type { CheckInStatus } from "../../shared/types/event.types";
 import {
   CheckInButtonStyle,
+  CheckInSubtitle,
   ColumnaLateral,
   ColumnaPrincipal,
   ContentGrid,
@@ -29,13 +33,20 @@ import {
 
 export const RoomPage = () => {
   const { loading, roomData } = useGetRoom();
-  const { handleCheckIn, isCheckInAvailable } = useCheckIn();
+  const { handleCheckIn, isCheckInAvailable, clearMessage, message, isSuccess } = useCheckIn();
 
   const getCheckInButtonStyle = (isAvailable: boolean) => css`
     ${CheckInButtonStyle}
     opacity: ${isAvailable ? 1 : 0.5};
     pointer-events: ${isAvailable ? "auto" : "none"};
   `;
+
+  const renderCheckInStatusTag = (status: CheckInStatus | undefined) => {
+    if (!status) return null;
+    
+    const config = CHECK_IN_STATUS_DISPLAY[status];
+    return <Tag text={config.text} type={config.type} />;
+  };
 
   return (
     <RoomPageContainer>
@@ -61,7 +72,10 @@ export const RoomPage = () => {
             </CardContainer>
 
             <CardContainer>
-              <TitleStyle>{ROOM_PAGE_MESSAGES.QR_TITLE}</TitleStyle>
+              <TitleStyle>{ROOM_PAGE_MESSAGES.CHECK_IN_TITLE}</TitleStyle>
+              <CheckInSubtitle>
+                {ROOM_PAGE_MESSAGES.CHECK_IN_SUBTITLE}
+              </CheckInSubtitle>
               <Button
                 text={ROOM_PAGE_MESSAGES.CHECK_IN_BUTTON}
                 onClick={() => handleCheckIn(roomData)}
@@ -93,6 +107,12 @@ export const RoomPage = () => {
                 <span>{ROOM_PAGE_MESSAGES.STATUS_LABEL}</span>
                 {renderStatusTag(loading, roomData?.is_busy)}
               </FilaEstado>
+              {roomData?.current_event && (
+                <FilaEstado>
+                  <span>{ROOM_PAGE_MESSAGES.CHECK_IN_STATUS_LABEL}</span>
+                  {renderCheckInStatusTag(roomData.current_event.checkInStatus)}
+                </FilaEstado>
+              )}
               <FilaEstado>
                 <span>{ROOM_PAGE_MESSAGES.CAPACITY_LABEL}</span>
                 <strong>
@@ -120,6 +140,12 @@ export const RoomPage = () => {
           </ColumnaLateral>
         </ContentGrid>
       </PageInner>
+
+      <CheckInMessageModal
+        message={message}
+        isSuccess={isSuccess}
+        onClose={clearMessage}
+      />
     </RoomPageContainer>
   );
 };
