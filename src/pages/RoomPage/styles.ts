@@ -63,7 +63,7 @@ export const QRBox = styled.div`
   justify-content: center;
 `;
 
-export const ReservasLista = styled.div`
+export const ReservationList = styled.div`
   display: grid;
   gap: 14px;
 `;
@@ -209,6 +209,12 @@ export const CheckInSubtitle = styled.p`
   font-size: 0.875rem;
   color: #666;
   margin-bottom: 1rem;
+  text-align: center;
+`;
+
+export const NoEquipmentMessage = styled.p`
+  font-size: 0.875rem;
+  color: #666;
 `;
 
 export const CheckInModalOverlay = styled.div`
@@ -256,4 +262,23 @@ export const CheckInCloseButton = styled.button`
   &:hover {
     opacity: 0.9;
   }
+`;
+
+export const ErrorMessage = styled.p`
+  text-align: center;
+  color: #ef4444;
+  padding: 2rem;
+  margin: 0;
+`;
+
+export const NoReservationsMessage = styled.p`
+  text-align: center;
+  color: #9ca3af;
+  font-size: 0.875rem;
+  padding: 1rem 0;
+  margin: 0;
+`;
+
+export const ReservationsSectionSeparator = styled(TitleStyle)`
+  margin-top: 1.5rem;
 `;

@@ -1,8 +1,8 @@
 import { useMemo } from "react";
-import type { RoomEventDetailsDTO } from "../../../shared/types/types";
+import type { EventResponseDTO } from "../../../shared/types/event.types";
 
 export const useFilteredEvents = (
-  events: RoomEventDetailsDTO[],
+  events: EventResponseDTO[],
   searchTerm: string
 ) => {
   return useMemo(() => {

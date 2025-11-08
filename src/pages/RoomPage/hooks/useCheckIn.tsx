@@ -10,7 +10,11 @@ interface CheckInState {
   isSuccess: boolean | null;
 }
 
-export const useCheckIn = () => {
+interface UseCheckInParams {
+  onSuccess?: (room: RoomResponseDTO) => void;
+}
+
+export const useCheckIn = ({ onSuccess }: UseCheckInParams = {}) => {
   const { userEmail } = useContext(AuthContext);
   const [state, setState] = useState<CheckInState>({
     isLoading: false,
@@ -40,6 +44,19 @@ export const useCheckIn = () => {
 
     try {
       await roomService.checkInCurrentEvent(room.email, userEmail);
+
+      // Optimistic update: actualizar estado local inmediatamente
+      if (onSuccess && room.current_event) {
+        const updatedRoom: RoomResponseDTO = {
+          ...room,
+          is_busy: true,
+          current_event: {
+            ...room.current_event,
+            checkInStatus: 'checked_in',
+          },
+        };
+        onSuccess(updatedRoom);
+      }
 
       setState({
         isLoading: false,

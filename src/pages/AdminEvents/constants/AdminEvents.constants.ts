@@ -23,7 +23,7 @@ export const EVENT_MODAL = {
   DATE: "Fecha",
   TIME: "Horario",
   ROOM: "Sala",
-  ID: "ID de la sala",
+  ID: "ID de la sala", // Coloco ID porque los csv del cliente creo que no tienen email (a confirmar).
   CREATOR_MAIL: "Mail del Responsable",
   CREATOR_NAME: "Creador del evento",
   CHECK_IN: "Check-in",

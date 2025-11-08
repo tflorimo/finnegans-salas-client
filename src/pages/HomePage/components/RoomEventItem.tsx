@@ -9,7 +9,7 @@ export const RoomEventItem = ({ event }: RoomEventTimeProps) => {
 
   return (
     <RoomEventItemStyles>
-      <p title={event.title}>{truncateText(event.title, 25)}</p>
+      <p title={event.title}>{truncateText(event.title, 20)}</p>
       <RoomEventTimeSectionStyles>
         <Clock 
           size={14} 

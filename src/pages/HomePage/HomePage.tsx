@@ -1,38 +1,21 @@
 import { Funnel } from "lucide-react";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { CardContainer } from "../../components/CardContainer/CardContainer";
 import { GenericSelect } from "../../components/GenericSelect/GenericSelect";
 import { RoomItem } from "./components/RoomItem";
 import { ROOM_SELECT_OPTIONS } from "./constants/HomePage.constants";
 import { useGetRooms } from "./hooks/useGetRooms";
+import { useRoomFilters } from "./hooks/useRoomFilters";
 import { AllRoomsCardContainerStyles, FreeRoomsCardContainerStyles, HomePageStyled, OccupiedRoomsCardContainerStyles, ROOM_PAGE_COLORS, RoomListContainer, RoomStatusContainer, SelectFilterContainer } from "./styles";
-import { RoomStatusOptionsEnum } from "./types/RoomPage.types";
 
 export const HomePage = () => {
 
   const [roomStatusSelected, setRoomStatusSelected] = useState<string>('all');
   const { roomsData, loading } = useGetRooms();
-
-const countRoomsByStatus = useCallback(() => {
-  const occupiedCount = roomsData.filter(room => room.is_busy).length;
-  const availableCount = roomsData.length - occupiedCount;
-
-  return [
-    { title: 'Total de Salas', number: roomsData.length },
-    { title: 'Salas libres', number: availableCount },
-    { title: 'Salas ocupadas', number: occupiedCount },
-  ];
-}, [roomsData]);
-
-const calculateRoomsByStatus = useCallback(() => {
-  const roomsByStatus = [
-    { id: RoomStatusOptionsEnum.all, rooms: roomsData },
-    { id: RoomStatusOptionsEnum.available, rooms: roomsData.filter(room => !room.is_busy) },
-    { id: RoomStatusOptionsEnum.occupied, rooms: roomsData.filter(room => room.is_busy) },
-  ];
-
-  return roomsByStatus.find(roomStatus => roomStatus.id === roomStatusSelected);
-}, [roomStatusSelected, roomsData]);
+  const { countRoomsByStatus, calculateRoomsByStatus } = useRoomFilters({
+    roomsData,
+    roomStatusSelected,
+  });
 
   if (loading) {
     // TODO: Reemplazar por loader o spinner cuando se implemente el componente

@@ -23,7 +23,7 @@ export const RoomItem = ({ room }: RoomItemProps) => {
   const roomTimes = useRoomFormattedTimes(room);
 
   const handleClick = () => {
-    navigate(`/room/${room.email}`, { state: { room: roomTimes } });
+    navigate(`/room/${room.email}`, { state: { room } });
   };
 
   if (!roomTimes) return null;

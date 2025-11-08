@@ -31,7 +31,7 @@ export const ReservationItemComponent = ({
       </ResLeft>
       <ResRight>
         <Clock size={16} />
-        <span>{`${start} - ${end}`}</span>
+        <span>{`${start ?? '-'} - ${end ?? '-'}`}</span>
       </ResRight>
     </ReservationItem>
   );

@@ -1,5 +1,4 @@
 export type ResponseStatus = 'accepted' | 'declined' | 'tentative' | 'needsAction';
-
 export type CheckInStatus = 'pending' | 'checked_in' | 'expired';
 
 export interface AttendeeDTO {

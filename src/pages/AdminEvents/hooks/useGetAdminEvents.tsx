@@ -28,7 +28,7 @@ export const useGetAdminEvents = () => {
 
             const parsedEvents = events.map(e => ({
                 ...e,
-                date: new Date(e.startTime).toISOString().split("T")[0],
+                date: new Date(new Date(e.startTime).toISOString().split("T")[0]),
                 startTime: new Date(e.startTime),
                 endTime: new Date(e.endTime),
             }));

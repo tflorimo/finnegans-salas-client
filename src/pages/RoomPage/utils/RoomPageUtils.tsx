@@ -11,12 +11,12 @@ export function initials(name: string): string {
     .toUpperCase();
 }
 
-export const renderStatusTag = (loading: boolean, is_bussy?: boolean) => {
+export const renderStatusTag = (loading: boolean, is_busy?: boolean) => {
   if (loading) {
     return <Tag text={ROOM_STATUS_LABELS.loading} type={ROOM_STATUS_TAG_TYPES.loading} />;
   }
   
-  if (!is_bussy) {
+  if (!is_busy) {
     return <Tag text={ROOM_STATUS_LABELS.available} type={ROOM_STATUS_TAG_TYPES.available} />;
   }
   

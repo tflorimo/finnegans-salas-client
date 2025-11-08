@@ -11,7 +11,9 @@ import { CheckInMessageModal } from "./components/CheckInMessageModal";
 import { ROOM_PAGE_MESSAGES, CHECK_IN_STATUS_DISPLAY } from "./constants/RoomPage.constants";
 import { useCheckIn } from "./hooks/useCheckIn";
 import { useGetRoom } from "./hooks/useGetRoom";
+import { useFilteredReservations } from "./hooks/useFilteredReservations";
 import { renderStatusTag } from "./utils/RoomPageUtils";
+import { formatTime } from "../HomePage/utils/formatTime.utils";
 import type { CheckInStatus } from "../../shared/types/event.types";
 import {
   CheckInButtonStyle,
@@ -21,19 +23,29 @@ import {
   ContentGrid,
   CurrentStatusCardStyle,
   EquipmentContainer,
+  ErrorMessage,
+  NoReservationsMessage,
+  ReservationsSectionSeparator,
   TitleStyle,
   FilaEstado,
   PageInner,
   QRCardStyle,
   ReservationsCardStyle,
-  ReservasLista,
+  ReservationList,
   RoomInfoCardStyle,
   RoomPageContainer,
+  NoEquipmentMessage,
 } from "./styles";
 
 export const RoomPage = () => {
-  const { loading, roomData } = useGetRoom();
-  const { handleCheckIn, isCheckInAvailable, clearMessage, message, isSuccess } = useCheckIn();
+  const { loading, roomData, error, updateRoomData } = useGetRoom();
+  const { todayReservations, weekReservations } = useFilteredReservations(roomData?.events);
+  
+  const { handleCheckIn, isCheckInAvailable, clearMessage, message, isSuccess } = useCheckIn({
+    onSuccess: (updatedRoom) => {
+      updateRoomData(() => updatedRoom);
+    }
+  });
 
   const getCheckInButtonStyle = (isAvailable: boolean) => css`
     ${CheckInButtonStyle}
@@ -47,6 +59,19 @@ export const RoomPage = () => {
     const config = CHECK_IN_STATUS_DISPLAY[status];
     return <Tag text={config.text} type={config.type} />;
   };
+
+  if (error) {
+    return (
+      <RoomPageContainer>
+        <BackButton />
+        <PageInner>
+          <CardContainer>
+            <ErrorMessage>{error}</ErrorMessage>
+          </CardContainer>
+        </PageInner>
+      </RoomPageContainer>
+    );
+  }
 
   return (
     <RoomPageContainer>
@@ -64,11 +89,15 @@ export const RoomPage = () => {
 
               <TitleStyle>{ROOM_PAGE_MESSAGES.EQUIPMENT_TITLE}</TitleStyle>
 
-              <EquipmentContainer>
-                {(roomData?.resources ?? []).map((item) => (
-                  <EquipmentItem key={item} item={item} />
-                ))}
-              </EquipmentContainer>
+              {(roomData?.resources ?? []).length > 0 ? (
+                <EquipmentContainer>
+                  {(roomData?.resources ?? []).map((item) => (
+                    <EquipmentItem key={item} item={item} />
+                  ))}
+                </EquipmentContainer>
+              ) : (
+                <NoEquipmentMessage>{ROOM_PAGE_MESSAGES.NO_EQUIPMENT}</NoEquipmentMessage>
+              )}
             </CardContainer>
 
             <CardContainer>
@@ -84,19 +113,51 @@ export const RoomPage = () => {
             </CardContainer>
 
             <CardContainer customStyle={ReservationsCardStyle}>
-              <TitleStyle>{ROOM_PAGE_MESSAGES.RESERVATIONS_TITLE}</TitleStyle>
-              <ReservasLista>
-                {(roomData?.events ?? []).map((event) => (
-                  <ReservationItemComponent
-                    key={event.id}
-                    organizer={event.creatorName}
-                    start={event.startTime}
-                    end={event.endTime}
-                    date={event.date}
-                    title={event.title}
-                  />
-                ))}
-              </ReservasLista>
+              <TitleStyle>
+                {ROOM_PAGE_MESSAGES.TODAY_RESERVATIONS_TITLE}
+              </TitleStyle>
+              
+              {todayReservations.length > 0 ? (
+                <ReservationList>
+                  {todayReservations.map((event) => (
+                    <ReservationItemComponent
+                      key={event.id}
+                      organizer={event.creatorName}
+                      start={formatTime(event.startTime)}
+                      end={formatTime(event.endTime)}
+                      date={event.date}
+                      title={event.title}
+                    />
+                  ))}
+                </ReservationList>
+              ) : (
+                <NoReservationsMessage>
+                  {ROOM_PAGE_MESSAGES.NO_TODAY_RESERVATIONS}
+                </NoReservationsMessage>
+              )}
+
+              <ReservationsSectionSeparator>
+                {ROOM_PAGE_MESSAGES.WEEK_RESERVATIONS_TITLE}
+              </ReservationsSectionSeparator>
+              
+              {weekReservations.length > 0 ? (
+                <ReservationList>
+                  {weekReservations.map((event) => (
+                    <ReservationItemComponent
+                      key={event.id}
+                      organizer={event.creatorName}
+                      start={formatTime(event.startTime)}
+                      end={formatTime(event.endTime)}
+                      date={event.date}
+                      title={event.title}
+                    />
+                  ))}
+                </ReservationList>
+              ) : (
+                <NoReservationsMessage>
+                  {ROOM_PAGE_MESSAGES.NO_WEEK_RESERVATIONS}
+                </NoReservationsMessage>
+              )}
             </CardContainer>
           </ColumnaPrincipal>
 
@@ -121,9 +182,9 @@ export const RoomPage = () => {
                 </strong>
               </FilaEstado>
               <FilaEstado>
-                <span>{ROOM_PAGE_MESSAGES.TODAY_RESERVATIONS_LABEL}</span>
+                <span>{ROOM_PAGE_MESSAGES.TODAY_RESERVATIONS_COUNT_LABEL}</span>
                 <strong>
-                  {roomData?.events.length ?? 0}
+                  {todayReservations.length}
                 </strong>
               </FilaEstado>
             </CardContainer>

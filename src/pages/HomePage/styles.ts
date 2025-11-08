@@ -96,6 +96,13 @@ export const RoomListContainerStyles = css`
   box-shadow: 0 1px 2px ${ROOM_PAGE_COLORS.roomBoxShadow};
   padding: 1.5rem;
   width: 28%;
+  cursor: pointer;
+  transition: box-shadow 0.2s ease;
+  
+  &:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+  
   p {
     color: ${ROOM_PAGE_COLORS.roomText};
     margin: 0;
@@ -129,7 +136,7 @@ export const RoomEventItemStyles = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 0.5rem;
-  margin-top: 1rem;
+  margin-top: 0rem;
   p {
     margin: 0;
     font-weight: bold;
