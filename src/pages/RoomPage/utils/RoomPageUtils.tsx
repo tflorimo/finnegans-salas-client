@@ -1,5 +1,5 @@
 import { Tag } from "../../../components/Tag/Tag";
-import { Tags } from "../../../components/Tag/types";
+import { ROOM_STATUS_LABELS, ROOM_STATUS_TAG_TYPES } from "../constants/RoomPage.constants";
 
 export function initials(name: string): string {
   return name
@@ -12,9 +12,15 @@ export function initials(name: string): string {
 }
 
 export const renderStatusTag = (loading: boolean, is_bussy?: boolean) => {
-  if (loading) return <Tag text="…" type={Tags.info} />;
-  if (!is_bussy) return <Tag text="Libre" type={Tags.success} />;
-  else return <Tag text="Ocupada" type={Tags.info} />;
+  if (loading) {
+    return <Tag text={ROOM_STATUS_LABELS.loading} type={ROOM_STATUS_TAG_TYPES.loading} />;
+  }
+  
+  if (!is_bussy) {
+    return <Tag text={ROOM_STATUS_LABELS.available} type={ROOM_STATUS_TAG_TYPES.available} />;
+  }
+  
+  return <Tag text={ROOM_STATUS_LABELS.occupied} type={ROOM_STATUS_TAG_TYPES.occupied} />;
 };
 
 export function getDayName(dateInput: string | Date): string {

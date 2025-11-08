@@ -23,13 +23,13 @@ export const ROOM_PAGE_MESSAGES = {
 export const ROOM_STATUS_LABELS = {
   available: "Libre",
   occupied: "Ocupada",
-  maintenance: "Mantenimiento",
+  loading: "…",
 };
 
 export const ROOM_STATUS_TAG_TYPES = {
   available: Tags.success,
   occupied: Tags.info,
-  maintenance: Tags.danger,
+  loading: Tags.info,
 };
 
 export const CHECK_IN_STATUS_DISPLAY: Record<CheckInStatus, { text: string; type: Tags }> = {
