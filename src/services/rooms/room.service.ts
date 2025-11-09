@@ -28,9 +28,9 @@ export const roomService = {
     }
   },
 
-  checkInCurrentEvent: async (roomId: string, userEmail: string): Promise<void> => {
+  checkInEvent: async (roomId: string, eventId: string, userEmail: string): Promise<void> => {
     try {
-      await axiosInstance.patch(ROOM_ENDPOINTS.checkInCurrentEvent(roomId), { userEmail });
+      await axiosInstance.patch(ROOM_ENDPOINTS.checkInEvent(roomId, eventId), { userEmail });
     } catch (error) {
       const message = getErrorMessage(error, ROOM_ERROR_MESSAGES.checkInError);
       throw new Error(message);

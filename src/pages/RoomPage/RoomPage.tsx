@@ -13,6 +13,7 @@ import { useCheckIn } from "./hooks/useCheckIn";
 import { useGetRoom } from "./hooks/useGetRoom";
 import { useFilteredReservations } from "./hooks/useFilteredReservations";
 import { renderStatusTag } from "./utils/RoomPageUtils";
+import { truncateText } from "../../shared/utils/text.utils";
 import { formatTime } from "../HomePage/utils/formatTime.utils";
 import type { CheckInStatus } from "../../shared/types/event.types";
 import {
@@ -41,16 +42,19 @@ export const RoomPage = () => {
   const { loading, roomData, error, updateRoomData } = useGetRoom();
   const { todayReservations, weekReservations } = useFilteredReservations(roomData?.events);
   
-  const { handleCheckIn, isCheckInAvailable, clearMessage, message, isSuccess } = useCheckIn({
+  const { handleCheckIn, getEligibleEvents, clearMessage, message, isSuccess, checkingInEventId } = useCheckIn({
     onSuccess: (updatedRoom) => {
       updateRoomData(() => updatedRoom);
     }
   });
 
-  const getCheckInButtonStyle = (isAvailable: boolean) => css`
+  const eligibleEvents = getEligibleEvents(roomData);
+
+  const getCheckInButtonStyle = (isDisabled: boolean) => css`
     ${CheckInButtonStyle}
-    opacity: ${isAvailable ? 1 : 0.5};
-    pointer-events: ${isAvailable ? "auto" : "none"};
+    opacity: ${isDisabled ? 0.5 : 1};
+    pointer-events: ${isDisabled ? "none" : "auto"};
+    margin-bottom: 12px;
   `;
 
   const renderCheckInStatusTag = (status: CheckInStatus | undefined) => {
@@ -105,11 +109,24 @@ export const RoomPage = () => {
               <CheckInSubtitle>
                 {ROOM_PAGE_MESSAGES.CHECK_IN_SUBTITLE}
               </CheckInSubtitle>
-              <Button
-                text={ROOM_PAGE_MESSAGES.CHECK_IN_BUTTON}
-                onClick={() => handleCheckIn(roomData)}
-                customStyle={getCheckInButtonStyle(isCheckInAvailable(roomData))}
-              />
+              
+              {eligibleEvents.length > 0 ? (
+                eligibleEvents.map((event) => {
+                  const isCheckingIn = checkingInEventId === event.id;
+                  return (
+                    <Button
+                      key={event.id}
+                      text={`Check-in: ${truncateText(event.title, 3)}`}
+                      onClick={() => handleCheckIn(roomData, event.id)}
+                      customStyle={getCheckInButtonStyle(isCheckingIn)}
+                    />
+                  );
+                })
+              ) : (
+                <NoEquipmentMessage>
+                  No hay eventos disponibles para check-in en este momento
+                </NoEquipmentMessage>
+              )}
             </CardContainer>
 
             <CardContainer customStyle={ReservationsCardStyle}>

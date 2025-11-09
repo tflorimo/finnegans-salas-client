@@ -18,7 +18,7 @@ import {
   ATTENDEE_STATUS_TAG_MAP, 
   CHECK_IN_STATUS_TAG_MAP 
 } from "../constants/AdminEvents.constants";
-import { truncateText } from "../../RoomPage/utils/textUtils";
+import { truncateText } from "../../../shared/utils/text.utils";
 
 interface EventDetailsModalProps {
   event: EventResponseDTO;

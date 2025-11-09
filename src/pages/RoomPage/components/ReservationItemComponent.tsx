@@ -2,7 +2,7 @@ import { Clock } from "lucide-react";
 import { Avatar, ResInfo, ResLeft, ResRight, ReservationItem } from "../styles";
 import { initials } from "../utils/RoomPageUtils";
 import { getDayName } from "../utils/RoomPageUtils";
-import { truncateText } from "../utils/textUtils";
+import { truncateText } from "../../../shared/utils/text.utils";
 interface ReservationItemComponentProps {
   organizer: string;
   start: string | Date | undefined;

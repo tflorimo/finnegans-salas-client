@@ -1,7 +1,7 @@
 import { Clock } from "lucide-react";
 import { ROOM_PAGE_COLORS, RoomEventItemStyles, RoomEventTimeSectionStyles } from "../styles";
 import type { RoomEventTimeProps } from "../utils/formatTime.utils";
-import { truncateText } from "../../RoomPage/utils/textUtils";
+import { truncateText } from "../../../shared/utils/text.utils";
 
 export const RoomEventItem = ({ event }: RoomEventTimeProps) => {
   const startTime = event.startTime; 

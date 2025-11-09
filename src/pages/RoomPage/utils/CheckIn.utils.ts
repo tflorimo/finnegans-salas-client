@@ -1,4 +1,5 @@
 import type { EventResponseDTO } from "../../../shared/types/event.types";
+import type { RoomResponseDTO } from "../../../shared/types/room.types";
 
 export const isWithinCheckInTimeWindow = (startTime: Date | string): boolean => {
   const now = new Date();
@@ -33,3 +34,35 @@ export const canCheckIn = (
 
   return isWithinCheckInTimeWindow(event.startTime);
 };
+
+export const findCheckInEligibleEvent = (
+  room: RoomResponseDTO | undefined,
+  userEmail: string | null
+): EventResponseDTO | null => {
+  if (!room || !userEmail) {
+    return null;
+  }
+
+  if (room.current_event && canCheckIn(room.current_event, userEmail)) {
+    return room.current_event;
+  }
+
+  const eligibleEvent = room.events?.find(event => canCheckIn(event, userEmail));
+  
+  return eligibleEvent || null;
+};
+
+// Nueva función: Encuentra TODOS los eventos elegibles para check-in
+export const findAllCheckInEligibleEvents = (
+  room: RoomResponseDTO | undefined,
+  userEmail: string | null
+): EventResponseDTO[] => {
+  if (!room || !userEmail) {
+    return [];
+  }
+
+  const eligibleEvents = room.events?.filter(event => canCheckIn(event, userEmail)) ?? [];
+  
+  return eligibleEvents;
+};
+
