@@ -52,7 +52,6 @@ export const findCheckInEligibleEvent = (
   return eligibleEvent || null;
 };
 
-// Nueva función: Encuentra TODOS los eventos elegibles para check-in
 export const findAllCheckInEligibleEvents = (
   room: RoomResponseDTO | undefined,
   userEmail: string | null

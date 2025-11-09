@@ -25,7 +25,6 @@ export const useCheckIn = ({ onSuccess }: UseCheckInParams = {}) => {
     checkingInEventId: null,
   });
 
-  // Obtener todos los eventos elegibles para check-in
   const getEligibleEvents = (room: RoomResponseDTO | undefined): EventResponseDTO[] => {
     if (!room || !userEmail) {
       return [];
@@ -33,7 +32,6 @@ export const useCheckIn = ({ onSuccess }: UseCheckInParams = {}) => {
     return findAllCheckInEligibleEvents(room, userEmail);
   };
 
-  // Realizar check-in para un evento específico
   const handleCheckIn = async (room: RoomResponseDTO | undefined, eventId: string) => {
     if (!room || !userEmail) {
       setState(prev => ({
@@ -67,7 +65,6 @@ export const useCheckIn = ({ onSuccess }: UseCheckInParams = {}) => {
     }));
 
     try {
-      // Enviar el eventId específico al backend
       await roomService.checkInEvent(room.email, eventId, userEmail);
 
       // Optimistic update: actualizar estado local inmediatamente
