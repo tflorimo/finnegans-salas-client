@@ -3,12 +3,12 @@ import styled, { css } from "styled-components";
 export const RoomPageContainer = styled.div`
   width: 100%;
   max-width: 100%;
-  padding: 30px 20px;
+  padding: 5px 20px 10px;
   box-sizing: border-box;
   overflow-x: hidden;
-  @media (min-width: 768px) { padding: 30px 40px; }
-  @media (min-width: 1024px) { padding: 30px 80px; }
-  @media (min-width: 1440px) { padding: 30px 160px; }
+  @media (min-width: 768px) { padding: 10px 40px 20px; }
+  @media (min-width: 1024px) { padding: 10px 80px 20px; }
+  @media (min-width: 1440px) { padding: 10px 160px 20px; }
 `;
 
 export const PageInner = styled.div`

@@ -1,5 +1,4 @@
 import type { EventResponseDTO } from "./event.types";
-
 export interface RoomResponseDTO {
     email: string;
     name: string;
@@ -12,12 +11,10 @@ export interface RoomResponseDTO {
     resources: string[] | null;
     events: EventResponseDTO[];
 }
-
 export interface FormattedEventDTO extends Omit<EventResponseDTO, 'startTime' | 'endTime'> {
     startTime: string;
     endTime: string;
 }
-
 export interface FormattedRoomResponseDTO extends Omit<RoomResponseDTO, 'events' | 'current_event'> {
     events: FormattedEventDTO[];
     current_event: FormattedEventDTO | null;

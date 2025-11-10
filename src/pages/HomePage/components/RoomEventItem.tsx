@@ -1,7 +1,7 @@
 import { Clock } from "lucide-react";
 import { ROOM_PAGE_COLORS, RoomEventItemStyles, RoomEventTimeSectionStyles } from "../styles";
 import type { RoomEventTimeProps } from "../utils/formatTime.utils";
-import { truncateText } from "../../../shared/utils/text.utils";
+import { truncateTextByLength } from "../../../shared/utils/text.utils";
 
 export const RoomEventItem = ({ event }: RoomEventTimeProps) => {
   const startTime = event.startTime; 
@@ -9,7 +9,7 @@ export const RoomEventItem = ({ event }: RoomEventTimeProps) => {
 
   return (
     <RoomEventItemStyles>
-      <p title={event.title}>{truncateText(event.title, 20)}</p>
+      <p title={event.title}>{truncateTextByLength(event.title, 20)}</p>
       <RoomEventTimeSectionStyles>
         <Clock 
           size={14} 

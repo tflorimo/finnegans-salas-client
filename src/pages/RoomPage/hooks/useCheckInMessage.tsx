@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-
 interface UseCheckInMessageProps {
   message: string | null;
   isSuccess: boolean | null;

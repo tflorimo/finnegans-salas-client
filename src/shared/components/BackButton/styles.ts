@@ -4,7 +4,7 @@ export const BackButtonStyled = styled.button`
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  margin: 0;
+  margin: 0 0 0 -3px;
   padding: 0;
   font-size: 14px;
   font-weight: 500;

@@ -36,7 +36,7 @@ export const AdminLogsContainer = styled.div<{ $collapsed: boolean }>`
   margin-left: ${({ $collapsed }) =>
     `${$collapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_WIDTH}px`};
   margin-top: 0;
-  padding: 16px 56px 40px;
+  padding: 10px 56px 40px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -44,13 +44,13 @@ export const AdminLogsContainer = styled.div<{ $collapsed: boolean }>`
   transition: margin-left 0.25s ease, max-width 0.25s ease;
 
   @media (max-width: 1200px) {
-    padding: 16px 32px 32px;
+    padding: 10px 32px 32px;
   }
 
   @media (max-width: 768px) {
     margin-left: 0;
     max-width: 100vw;
-    padding: 16px 16px;
+    padding: 5px 16px 10px;
   }
 `;
 
@@ -58,7 +58,7 @@ export const PageInner = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 12px;
 `;
 
 export const PageHeader = styled.header`

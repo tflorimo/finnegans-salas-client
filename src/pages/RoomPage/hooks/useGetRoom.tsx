@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import type { RoomResponseDTO } from "../../../shared/types/room.types";
-
 interface UseGetRoomReturn {
   loading: boolean;
   roomData: RoomResponseDTO | undefined;
@@ -17,7 +16,6 @@ export const useGetRoom = (): UseGetRoomReturn => {
   const loading = false;
   const error = roomData ? null : "No se encontró información de la sala";
 
-  // Actualizar si cambia la ubicación
   useEffect(() => {
     const newRoomData = (location.state as { room?: RoomResponseDTO })?.room;
     if (newRoomData) {

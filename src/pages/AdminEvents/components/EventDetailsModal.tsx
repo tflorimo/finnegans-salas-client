@@ -2,7 +2,7 @@ import { X } from "lucide-react";
 import { CardContainer } from "../../../components/CardContainer/CardContainer";
 import { Tag } from "../../../components/Tag/Tag";
 import type { EventResponseDTO } from "../../../shared/types/event.types";
-import { formatDate, formatTimeRange } from "../utils/dateUtils";
+import { formatDate, formatTime, formatTimeRange } from "../utils/dateUtils";
 import {
   Overlay,
   ModalBody,
@@ -84,10 +84,16 @@ export const EventDetailsModal = ({ event, onClose }: EventDetailsModalProps) =>
             </Field>
 
             {event.deletedAt && (
-              <Field>
-                <label>{EVENT_MODAL.DELETED_AT}</label>
-                <div>{formatDate(event.deletedAt)}</div>
-              </Field>
+              <>
+                <Field>
+                  <label>{EVENT_MODAL.DELETED_AT}</label>
+                  <div>{formatDate(event.deletedAt)}</div>
+                </Field>
+                <Field>
+                  <label>Hora de eliminación</label>
+                  <div>{formatTime(event.deletedAt)}</div>
+                </Field>
+              </>
             )}
 
             <Field>
