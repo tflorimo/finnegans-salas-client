@@ -1,7 +1,7 @@
 import { AUTH_ENDPOINTS } from "../../constants/auth.constants";
 import { ROOM_ERROR_MESSAGES } from "../../constants/rooms.constants";
 import { getErrorMessage } from "../../api/axios/axios.utils";
-import type { AuthResponse } from "./types";
+import type { AuthResponse } from "./auth.types";
 import axiosInstance from "../../api/axios/axios.instance";
 import type { AxiosRequestConfig } from "axios";
 import { clearAuthToken, clearStoredUserEmail, setAuthToken } from "../../shared/utils/localStorage.utils";

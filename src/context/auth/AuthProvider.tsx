@@ -19,7 +19,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const login = (token: string, email: string) => {
     setAuthToken(token);
     setStoredUserEmail(email);
-    console.log("AuthProvider - login - token:", token);
     setAuthTokenState(token);
     setLogged(true);
     setUserEmail(email);

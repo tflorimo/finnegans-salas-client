@@ -1,7 +1,6 @@
 import { Users } from "lucide-react";
 import { RoomStatusTag } from "./RoomStatusTag";
 import { ROOM_PAGE_MESSAGES } from "../constants/RoomPage.constants";
-import type { roomStatusType } from "../../../shared/types/types";
 import {
   RoomHeaderContainer,
   RoomHeaderInfo,
@@ -12,11 +11,11 @@ import {
 interface RoomHeaderProps {
   name?: string;
   capacity?: number;
-  status?: roomStatusType;
+  isBusy?: boolean | undefined;
   loading: boolean;
 }
 
-export const RoomHeader = ({ name, capacity, status, loading }: RoomHeaderProps) => {
+export const RoomHeader = ({ name, capacity, isBusy, loading }: RoomHeaderProps) => {
   return (
     <RoomHeaderContainer>
       <RoomHeaderInfo>
@@ -31,7 +30,7 @@ export const RoomHeader = ({ name, capacity, status, loading }: RoomHeaderProps)
           </span>
         </RoomCapacityInfo>
       </RoomHeaderInfo>
-      <RoomStatusTag status={status} loading={loading} />
+      <RoomStatusTag isBusy={isBusy} loading={loading} />
     </RoomHeaderContainer>
   );
 };

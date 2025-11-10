@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { adminService } from "../../../services/admin/admin.service";
-import type { EventResponseDTO, FlatEvent } from "../../../services/admin/events/types";
+import type { FlatEvent } from "../../../services/admin/events/types";
+import type { EventResponseDTO } from "../../../shared/types/event.types";
 import { mapToFlatEvent } from "../utils/eventsMapper";
 
 export const useGetAdminEvents = () => {
@@ -27,7 +28,7 @@ export const useGetAdminEvents = () => {
 
             const parsedEvents = events.map(e => ({
                 ...e,
-                date: new Date(e.startTime).toISOString().split("T")[0],
+                date: new Date(new Date(e.startTime).toISOString().split("T")[0]),
                 startTime: new Date(e.startTime),
                 endTime: new Date(e.endTime),
             }));

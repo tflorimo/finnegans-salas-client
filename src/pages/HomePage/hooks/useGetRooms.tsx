@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { roomService } from "../../../services/rooms/room.service";
-import type { RoomData } from "../../../shared/types/types";
+import type { RoomResponseDTO } from "../../../shared/types/room.types";
 
 export const useGetRooms = () => {
     const [loading, setLoading] = useState<boolean>(false);
-    const [roomsData, setRoomsData] = useState<RoomData[]>([]);
+    const [roomsData, setRoomsData] = useState<RoomResponseDTO[]>([]);
 
     useEffect(() => {
         setLoading(true);

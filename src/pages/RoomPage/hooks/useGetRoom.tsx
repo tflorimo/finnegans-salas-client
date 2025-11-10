@@ -1,25 +1,33 @@
-import { useEffect, useState } from "react";
-import { roomService } from "../../../services/rooms/room.service";
-import type { RoomData } from "../../../shared/types/types";
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import type { RoomResponseDTO } from "../../../shared/types/room.types";
 
-export const useGetRoom = () => {
-  const [loading, setLoading] = useState<boolean>(true);
-  const [roomData, setRoomData] = useState<RoomData | null>(null);
+interface UseGetRoomReturn {
+  loading: boolean;
+  roomData: RoomResponseDTO | undefined;
+  error: string | null;
+  updateRoomData: (updater: (prev: RoomResponseDTO | undefined) => RoomResponseDTO | undefined) => void;
+}
 
+export const useGetRoom = (): UseGetRoomReturn => {
+  const location = useLocation();
+  const initialRoomData = (location.state as { room?: RoomResponseDTO })?.room ?? undefined;
+  
+  const [roomData, setRoomData] = useState<RoomResponseDTO | undefined>(initialRoomData);
+  const loading = false;
+  const error = roomData ? null : "No se encontró información de la sala";
+
+  // Actualizar si cambia la ubicación
   useEffect(() => {
-    setLoading(true);
-    const fetchRoom = async () => {
-      try {
-        const data = await roomService.getRoom();
-        setRoomData(data);
-        setLoading(false);
-      } catch (error) {
-        setLoading(false);
-        console.error("Error al consultar la sala:", error);
-      }
-    };
-    fetchRoom();
-  }, []);
+    const newRoomData = (location.state as { room?: RoomResponseDTO })?.room;
+    if (newRoomData) {
+      setRoomData(newRoomData);
+    }
+  }, [location.state]);
 
-  return { loading, roomData };
+  const updateRoomData = (updater: (prev: RoomResponseDTO | undefined) => RoomResponseDTO | undefined) => {
+    setRoomData(updater);
+  };
+
+  return { loading, roomData, error, updateRoomData };
 };

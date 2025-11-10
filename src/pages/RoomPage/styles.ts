@@ -63,7 +63,7 @@ export const QRBox = styled.div`
   justify-content: center;
 `;
 
-export const ReservasLista = styled.div`
+export const ReservationList = styled.div`
   display: grid;
   gap: 14px;
 `;
@@ -140,21 +140,18 @@ export const QRCardStyle = css`
   p { margin: 0 0 16px; color: #64748b; font-size: 14px; }
 `;
 
-export const EquipmentTitle = styled.h2`
+export const TitleStyle = styled.h2`
   color: rgba(0, 0, 0, 1);
   margin-bottom: 8px;
+  margin-top: -8px; 
+  font-size: 20px; 
+  font-weight: 700;
 `;
 
 export const EquipmentContainer = styled.div`
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
-`;
-
-export const CheckInTitle = styled.h1`
-  color: rgba(0, 0, 0, 1);
-  margin-bottom: 8px;
-  font-size: 24px;
 `;
 
 export const CheckInButtonStyle = css`
@@ -206,4 +203,82 @@ export const EquipmentTagStyle = css`
   font-weight: 500;
   padding: 8px 12px;
   gap: 6px;
+`;
+
+export const CheckInSubtitle = styled.p`
+  font-size: 0.875rem;
+  color: #666;
+  margin-bottom: 1rem;
+  text-align: center;
+`;
+
+export const NoEquipmentMessage = styled.p`
+  font-size: 0.875rem;
+  color: #666;
+`;
+
+export const CheckInModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+`;
+
+export const CheckInModalContent = styled.div<{ $isSuccess: boolean }>`
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  border-left: 4px solid ${({ $isSuccess }) => $isSuccess ? '#28a745' : '#dc3545'};
+  text-align: center;
+`;
+
+export const CheckInMessageText = styled.p`
+  margin: 0 0 1.5rem 0;
+  font-size: 1rem;
+  color: #343a40;
+  text-align: center;
+`;
+
+export const CheckInCloseButton = styled.button`
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 0.5rem 1.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 0.9;
+  }
+`;
+
+export const ErrorMessage = styled.p`
+  text-align: center;
+  color: #ef4444;
+  padding: 2rem;
+  margin: 0;
+`;
+
+export const NoReservationsMessage = styled.p`
+  text-align: center;
+  color: #9ca3af;
+  font-size: 0.875rem;
+  padding: 1rem 0;
+  margin: 0;
+`;
+
+export const ReservationsSectionSeparator = styled(TitleStyle)`
+  margin-top: 1.5rem;
 `;

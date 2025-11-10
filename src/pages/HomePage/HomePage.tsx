@@ -1,58 +1,21 @@
 import { Funnel } from "lucide-react";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { CardContainer } from "../../components/CardContainer/CardContainer";
 import { GenericSelect } from "../../components/GenericSelect/GenericSelect";
 import { RoomItem } from "./components/RoomItem";
 import { ROOM_SELECT_OPTIONS } from "./constants/HomePage.constants";
 import { useGetRooms } from "./hooks/useGetRooms";
+import { useRoomFilters } from "./hooks/useRoomFilters";
 import { AllRoomsCardContainerStyles, FreeRoomsCardContainerStyles, HomePageStyled, OccupiedRoomsCardContainerStyles, ROOM_PAGE_COLORS, RoomListContainer, RoomStatusContainer, SelectFilterContainer } from "./styles";
-import { RoomStatusOptionsEnum } from "./types/RoomPage.types";
 
 export const HomePage = () => {
 
   const [roomStatusSelected, setRoomStatusSelected] = useState<string>('all');
-
   const { roomsData, loading } = useGetRooms();
-
-  const countRoomsByStatus = useCallback(() => {
-    const roomsByStatus = [{
-      title: 'Total de Salas',
-      number: roomsData.length,
-    },
-    {
-      title: 'Salas libres',
-      number: 0,
-    },
-    {
-      title: 'Salas ocupadas',
-      number: 0,
-    }];
-
-    roomsData?.forEach((room) => {
-      switch (room.roomDetails.status) {
-        case RoomStatusOptionsEnum.available:
-          roomsByStatus[1].number += 1;
-          break;
-        case RoomStatusOptionsEnum.occupied:
-          roomsByStatus[2].number += 1;
-          break;
-        default:
-          break;
-      }
-    });
-    return roomsByStatus;
-  }, [roomsData]);
-
-  const calculateRoomsByStatus = useCallback(() => {
-    const roomsByStatus = [
-      { id: RoomStatusOptionsEnum.all, rooms: roomsData },
-      { id: RoomStatusOptionsEnum.available, rooms: [...roomsData].filter(room => room.roomDetails.status === RoomStatusOptionsEnum.available) },
-      { id: RoomStatusOptionsEnum.occupied, rooms: [...roomsData].filter(room => room.roomDetails.status === RoomStatusOptionsEnum.occupied) },
-    ]
-
-    const filterRoomsByStatus = roomsByStatus.find(roomStatus => roomStatus.id === roomStatusSelected);
-    return filterRoomsByStatus;
-  }, [roomStatusSelected, roomsData]);
+  const { countRoomsByStatus, calculateRoomsByStatus } = useRoomFilters({
+    roomsData,
+    roomStatusSelected,
+  });
 
   if (loading) {
     // TODO: Reemplazar por loader o spinner cuando se implemente el componente
@@ -93,7 +56,7 @@ export const HomePage = () => {
       </SelectFilterContainer>
       <RoomListContainer>
         {calculateRoomsByStatus()?.rooms.map((room) => (
-          <RoomItem key={room.roomDetails.id} room={room} />
+          <RoomItem key={room.email} room={room} />
         ))}
 
       </RoomListContainer>

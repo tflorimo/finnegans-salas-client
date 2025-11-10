@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { CardContainer } from "../../../components/CardContainer/CardContainer";
 import { Tag } from "../../../components/Tag/Tag";
 import {
-  ROOM_STATUS_CONFIG,
-  ROOM_TEXT_CONFIG,
+  EVENTOS_SEMANA,
+  getRoomStatusConfig,
+  getRoomStatusText,
 } from "../constants/HomePage.constants";
 import {
   ROOM_PAGE_COLORS,
@@ -15,35 +16,43 @@ import {
 } from "../styles";
 import type { RoomItemProps } from "../types/RoomPage.types";
 import { RoomEventItem } from "./RoomEventItem";
+import { useRoomFormattedTimes } from "../hooks/useRoomFormattedTimes";
 
 export const RoomItem = ({ room }: RoomItemProps) => {
   const navigate = useNavigate();
+  const roomTimes = useRoomFormattedTimes(room);
+
+  const handleClick = () => {
+    navigate(`/room/${room.email}`, { state: { room } });
+  };
+
+  if (!roomTimes) return null;
 
   return (
     <CardContainer
-      onClick={() => navigate(`/room/${room.roomDetails.id}`)}
+      onClick={handleClick}
       customStyle={RoomListContainerStyles}
     >
       <RoomStatusSectionStyles>
-        <h2>{room.roomDetails.name}</h2>
+        <h2>{roomTimes.name}</h2>
         <Tag
-          text={ROOM_TEXT_CONFIG[room.roomDetails.status]}
-          type={ROOM_STATUS_CONFIG[room.roomDetails.status]}
+          text={getRoomStatusText(roomTimes.is_busy)}
+          type={getRoomStatusConfig(roomTimes.is_busy)}
         />
       </RoomStatusSectionStyles>
 
       <RoomInfoSectionStyles>
         <UsersIcon size={16} color={ROOM_PAGE_COLORS.roomText} />
-        <p>{`Capacidad: ${room.roomDetails.capacity} personas`}</p>
+        <p>{`Capacidad: ${roomTimes.capacity} personas`}</p>
       </RoomInfoSectionStyles>
 
       <RoomInfoSectionStyles>
         <Calendar size={16} color={ROOM_PAGE_COLORS.roomText} />
-        <p>Eventos esta semana</p>
+        <p>{EVENTOS_SEMANA}</p>
       </RoomInfoSectionStyles>
 
       <RoomEventsSectionStyles>
-        {room.roomEvents.map((event) => (
+        {roomTimes.events.slice(0, 3).map((event) => (
           <RoomEventItem key={event.id} event={event} />
         ))}
       </RoomEventsSectionStyles>

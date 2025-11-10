@@ -7,7 +7,7 @@ import { useGetAdminEvents } from "./hooks/useGetAdminEvents";
 import { EventsTable } from "./components/EventsTable";
 import { EventsToolbar } from "./components/EventsToolbar";
 import { ADMIN_EVENTS_MESSAGES } from "./constants/AdminEvents.constants";
-import type { EventResponseDTO } from "../../services/admin/events/types";
+import type { EventResponseDTO } from "../../shared/types/event.types";
 import {
   AdminEventsContainer,
   AdminEventsPageWrapper,

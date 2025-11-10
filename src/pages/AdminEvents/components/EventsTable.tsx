@@ -1,5 +1,5 @@
 import { CardContainer } from "../../../components/CardContainer/CardContainer";
-import type { EventResponseDTO } from "../../../services/admin/events/types";
+import type { EventResponseDTO } from "../../../shared/types/event.types";
 import { ADMIN_EVENTS_MESSAGES, TABLE_HEADERS } from "../constants/AdminEvents.constants";
 import { EmptyState, Table, tableCardStyle } from "../styles";
 import { EventTableRow } from "./EventTableRow";

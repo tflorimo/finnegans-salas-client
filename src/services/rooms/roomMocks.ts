@@ -1,4 +1,4 @@
-import type { RoomData } from "../../shared/types/types";
+/* import type { RoomData } from "../../shared/types/types";
 
 export const mockRoomData: RoomData = {
   roomDetails: {
@@ -278,3 +278,4 @@ export const mockRoomsData: RoomData[] = [
     ],
   },
 ];
+ */

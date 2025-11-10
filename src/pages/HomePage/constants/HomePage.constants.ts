@@ -1,5 +1,4 @@
 import { Tags } from "../../../components/Tag/types";
-import { RoomStatusEnum } from "./../../../shared/types/types";
 import { RoomStatusOptionsEnum } from "./../types/RoomPage.types";
 
 export const ROOM_SELECT_OPTIONS = [
@@ -20,14 +19,10 @@ export const ROOM_SELECT_OPTIONS = [
   },
 ];
 
-export const ROOM_STATUS_CONFIG = {
-  [RoomStatusEnum.AVAILABLE]: Tags.succesOutput,
-  [RoomStatusEnum.OCCUPIED]: Tags.dangerOutput,
-  [RoomStatusEnum.MAINTENANCE]: Tags.infoOutput,
-};
+export const EVENTOS_SEMANA = "Eventos esta semana:";
 
-export const ROOM_TEXT_CONFIG = {
-  [RoomStatusEnum.AVAILABLE]: "Libre",
-  [RoomStatusEnum.OCCUPIED]: "Ocupada",
-  [RoomStatusEnum.MAINTENANCE]: "Mantenimiento",
-};
+export const getRoomStatusConfig = (isBusy: boolean) => 
+  isBusy ? Tags.dangerOutput : Tags.succesOutput;
+
+export const getRoomStatusText = (isBusy: boolean) => 
+  isBusy ? "Ocupada" : "Libre";
