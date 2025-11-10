@@ -264,7 +264,7 @@ export const FieldsWrapper = styled.div`
 
 export const Field = styled.div`
   width: 100%;
-  max-width: 580px;
+  max-width: 450px;
   display: flex;
   flex-direction: column;
   align-items: center;
