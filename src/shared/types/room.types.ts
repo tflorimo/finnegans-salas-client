@@ -7,7 +7,7 @@ export interface RoomResponseDTO {
     type: string;
     floor: string;
     is_busy: boolean;
-    current_event: EventResponseDTO | null; 
+    current_event: EventResponseDTO | null;
     resources: string[] | null;
     events: EventResponseDTO[];
 }
