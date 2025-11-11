@@ -4,14 +4,12 @@ import { roomService } from "../../../services/rooms/room.service";
 import type { RoomResponseDTO } from "../../../shared/types/room.types";
 import type { EventResponseDTO } from "../../../shared/types/event.types";
 import { findAllCheckInEligibleEvents } from "../utils/CheckIn.utils";
-
 interface CheckInState {
   isLoading: boolean;
   message: string | null;
   isSuccess: boolean | null;
   checkingInEventId: string | null;
 }
-
 interface UseCheckInParams {
   onSuccess?: (room: RoomResponseDTO) => void;
 }
@@ -67,7 +65,6 @@ export const useCheckIn = ({ onSuccess }: UseCheckInParams = {}) => {
     try {
       await roomService.checkInEvent(room.email, eventId, userEmail);
 
-      // Optimistic update: actualizar estado local inmediatamente
       if (onSuccess) {
         const updatedEvents = room.events?.map(event => 
           event.id === eventId

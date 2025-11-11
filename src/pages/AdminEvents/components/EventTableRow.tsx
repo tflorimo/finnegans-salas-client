@@ -3,6 +3,7 @@ import { Tag } from "../../../components/Tag/Tag";
 import { Tags } from "../../../components/Tag/types";
 import type { EventResponseDTO } from "../../../shared/types/event.types";
 import { formatDate, formatTimeRange } from "../utils/dateUtils";
+import { truncateTextByLength } from "../../../shared/utils/text.utils";
 import { attendeesTagStyle, IconBtn } from "../styles";
 interface EventTableRowProps {
   event: EventResponseDTO;
@@ -12,7 +13,7 @@ interface EventTableRowProps {
 export const EventTableRow = ({ event, onView }: EventTableRowProps) => {
   return (
     <tr key={event.id}>
-      <td>{event.title}</td>
+      <td title={event.title}>{truncateTextByLength(event.title, 30)}</td>
       <td>{event.roomName}</td>
       <td>{formatDate(event.startTime)}</td>
       <td>{formatTimeRange(event.startTime, event.endTime)}</td>
