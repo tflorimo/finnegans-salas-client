@@ -5,18 +5,18 @@ import { RoomStatusOptionsEnum } from "../types/RoomPage.types";
 interface UseRoomFiltersProps {
   roomsData: RoomResponseDTO[];
   roomStatusSelected: string;
+  roomKeywordSelected: string;
 }
 
-export const useRoomFilters = ({ roomsData, roomStatusSelected }: UseRoomFiltersProps) => {
+export const useRoomFilters = ({ roomsData, roomStatusSelected, roomKeywordSelected }: UseRoomFiltersProps) => {
   const countRoomsByStatus = useCallback(() => {
-    const occupiedCount = roomsData.filter(room => room.is_busy).length;
-    const availableCount = roomsData.length - occupiedCount;
-
-    return [
-      { title: 'Total de Salas', number: roomsData.length },
-      { title: 'Salas libres', number: availableCount },
-      { title: 'Salas ocupadas', number: occupiedCount },
-    ];
+    const occupied = roomsData.filter((room) => room.is_busy).length;
+    const available = roomsData.length - occupied;
+    return {
+      total: roomsData.length,
+      available,
+      occupied,
+    };
   }, [roomsData]);
 
   const calculateRoomsByStatus = useCallback(() => {
@@ -29,8 +29,29 @@ export const useRoomFilters = ({ roomsData, roomStatusSelected }: UseRoomFilters
     return roomsByStatus.find(roomStatus => roomStatus.id === roomStatusSelected);
   }, [roomStatusSelected, roomsData]);
 
+  const filterRooms = useCallback(() => {
+    let filtered = [...roomsData];
+
+    // Filtro por estado
+    if (roomStatusSelected === RoomStatusOptionsEnum.available) {
+      filtered = filtered.filter((room) => !room.is_busy);
+    } else if (roomStatusSelected === RoomStatusOptionsEnum.occupied) {
+      filtered = filtered.filter((room) => room.is_busy);
+    }
+
+    // Filtro por nombre
+    if (roomKeywordSelected.trim() !== "") {
+      filtered = filtered.filter((room) =>
+        room.name.toLowerCase().includes(roomKeywordSelected.toLowerCase())
+      );
+    }
+
+    return filtered;
+  }, [roomsData, roomStatusSelected, roomKeywordSelected]);
+
   return {
     countRoomsByStatus,
     calculateRoomsByStatus,
+    filterRooms
   };
 };
