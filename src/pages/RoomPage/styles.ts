@@ -87,14 +87,6 @@ export const ReservationItem = styled.div`
   box-sizing: border-box;
 `;
 
-export const ResLeft = styled.div`
-  display: flex;
-  align-items: start;
-  gap: 12px;
-  min-width: 0;
-  flex: 1;
-`;
-
 export const Avatar = styled.div`
   width: 40px;
   height: 40px;
@@ -131,16 +123,6 @@ export const ResInfo = styled.div`
     color: #6b7280; 
     font-size: 12px; 
   }
-`;
-
-export const EventStatusInProgress = styled.span`
-  color: #2b62daff !important;
-  font-weight: 600;
-`;
-
-export const EventStatusOverlapping = styled.span`
-  color: #ef4343 !important;
-  font-weight: 600;
 `;
 
 export const ResRight = styled.div`

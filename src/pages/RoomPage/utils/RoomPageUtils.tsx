@@ -31,10 +31,8 @@ export function getDayName(dateInput: string | Date): string {
 
 export function cleanEventTitle(title: string): string {
   return title
-    .replace(/\s*-\s*Evento en Curso\s*/i, '')
-    .replace(/\s*En Curso\s*/i, '')
     .replace(/\s*Superpuesto\s*/i, '')
-    .replace(/⏱️|⚠️/g, '') // Remove clock emojis
+    .replace(/⚠️/g, '') 
     .replace(/^\s*-\s*/, '') 
     .replace(/\s*-\s*$/, '') 
     .trim();

@@ -1,7 +1,7 @@
 export const isEventFinished = (endTime: Date | string): boolean => {
   const now = new Date();
   const eventEndTime = new Date(endTime);
-  return eventEndTime <= now;
+  return eventEndTime < now;
 };
 
 export const isEventInProgress = (startTime: Date | string, endTime: Date | string): boolean => {
@@ -20,7 +20,7 @@ export const getEventStatus = (startTime: Date | string, endTime: Date | string)
     return 'finished';
   }
   
-  if (now >= eventStartTime && now <= eventEndTime) {
+  if (now >= eventStartTime && now < eventEndTime) {
     return 'in-progress';
   }
   
