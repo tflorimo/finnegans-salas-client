@@ -5,3 +5,7 @@ export type PrivateRouteProps = {
 };
 
 export type PublicRouteProps = PrivateRouteProps;
+
+export type AdminRouteProps = {
+  children: React.ReactNode;
+}
