@@ -29,3 +29,32 @@ export function getDayName(dateInput: string | Date): string {
   return days[date.getDay()];
 }
 
+export function cleanEventTitle(title: string): string {
+  return title
+    .replace(/\s*-\s*Evento en Curso\s*/i, '')
+    .replace(/\s*En Curso\s*/i, '')
+    .replace(/\s*Superpuesto\s*/i, '')
+    .replace(/⏱️|⚠️/g, '') // Remove clock emojis
+    .replace(/^\s*-\s*/, '') 
+    .replace(/\s*-\s*$/, '') 
+    .trim();
+}
+
+export function sortEligibleEvents<T extends { id: string; startTime: string | Date }>(
+  events: T[],
+  currentEventId?: string
+): T[] {
+  return events.sort((a, b) => {
+    const timeA = new Date(a.startTime).getTime();
+    const timeB = new Date(b.startTime).getTime();
+    
+    if (timeA === timeB) {
+      const isACurrentEvent = currentEventId === a.id;
+      const isBCurrentEvent = currentEventId === b.id;
+      if (isACurrentEvent) return -1;
+      if (isBCurrentEvent) return 1;
+    }
+    
+    return timeA - timeB;
+  });
+}
