@@ -53,7 +53,11 @@ export const RoomItem = ({ room }: RoomItemProps) => {
 
       <RoomEventsSectionStyles>
         {roomTimes.events.slice(0, 3).map((event) => (
-          <RoomEventItem key={event.id} event={event} />
+          <RoomEventItem 
+            key={event.id} 
+            event={event} 
+            currentEventId={roomTimes.current_event?.id}
+          />
         ))}
       </RoomEventsSectionStyles>
     </CardContainer>

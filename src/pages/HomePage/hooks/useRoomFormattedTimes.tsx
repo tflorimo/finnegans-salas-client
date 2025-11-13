@@ -16,11 +16,15 @@ export const useRoomFormattedTimes = (room: RoomResponseDTO | null): FormattedRo
           }
         : null,
       events: Array.isArray(room.events)
-        ? room.events.map((event) => ({
-            ...event,
-            startTime: formatTime(event.startTime),
-            endTime: formatTime(event.endTime),
-          }))
+        ? room.events
+            .sort((a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime())
+            .map((event) => ({
+              ...event,
+              startTime: formatTime(event.startTime),
+              endTime: formatTime(event.endTime),
+              originalStartTime: event.startTime, 
+              originalEndTime: event.endTime, 
+            }))
         : [],
     };
   }, [room]);
