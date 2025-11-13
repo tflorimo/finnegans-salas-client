@@ -1,10 +1,4 @@
-export const ACTION_TYPES = {
-  login: "[Auth] Login",
-  logout: "[Auth] Logout",
-};
-
 export type AuthState = {
-  logged: boolean;
   userEmail: string | null;
   authToken: string | null;
 };
