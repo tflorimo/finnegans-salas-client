@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import LogoFinnegans from "../../../assets/images/logoFinnegans.svg";
 import { AuthContext } from "../../../context/auth/authContext";
+import { decodeJwt } from "../../utils/decodeJwt.utils";
 import {
   TopBar,
   TopBarInner,
@@ -16,7 +17,11 @@ import {
  */
 export const Header = () => {
 
-  const { logout } = useContext(AuthContext)
+  const { authToken, logout } = useContext(AuthContext)
+
+  const decodedToken = authToken ? decodeJwt(authToken) : null;
+  const isAdmin = decodedToken?.role === "admin";
+
   return (
     <TopBar>
       <TopBarInner>
@@ -41,7 +46,7 @@ export const Header = () => {
               };
             }}
           >
-            <Settings size={20} />
+            {isAdmin && <Settings size={20} />}
           </NavLink>
           <LogOut size={20} onClick={() => logout()} />
         </TopBarRight>

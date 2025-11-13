@@ -1,22 +1,22 @@
 import { useContext } from "react";
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
+import { AuthContext } from "../context/auth/authContext";
 import { AuthCallback } from "../pages/LoginPage/AuthCallback";
 import { LoginPage } from "../pages/LoginPage/LoginPage";
 import { FinnegansRoutes } from "../routes/FinnegansRoutes";
-import { AuthContext } from "../context/auth/authContext";
 import { PrivateRoute } from "./PrivateRoute";
 import { PublicRoute } from "./PublicRoute";
 
 export const AppRouter = () => {
-  const { logged } = useContext(AuthContext);
+  const { authToken } = useContext(AuthContext);
 
   return (
     <Routes>
       <Route
         path="/"
-        element={<Navigate to={logged ? "/home" : "/login"} replace />}
+        element={<Navigate to={authToken ? "/home" : "/login"} replace />}
       />
-      
+
       <Route
         path="login"
         element={
