@@ -11,7 +11,7 @@ export const RoomEventItem = ({ event, currentEventId }: RoomEventTimeProps) => 
     <RoomEventItemStyles>
       <p title={event.title}>{truncateTextByLength(event.title, 20)}</p>
       <RoomEventTimeSectionStyles>
-        {event.originalStartTime && event.originalEndTime ? (
+        {event.originalStartTime && event.originalEndTime && (
           <EventStatusIcon
             startTime={event.originalStartTime}
             endTime={event.originalEndTime}
@@ -23,15 +23,6 @@ export const RoomEventItem = ({ event, currentEventId }: RoomEventTimeProps) => 
             InProgressWrapper={InProgressEventIconWrapper}
             UpcomingWrapper={EventIconWrapper}
           />
-        ) : (
-          <EventIconWrapper>
-            <EventStatusIcon
-              startTime={new Date()}
-              endTime={new Date()}
-              size={14}
-              upcomingColor={ROOM_PAGE_COLORS.roomText}
-            />
-          </EventIconWrapper>
         )}
         <p>{`${startTime} - ${endTime}`}</p>
       </RoomEventTimeSectionStyles>

@@ -1,7 +1,6 @@
 import { useMemo } from "react";
 import type { EventResponseDTO } from "../../../shared/types/event.types";
 import { isEventFinished } from "../../../shared/utils/event.utils";
-
 interface UseFilteredReservationsReturn {
   todayReservations: EventResponseDTO[];
   weekReservations: EventResponseDTO[];
