@@ -1,5 +1,5 @@
-import { useState, type ReactNode } from "react";
-import { AuthContext } from "./authContext";
+import { useCallback, useState, type ReactNode } from "react";
+import { authService } from "../../services/auth/auth.service";
 import {
   clearAuthToken,
   clearStoredUserEmail,
@@ -8,19 +8,16 @@ import {
   setAuthToken,
   setStoredUserEmail,
 } from "../../shared/utils/localStorage.utils";
-import { authService } from "../../services/auth/auth.service";
-import { useCallback } from "react";
+import { AuthContext } from "./authContext";
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [authToken, setAuthTokenState] = useState<string | null>(getAuthToken());
-  const [logged, setLogged] = useState<boolean>(() => authToken !== null);
   const [userEmail, setUserEmail] = useState<string | null>(getStoredUserEmail());
 
   const login = (token: string, email: string) => {
     setAuthToken(token);
     setStoredUserEmail(email);
     setAuthTokenState(token);
-    setLogged(true);
     setUserEmail(email);
   };
 
@@ -33,13 +30,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       clearAuthToken();
       clearStoredUserEmail();
       setAuthTokenState(null);
-      setLogged(false);
       setUserEmail(null);
     }
   }, []);
 
   return (
-    <AuthContext.Provider value={{ logged, userEmail, authToken, login, logout }}>
+    <AuthContext.Provider value={{ userEmail, authToken, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
