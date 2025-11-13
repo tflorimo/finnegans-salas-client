@@ -14,6 +14,8 @@ export interface RoomResponseDTO {
 export interface FormattedEventDTO extends Omit<EventResponseDTO, 'startTime' | 'endTime'> {
     startTime: string;
     endTime: string;
+    originalStartTime?: Date | string; 
+    originalEndTime?: Date | string; 
 }
 export interface FormattedRoomResponseDTO extends Omit<RoomResponseDTO, 'events' | 'current_event'> {
     events: FormattedEventDTO[];
