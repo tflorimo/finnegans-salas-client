@@ -1,4 +1,9 @@
 import styled, { css } from "styled-components";
+import { 
+  EventIconWrapper as SharedEventIconWrapper,
+  FinishedEventIconWrapper as SharedFinishedEventIconWrapper, 
+  InProgressEventIconWrapper as SharedInProgressEventIconWrapper 
+} from "../../shared/components/EventStatusIcon";
 
 export const ROOM_PAGE_COLORS = {
   roomTitle: "#0f172a",
@@ -151,4 +156,16 @@ export const RoomEventTimeSectionStyles = styled.div`
     margin: 0;
     font-weight: normal;
   }
+`;
+
+export const EventIconWrapper = styled(SharedEventIconWrapper)`
+  margin-right: 0.25rem;
+`;
+
+export const FinishedEventIconWrapper = styled(SharedFinishedEventIconWrapper)`
+  margin-right: 0.25rem;
+`;
+
+export const InProgressEventIconWrapper = styled(SharedInProgressEventIconWrapper)`
+  margin-right: 0.25rem;
 `;
