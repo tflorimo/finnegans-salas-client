@@ -1,13 +1,14 @@
 import { useState } from "react";
-import { SideBar } from "../../shared/components/SideBar/SideBar";
-import Header from "../../shared/components/Header/Header";
 import { BackButton } from "../../shared/components/BackButton/BackButton";
-import { useGetAdminEvents } from "./hooks/useGetAdminEvents";
-//import { useFilteredEvents } from "./hooks/useFilteredEvents";
-import { EventsTable } from "./components/EventsTable";
-import { EventsToolbar } from "./components/EventsToolbar";
-import { ADMIN_EVENTS_MESSAGES } from "./constants/AdminEvents.constants";
+import { FilterToolbar } from "../../shared/components/FilterToolbar/FilterToolbar";
+import Header from "../../shared/components/Header/Header";
+import { SideBar } from "../../shared/components/SideBar/SideBar";
 import type { EventResponseDTO } from "../../shared/types/event.types";
+import { EventDetailsModal } from "./components/EventDetailsModal";
+import { EventsTable } from "./components/EventsTable";
+import { ADMIN_EVENTS_MESSAGES, EVENT_FILTER_PLACEHOLDER } from "./constants/AdminEvents.constants";
+import { useFilteredEvents } from "./hooks/useFilteredEvents";
+import { useGetAdminEvents } from "./hooks/useGetAdminEvents";
 import {
   AdminEventsContainer,
   AdminEventsPageWrapper,
@@ -17,15 +18,12 @@ import {
   PageInner,
   PageTitle,
 } from "./styles";
-import { EventDetailsModal } from "./components/EventDetailsModal";
 
-// TODO: Implementar búsqueda y filtrado de eventos
 export const AdminEventsPage = () => {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(false);
-  //const [eventSearched, setEventSearched] = useState<string>("");
   const [selectedEvent, setSelectedEvent] = useState<EventResponseDTO | null>(null);
-  const { events } = useGetAdminEvents();
-  //const filteredEvents = useFilteredEvents(events, eventSearched);
+  const { events = [] } = useGetAdminEvents();
+  const { filteredData, onKeywordSelected } = useFilteredEvents<EventResponseDTO>(events);
 
   return (
     <AdminEventsPageWrapper>
@@ -33,7 +31,7 @@ export const AdminEventsPage = () => {
         isCollapsed={isSidebarCollapsed}
         onToggle={() => setIsSidebarCollapsed((prevState) => !prevState)}
       />
-      
+
       <AdminHeaderWrapper $collapsed={isSidebarCollapsed}>
         <Header />
       </AdminHeaderWrapper>
@@ -47,10 +45,10 @@ export const AdminEventsPage = () => {
             </HeaderContent>
           </PageHeader>
 
-          <EventsToolbar />
+          <FilterToolbar placeholder={EVENT_FILTER_PLACEHOLDER} onKeywordSelected={onKeywordSelected} />
 
           <EventsTable
-            events={events}
+            events={filteredData}
             onView={(ev) => setSelectedEvent(ev)}
           />
 

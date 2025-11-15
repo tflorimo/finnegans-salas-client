@@ -28,4 +28,6 @@ export const TIMESTAMP_FORMAT_OPTIONS: Intl.DateTimeFormatOptions = {
   minute: '2-digit'
 };
 
+export const ADMIN_FILTER_PLACEHOLDER = 'Buscar por tipo de Log...';
+
 export const LOCALE_ES = 'es-ES';
