@@ -1,3 +1,5 @@
+import { ThemeContext } from "../../../context/theme/themeContext";
+import { useContext } from "react";
 import { useCheckInMessage } from "../hooks/useCheckInMessage";
 import {
   CheckInModalOverlay,
@@ -13,6 +15,7 @@ interface CheckInMessageModalProps {
 }
 
 export const CheckInMessageModal = ({ message, isSuccess, onClose }: CheckInMessageModalProps) => {
+  const {theme} = useContext(ThemeContext);
   const { shouldShowModal, handleOverlayClick, handleContentClick } = useCheckInMessage({
     message,
     isSuccess,
@@ -22,9 +25,9 @@ export const CheckInMessageModal = ({ message, isSuccess, onClose }: CheckInMess
   if (!shouldShowModal) return null;
 
   return (
-    <CheckInModalOverlay onClick={handleOverlayClick}>
+    <CheckInModalOverlay $theme={theme} onClick={handleOverlayClick}>
       <CheckInModalContent onClick={handleContentClick} $isSuccess={isSuccess ?? false}>
-        <CheckInMessageText>{message}</CheckInMessageText>
+        <CheckInMessageText $theme={theme}>{message}</CheckInMessageText>
         <CheckInCloseButton onClick={onClose}>Cerrar</CheckInCloseButton>
       </CheckInModalContent>
     </CheckInModalOverlay>
