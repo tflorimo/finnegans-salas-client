@@ -8,6 +8,19 @@ import { Tags, type TagProps } from "./types";
  * @param {TagProps} { icon, text, type, customStyle }
  * @return {JSX.Element}
  */
-export const Tag = ({ icon, text, customStyle, type = Tags.succesOutput }: TagProps): JSX.Element => {
-    return <TagStyled $type={type} $customStyle={customStyle}>{icon && icon} {text}</TagStyled>;
+export const Tag = ({
+  icon,
+  text,
+  customStyle,
+  type = Tags.succesOutput,
+  ...rest
+}: TagProps & Record<string, any>): JSX.Element => {
+  const themeProp = rest.$theme ?? rest.theme ?? "light";
+
+  const Styled: any = TagStyled;
+  return (
+    <Styled $type={type} $customStyle={customStyle} $theme={themeProp}>
+      {icon && icon} {text}
+    </Styled>
+  );
 }
