@@ -1,11 +1,9 @@
 import styled, { css } from "styled-components";
 
 export const ROOM_PAGE_COLORS = {
-  roomTitle: "#0f172a",
   roomTitleFree: "#16a249",
   roomTitleOccupied: "#ef4343",
-  roomText: "#64748b",
-  roomBorder: "#e5e7eb",
+  roomBorder: "#B6CBD5",
   roomBoxShadow: "#0000001a",
 };
 
@@ -42,12 +40,10 @@ export const AllRoomsCardContainerStyles = css`
   box-shadow: 0 1px 2px ${ROOM_PAGE_COLORS.roomBoxShadow};
   padding: 1.5rem;
   h2 {
-    color: ${ROOM_PAGE_COLORS.roomTitle};
     margin: 0 0 0.5rem;
     font-weight: bold;
   }
   p {
-    color: ${ROOM_PAGE_COLORS.roomText};
     margin: 0;
   }
 `;
@@ -59,12 +55,11 @@ export const FreeRoomsCardContainerStyles = css`
   box-shadow: 0 1px 2px ${ROOM_PAGE_COLORS.roomBoxShadow};
   padding: 1.5rem;
   h2 {
-    color: ${ROOM_PAGE_COLORS.roomTitleFree};
     margin: 0 0 0.5rem;
+    color: ${ROOM_PAGE_COLORS.roomTitleFree};
     font-weight: bold;
   }
   p {
-    color: ${ROOM_PAGE_COLORS.roomText};
     margin: 0;
   }
 `;
@@ -76,12 +71,11 @@ export const OccupiedRoomsCardContainerStyles = css`
   box-shadow: 0 1px 2px ${ROOM_PAGE_COLORS.roomBoxShadow};
   padding: 1.5rem;
   h2 {
-    color: ${ROOM_PAGE_COLORS.roomTitleOccupied};
     margin: 0 0 0.5rem;
+    color: ${ROOM_PAGE_COLORS.roomTitleOccupied};
     font-weight: bold;
   }
   p {
-    color: ${ROOM_PAGE_COLORS.roomText};
     margin: 0;
   }
 `;
@@ -104,7 +98,6 @@ export const RoomListContainerStyles = css`
   }
   
   p {
-    color: ${ROOM_PAGE_COLORS.roomText};
     margin: 0;
   }
 `;
@@ -116,7 +109,6 @@ export const RoomStatusSectionStyles = styled.div`
   align-items: center;
   h2 {
     font-size: 1.2rem;
-    color: ${ROOM_PAGE_COLORS.roomTitle};
     margin: 0 0 0.5rem;
     font-weight: bold;
   }
