@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Download } from 'lucide-react';
 import { SideBar } from '../../shared/components/SideBar/SideBar';
 import Header from '../../shared/components/Header/Header';
@@ -6,6 +6,7 @@ import { BackButton } from '../../shared/components/BackButton/BackButton';
 import { useLogsFetch } from './hooks/useLogsFetch';
 import { LogItem } from './components/LogItem';
 import { ADMIN_LOGS_MESSAGES } from './constants/AdminLogs.constants';
+import { ThemeContext } from '../../context/theme/themeContext';
 import {
   AdminLogsPageWrapper,
   AdminHeaderWrapper,
@@ -28,6 +29,8 @@ export const AdminLogsPage = () => {
   const hasLogs = !loading && logs.length > 0;
   const isEmpty = !loading && logs.length === 0;
 
+  const {theme} = useContext(ThemeContext);
+
   return (
     <AdminLogsPageWrapper>
       <SideBar 
@@ -42,7 +45,7 @@ export const AdminLogsPage = () => {
           <BackButton />
           <PageHeader>
             <HeaderContent>
-              <PageTitle>{ADMIN_LOGS_MESSAGES.PAGE_TITLE}</PageTitle>
+              <PageTitle $theme={theme}>{ADMIN_LOGS_MESSAGES.PAGE_TITLE}</PageTitle>
               <ExportButton onClick={() => {}}>
                 <Download />
                 {ADMIN_LOGS_MESSAGES.EXPORT_BUTTON}
@@ -65,7 +68,7 @@ export const AdminLogsPage = () => {
             )}
 
             {hasLogs && (
-              <LogsGrid>
+              <LogsGrid $theme={theme}>
                 {logs.map((log) => (
                   <LogItem key={log.id} log={log} />
                 ))}
