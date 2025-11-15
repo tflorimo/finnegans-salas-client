@@ -1,4 +1,6 @@
 import styled, { css } from "styled-components";
+import type { ThemeType } from "../../theme/Types";
+import { themes } from "../../theme/Theme";
 
 export const RoomPageContainer = styled.div`
   width: 100%;
@@ -6,6 +8,11 @@ export const RoomPageContainer = styled.div`
   padding: 5px 20px 10px;
   box-sizing: border-box;
   overflow-x: hidden;
+
+  min-height: 100vh;
+  background: #f9f9fa;
+  padding-bottom: 80px;
+
   @media (min-width: 768px) { padding: 10px 40px 20px; }
   @media (min-width: 1024px) { padding: 10px 80px 20px; }
   @media (min-width: 1440px) { padding: 10px 160px 20px; }
@@ -40,7 +47,7 @@ export const ColumnaLateral = styled.aside`
   align-content: start;
 `;
 
-export const FilaEstado = styled.div`
+export const FilaEstado = styled.div<{ $theme: ThemeType }>`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -48,8 +55,8 @@ export const FilaEstado = styled.div`
   gap: 8px;
   border-top: 1px solid #eef2f7;
   &:first-of-type { border-top: none; }
-  span { color: #6b7280; font-size: 14px; }
-  strong { color: #0f172a; font-weight: 700; font-size: 14px; }
+  span { color: ${({ $theme }) => themes[$theme].TEXT_COLOR}; font-size: 14px; }
+  strong { color: ${({ $theme }) => themes[$theme].TEXT_COLOR}; font-weight: 700; font-size: 14px; }
 `;
 
 export const QRBox = styled.div`
@@ -97,19 +104,19 @@ export const Avatar = styled.div`
   font-size: 14px;
 `;
 
-export const ResInfo = styled.div`
+export const ResInfo = styled.div<{ $theme: ThemeType }>`
   display: flex;
   flex-direction: column;
   line-height: 1.2;
-  span { color: #0f172a; font-weight: 700; font-size: 14px; white-space: nowrap; }
-  small { color: #6b7280; font-size: 12px; }
+  span { color: ${({ $theme }) => themes[$theme].TEXT_COLOR}; font-weight: 700; font-size: 14px; white-space: nowrap; }
+  small { color: ${({ $theme }) => themes[$theme].TEXT_COLOR}; font-size: 12px; }
 `;
 
-export const ResRight = styled.div`
+export const ResRight = styled.div<{ $theme: ThemeType }>`
   display: inline-flex;
   align-items: center;
   gap: 430px;
-  color: #0f172a;
+  color: ${({ $theme }) => themes[$theme].TEXT_COLOR};
   font-weight: 600;
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
@@ -123,8 +130,8 @@ export const RoomInfoCardStyle = css`
   h1, h2 { margin-top: 0; }
 `;
 
-export const ReservationsCardStyle = css`
-  h1 { color: rgba(0, 0, 0, 1); margin-bottom: 8px; font-size: 24px; }
+export const ReservationsCardStyle = css<{ $theme: ThemeType }>`
+  h1 { color: ${({ $theme }) => themes[$theme].TEXT_COLOR};; margin-bottom: 8px; font-size: 24px; }
 `;
 
 export const CurrentStatusCardStyle = css`
@@ -137,11 +144,11 @@ export const QRCardStyle = css`
   width: 100%;
   text-align: center;
   h3 { margin: 0 0 12px; font-size: 18px; font-weight: 700; }
-  p { margin: 0 0 16px; color: #64748b; font-size: 14px; }
+  p { margin: 0 0 16px; color: #ffffffff; font-size: 14px; }
 `;
 
-export const TitleStyle = styled.h2`
-  color: rgba(0, 0, 0, 1);
+export const TitleStyle = styled.h2<{ $theme: ThemeType }>`
+  color: ${({ $theme }) => themes[$theme].TEXT_COLOR};
   margin-bottom: 8px;
   margin-top: -8px; 
   font-size: 20px; 
@@ -154,12 +161,12 @@ export const EquipmentContainer = styled.div`
   flex-wrap: wrap;
 `;
 
-export const CheckInButtonStyle = css`
+export const CheckInButtonStyle = css<{ $theme: ThemeType }>`
   width: 100%;
   justify-content: center;
   gap: 10px;
   background: rgba(0, 66, 206, 1);
-  color: rgba(255, 255, 255, 1);
+  color: ${({ $theme }) => themes[$theme].TEXT_COLOR};
   border: 1px solid #e2e8f0;
   box-shadow: 0 2px 8px rgba(2, 8, 23, 0.05);
   &:hover { background: rgba(92, 0, 104, 1); }
@@ -178,18 +185,18 @@ export const RoomHeaderInfo = styled.div`
   flex-direction: column;
 `;
 
-export const RoomTitle = styled.h1`
-  color: rgba(0, 0, 0, 1);
+export const RoomTitle = styled.h1<{ $theme: ThemeType }>`
+  color: ${({ $theme }) => themes[$theme].TEXT_COLOR};
   margin: 0;
   font-size: 24px;
   font-weight: 700;
 `;
 
-export const RoomCapacityInfo = styled.div`
+export const RoomCapacityInfo = styled.div<{ $theme: ThemeType }>`
   display: flex;
   align-items: center;
   gap: 8px;
-  color: rgba(0, 0, 0, 1);
+  color: ${({ $theme }) => themes[$theme].TEXT_COLOR};
   font-size: 14px;
   margin-top: 6px;
 `;
@@ -197,33 +204,33 @@ export const RoomCapacityInfo = styled.div`
 export const EQUIPMENT_ICON_SIZE = 18;
 export const EQUIPMENT_ICON_COLOR = '#2563eb';
 
-export const EquipmentTagStyle = css`
+export const EquipmentTagStyle = css<{ $theme: ThemeType }>`
   background: #f9fafb;
-  color: #0f172a;
+  color: ${({ $theme }) => themes[$theme].TEXT_COLOR};
   font-weight: 500;
   padding: 8px 12px;
   gap: 6px;
 `;
 
-export const CheckInSubtitle = styled.p`
+export const CheckInSubtitle = styled.p<{ $theme: ThemeType }>`
   font-size: 0.875rem;
-  color: #666;
+  color: ${({ $theme }) => themes[$theme].TEXT_COLOR};
   margin-bottom: 1rem;
   text-align: center;
 `;
 
-export const NoEquipmentMessage = styled.p`
+export const NoEquipmentMessage = styled.p<{ $theme: ThemeType }>`
   font-size: 0.875rem;
-  color: #666;
+  color: ${({ $theme }) => themes[$theme].TEXT_COLOR};
 `;
 
-export const CheckInModalOverlay = styled.div`
+export const CheckInModalOverlay = styled.div<{ $theme: ThemeType }>`
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: ${({ $theme }) => themes[$theme].BACKGROUND_COLOR};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -241,10 +248,10 @@ export const CheckInModalContent = styled.div<{ $isSuccess: boolean }>`
   text-align: center;
 `;
 
-export const CheckInMessageText = styled.p`
+export const CheckInMessageText = styled.p<{ $theme: ThemeType }>`
   margin: 0 0 1.5rem 0;
   font-size: 1rem;
-  color: #343a40;
+  color: ${({ $theme }) => themes[$theme].TEXT_COLOR};
   text-align: center;
 `;
 
@@ -271,9 +278,9 @@ export const ErrorMessage = styled.p`
   margin: 0;
 `;
 
-export const NoReservationsMessage = styled.p`
+export const NoReservationsMessage = styled.p<{ $theme: ThemeType }>`
   text-align: center;
-  color: #9ca3af;
+  color: ${({ $theme }) => themes[$theme].TEXT_COLOR};
   font-size: 0.875rem;
   padding: 1rem 0;
   margin: 0;
