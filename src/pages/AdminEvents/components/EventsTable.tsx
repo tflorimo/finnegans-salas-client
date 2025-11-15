@@ -1,8 +1,10 @@
 import { CardContainer } from "../../../components/CardContainer/CardContainer";
+import { ThemeContext } from "../../../context/theme/themeContext";
 import type { EventResponseDTO } from "../../../shared/types/event.types";
 import { ADMIN_EVENTS_MESSAGES, TABLE_HEADERS } from "../constants/AdminEvents.constants";
 import { EmptyState, Table, tableCardStyle } from "../styles";
 import { EventTableRow } from "./EventTableRow";
+import { useContext } from "react";
 
 interface EventsTableProps {
   events: EventResponseDTO[];
@@ -10,9 +12,10 @@ interface EventsTableProps {
 }
 
 export const EventsTable = ({ events, onView }: EventsTableProps) => {
+  const { theme } = useContext(ThemeContext);
   return (
     <CardContainer customStyle={tableCardStyle}>
-      <Table>
+      <Table $theme={theme}>
         <thead>
           <tr>
             <th>{TABLE_HEADERS.EVENT}</th>
