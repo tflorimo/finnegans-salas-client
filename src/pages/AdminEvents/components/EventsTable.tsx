@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { CardContainer } from "../../../components/CardContainer/CardContainer";
 import type { EventResponseDTO } from "../../../shared/types/event.types";
 import { ADMIN_EVENTS_MESSAGES, TABLE_HEADERS } from "../constants/AdminEvents.constants";
@@ -9,7 +10,7 @@ interface EventsTableProps {
   onView: (event: EventResponseDTO) => void;
 }
 
-export const EventsTable = ({ events, onView }: EventsTableProps) => {
+export const EventsTable = memo(({ events, onView }: EventsTableProps) => {
   return (
     <CardContainer customStyle={tableCardStyle}>
       <Table>
@@ -43,4 +44,5 @@ export const EventsTable = ({ events, onView }: EventsTableProps) => {
       </Table>
     </CardContainer>
   );
-};
+});
+

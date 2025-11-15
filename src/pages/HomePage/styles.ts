@@ -31,8 +31,9 @@ export const RoomListContainer = styled(RoomStatusContainer)`
 `;
 
 export const SelectFilterContainer = styled(RoomStatusContainer)`
+  display: flex;
   justify-content: flex-start;
-  aligmn-items: center;
+  align-items: center;
 `;
 
 export const AllRoomsCardContainerStyles = css`
