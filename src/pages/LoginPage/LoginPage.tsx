@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import LogoFinnegans from "../../assets/images/logoFinnegans.svg";
+import LogoFinnegans from "../../assets/images/Finnegans Logo Principal Celeste.svg";
 import { Button } from "../../components/Button/Button";
 import { CardContainer } from "../../components/CardContainer/CardContainer";
 import {
@@ -61,7 +61,6 @@ export const LoginPage = () => {
               height={60}
             />
           </div>
-          <h1>Finnegans</h1>
           <p className="subtitle">Reservas de Sala In-Situ</p>
           <p className="description">
             Gestiona y reserva salas de manera eficiente
