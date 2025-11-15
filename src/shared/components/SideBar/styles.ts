@@ -1,13 +1,15 @@
 import styled from "styled-components";
+import { themes } from "../../../theme/Theme";
+import type { ThemeType } from "../../../theme/Types";
 
 export const SIDEBAR_WIDTH = 240;
 export const SIDEBAR_COLLAPSED_WIDTH = 80;
 
-export const SideBarContainer = styled.aside<{ $collapsed: boolean }>`
+export const SideBarContainer = styled.aside<{ $theme: ThemeType, $collapsed: boolean }>`
   width: ${({ $collapsed }) => ($collapsed ? `${SIDEBAR_COLLAPSED_WIDTH}px` : `${SIDEBAR_WIDTH}px`)};
   min-height: 100vh;
-  background: #f8fafc;
-  border-right: 1px solid #e2e8f0;
+  background: ${({ $theme }) => themes[$theme].SIDEBAR_COLOR};
+  border-right: 1px solid ${({ $theme }) => themes[$theme].SIDEBAR_COLOR};
   padding: 24px 0;
   position: fixed;
   left: 0;
@@ -60,19 +62,19 @@ export const SideBarHeader = styled.div<{ $collapsed: boolean }>`
   transition: padding 0.25s ease;
 `;
 
-export const SideBarTitle = styled.h2`
+export const SideBarTitle = styled.h2<{ $theme: ThemeType }>`
   font-size: 16px;
   font-weight: 700;
-  color: #1d4ed8;
+  color: ${({ $theme }) => themes[$theme].TEXT_SIDEBAR_COLOR};
   margin: 0 0 4px 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 `;
 
-export const SideBarSubtitle = styled.p`
+export const SideBarSubtitle = styled.p<{ $theme: ThemeType }>`
   font-size: 12px;
-  color: #64748b;
+  color: ${({ $theme }) => themes[$theme].TEXT_SIDEBAR_COLOR};
   margin: 0;
   white-space: nowrap;
   overflow: hidden;
