@@ -8,14 +8,14 @@ export const LoginPageContainer = styled.div`
   align-items: center;
   justify-content: center;
   gap: 32px;
-  background: #f6f7f9;
+  background: #08132f;
   padding: 24px;
   text-align: center;
   overflow: hidden;
 `;
 
 export const ImageFinnegans = styled.img`
-  width: 80px;
+  width: 800px;
   height: 80px;
   margin-bottom: 16px;
 `;
@@ -36,13 +36,13 @@ export const LoginHeader = styled.header`
 
   .subtitle {
     margin: 0;
-    color: #334155;
+    color: #ffffffff;
     font-size: 16px;
   }
 
   .description {
     margin: 0;
-    color: #64748b;
+    color: #ffffffb4;
     font-size: 14px;
   }
 `;
@@ -50,11 +50,11 @@ export const LoginHeader = styled.header`
 export const LoginFooter = styled.footer`
   margin-top: 16px;
   text-align: center;
-  color: #94a3b8;
+  color: #ffffffff;
   font-size: 12px;
 
   a {
-    color: #6366f1;
+    color: #b6b6b6ff;
     text-decoration: underline;
   }
 `;
@@ -63,13 +63,15 @@ export const LoginCardStyle = css`
   width: 450px;
   color: #0f172a;
 
+  background-color: #23688a;
+
   h2 {
-    color: #0f172a;
+    color: #ffffffff;
     margin: 0 0 0.5rem;
   }
 
   p.instruction {
-    color: #64748b;
+    color: #ffffffff;
     font-size: 14px;
   }
 `;
@@ -78,13 +80,13 @@ export const GoogleButtonStyle = css`
   width: 100%;
   justify-content: center;
   gap: 10px;
-  background: #fff;
-  color: #0f172a;
-  border: 1px solid #e2e8f0;
+  background: #174d68ff;
+  color: #ffffffd5;
+  border: 1px solid #23688a;
   box-shadow: 0 2px 8px rgba(2, 8, 23, 0.05);
 
   &:hover {
-    background: #f8fafc;
+    background: #2ed0d693;
   }
 `;
 
