@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { WHITE_COLOR } from "../../assets/colors/global-colors";
+import { SECONDARY_COLOR, WHITE_COLOR } from "../../assets/colors/global-colors";
 
 const INPUT_SEARCH_COLORS = {
   boder: "#dcdcdc",
@@ -7,6 +7,7 @@ const INPUT_SEARCH_COLORS = {
   borderFocus: "#1a73e8",
   boxShadowFocus: "rgba(26, 115, 232, 0.2)",
   textColor: "#374151",
+  containerColor: SECONDARY_COLOR,
   placeholderColor: "#9ca3af"
 };
 
@@ -15,6 +16,7 @@ export const InputContainer = styled.div`
   align-items: center;
   gap: 8px;
   width: 100%;
+  color: ${INPUT_SEARCH_COLORS.containerColor};
   background-color: ${WHITE_COLOR};
   border: 1px solid ${INPUT_SEARCH_COLORS.boder};
   border-radius: 8px;
