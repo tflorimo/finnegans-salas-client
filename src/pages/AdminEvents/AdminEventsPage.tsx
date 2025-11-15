@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { SideBar } from "../../shared/components/SideBar/SideBar";
 import Header from "../../shared/components/Header/Header";
 import { BackButton } from "../../shared/components/BackButton/BackButton";
@@ -18,6 +18,8 @@ import {
   PageTitle,
 } from "./styles";
 import { EventDetailsModal } from "./components/EventDetailsModal";
+import { ThemeContext } from '../../context/theme/themeContext';
+
 
 // TODO: Implementar búsqueda y filtrado de eventos
 export const AdminEventsPage = () => {
@@ -26,7 +28,7 @@ export const AdminEventsPage = () => {
   const [selectedEvent, setSelectedEvent] = useState<EventResponseDTO | null>(null);
   const { events } = useGetAdminEvents();
   //const filteredEvents = useFilteredEvents(events, eventSearched);
-
+const {theme} = useContext(ThemeContext);
   return (
     <AdminEventsPageWrapper>
       <SideBar
@@ -43,7 +45,7 @@ export const AdminEventsPage = () => {
           <BackButton />
           <PageHeader>
             <HeaderContent>
-              <PageTitle>{ADMIN_EVENTS_MESSAGES.PAGE_TITLE}</PageTitle>
+              <PageTitle $theme={theme}>{ADMIN_EVENTS_MESSAGES.PAGE_TITLE}</PageTitle>
             </HeaderContent>
           </PageHeader>
 
