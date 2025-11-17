@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { SIDEBAR_WIDTH, SIDEBAR_COLLAPSED_WIDTH } from '../../shared/components/SideBar/styles';
+import { SIDEBAR_COLLAPSED_WIDTH, SIDEBAR_WIDTH } from '../../shared/components/SideBar/styles';
 
 export const AdminLogsPageWrapper = styled.div`
   display: flex;
@@ -15,8 +15,7 @@ export const AdminHeaderWrapper = styled.div<{ $collapsed: boolean }>`
     `${$collapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_WIDTH}px`};
   right: 0;
   width: ${({ $collapsed }) =>
-    `calc(100% - ${
-      $collapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_WIDTH
+    `calc(100% - ${$collapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_WIDTH
     }px)`};
   z-index: 100;
   transition: left 0.25s ease, width 0.25s ease;
@@ -30,8 +29,7 @@ export const AdminHeaderWrapper = styled.div<{ $collapsed: boolean }>`
 export const AdminLogsContainer = styled.div<{ $collapsed: boolean }>`
   flex: 1;
   max-width: ${({ $collapsed }) =>
-    `calc(100vw - ${
-      $collapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_WIDTH
+    `calc(100vw - ${$collapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_WIDTH
     }px)`};
   margin-left: ${({ $collapsed }) =>
     `${$collapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_WIDTH}px`};
@@ -70,8 +68,10 @@ export const PageHeader = styled.header`
 
 export const HeaderContent = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  gap: 1rem;
+  flex-direction: column;
+  align-items: stretch;
+  margin: 1.5rem 0 0 0.8rem;
 `;
 
 export const PageTitle = styled.h1`
@@ -202,6 +202,12 @@ export const EmptyState = styled.div`
     font-size: 14px;
     margin: 0;
   }
+`;
+
+export const FilterLogsContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 export const LogItemCardStyle = css`

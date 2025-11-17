@@ -5,7 +5,7 @@ export interface AttendeeDTO {
     responseStatus: ResponseStatus;
     resource: boolean;
 }
-export interface EventResponseDTO {
+export type EventResponseDTO = {
     id: string;
     creatorMail: string;
     roomEmail: string;

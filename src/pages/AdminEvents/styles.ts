@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { SIDEBAR_WIDTH, SIDEBAR_COLLAPSED_WIDTH } from "../../shared/components/SideBar/styles";
+import { SIDEBAR_COLLAPSED_WIDTH, SIDEBAR_WIDTH } from "../../shared/components/SideBar/styles";
 
 export const AdminEventsPageWrapper = styled.div`
   display: flex;
@@ -67,6 +67,7 @@ export const HeaderContent = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin: 0.5rem 0;
 `;
 
 export const PageTitle = styled.h1`
