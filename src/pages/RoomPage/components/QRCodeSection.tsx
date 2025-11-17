@@ -1,25 +1,24 @@
-import { QrCode } from "lucide-react";
-import { QRBox } from "../styles";
+import QRCodeLib from "react-qr-code";
+import { QRContainer } from "../styles";
+import { QR_CODE_CONFIG, QR_ROUTES } from "../constants/RoomPage.constants";
 
 interface QRCodeSectionProps {
-  qrImageUrl?: string;
-  roomName?: string;
+  roomEmail: string;
 }
 
-export const QRCodeSection = ({ qrImageUrl, roomName }: QRCodeSectionProps) => {
+export const QRCodeSection = ({ roomEmail }: QRCodeSectionProps) => {
+  const baseUrl = import.meta.env.VITE_APP_URL;
+  const qrUrl = `${baseUrl}${QR_ROUTES.CHECK_IN(roomEmail)}`;
+
   return (
-    <QRBox>
-      {qrImageUrl ? (
-        <img
-          src={qrImageUrl}
-          alt={`QR ${roomName}`}
-          width={120}
-          height={120}
-          style={{ borderRadius: 8 }}
-        />
-      ) : (
-        <QrCode size={56} />
-      )}
-    </QRBox>
+    <QRContainer>
+      <QRCodeLib
+        value={qrUrl}
+        size={QR_CODE_CONFIG.SIZE}
+        level={QR_CODE_CONFIG.LEVEL}
+        bgColor={QR_CODE_CONFIG.BG_COLOR}
+        fgColor={QR_CODE_CONFIG.FG_COLOR}
+      />
+    </QRContainer>
   );
 };
