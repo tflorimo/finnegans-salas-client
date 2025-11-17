@@ -1,13 +1,22 @@
 import type { EventResponseDTO } from "../../../shared/types/event.types";
 import type { RoomResponseDTO } from "../../../shared/types/room.types";
 
-export const isWithinCheckInTimeWindow = (startTime: Date | string): boolean => {
+export const isCheckInAlreadyDoneError = (errorMessage: string): boolean => {
+  const lowerMessage = errorMessage.toLowerCase();
+  return (
+    lowerMessage.includes('ya tiene el check-in realizado') ||
+    lowerMessage.includes('check-in realizado')
+  );
+};
+
+export const isWithinCheckInTimeWindow = (startTime: Date | string, endTime: Date | string): boolean => {
   const now = new Date();
   const eventStartTime = new Date(startTime);
-  const thirtyMinutesBefore = new Date(eventStartTime.getTime() - 30 * 60 * 1000);
+  const eventEndTime = new Date(endTime);
+  const tenMinutesBefore = new Date(eventStartTime.getTime() - 10 * 60 * 1000);
   const fifteenMinutesAfter = new Date(eventStartTime.getTime() + 15 * 60 * 1000);
 
-  return now >= thirtyMinutesBefore && now <= fifteenMinutesAfter;
+  return now >= tenMinutesBefore && now <= fifteenMinutesAfter && now < eventEndTime;
 };
 
 export const isUserAttendee = (event: EventResponseDTO, userEmail: string): boolean => {
@@ -22,17 +31,15 @@ export const canCheckIn = (
     return false;
   }
 
-  // Verificar que el estado del check-in sea 'pending'
   if (event.checkInStatus !== 'pending') {
     return false;
   }
 
-  // Verificar que el usuario esté en la lista de asistentes
   if (!isUserAttendee(event, userEmail)) {
     return false;
   }
 
-  return isWithinCheckInTimeWindow(event.startTime);
+  return isWithinCheckInTimeWindow(event.startTime, event.endTime);
 };
 
 export const findCheckInEligibleEvent = (

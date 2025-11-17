@@ -7,10 +7,10 @@ interface UseCheckInMessageProps {
 
 export const useCheckInMessage = ({ message, isSuccess, onClose }: UseCheckInMessageProps) => {
   useEffect(() => {
-    if (message && isSuccess) {
+    if (message) {
       const timer = setTimeout(() => {
         onClose();
-      }, 3000);
+      }, isSuccess ? 3000 : 5000);
       return () => clearTimeout(timer);
     }
   }, [message, isSuccess, onClose]);
