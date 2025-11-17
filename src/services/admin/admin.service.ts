@@ -5,7 +5,6 @@ import { getErrorMessage } from "../../api/axios/axios.utils";
 import axiosInstance from "../../api/axios/axios.instance";
 import type { EventResponseDTO } from "../../shared/types/event.types";
 import axios from "axios";
-import { clearAuthToken } from "../../shared/utils/localStorage.utils";
 
 export const adminService = {
 
@@ -15,8 +14,7 @@ export const adminService = {
       return data;
     } catch (error) {
       if (axios.isAxiosError(error) && error.response?.status === 401) {
-        clearAuthToken();
-        return []; // Retorna array vacío para evitar errores en la UI
+        return []; 
       }
 
       throw error;
