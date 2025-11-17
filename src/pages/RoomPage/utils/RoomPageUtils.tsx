@@ -29,15 +29,6 @@ export function getDayName(dateInput: string | Date): string {
   return days[date.getDay()];
 }
 
-export function cleanEventTitle(title: string): string {
-  return title
-    .replace(/\s*Superpuesto\s*/i, '')
-    .replace(/⚠️/g, '') 
-    .replace(/^\s*-\s*/, '') 
-    .replace(/\s*-\s*$/, '') 
-    .trim();
-}
-
 export function sortEligibleEvents<T extends { id: string; startTime: string | Date }>(
   events: T[],
   currentEventId?: string
