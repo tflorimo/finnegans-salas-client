@@ -35,6 +35,8 @@ export const AppRouter = () => {
         }
       />
 
+      <Route path="qr-checkin/*" element={<FinnegansRoutes />} />
+
       <Route
         path="/*"
         element={

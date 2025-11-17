@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 
 import { AuthContext } from "../context/auth/authContext";
 import type { PublicRouteProps } from "./types";
@@ -10,8 +10,14 @@ import type { PublicRouteProps } from "./types";
  * @param {PublicRouteProps} { children }
  * @return {*} 
  */
+
 export const PublicRoute = ({ children }: PublicRouteProps) => {
     const { authToken } = useContext(AuthContext);
+    const location = useLocation();
+
+    if (location.pathname.includes('/auth/callback')) {
+        return <>{children}</>;
+    }
 
     return authToken ? <Navigate to="/home" replace /> : <>{children}</>;
 };
