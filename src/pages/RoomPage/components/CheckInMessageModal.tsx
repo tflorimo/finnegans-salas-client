@@ -8,12 +8,7 @@ import {
   CheckInCloseButton,
   CheckInModalIconWrapper,
 } from "../styles";
-
-interface CheckInMessageModalProps {
-  message: string | null;
-  isSuccess: boolean | null;
-  onClose: () => void;
-}
+import type { CheckInMessageModalProps } from "../types/RoomPage.types";
 
 export const CheckInMessageModal = ({ message, isSuccess, onClose }: CheckInMessageModalProps) => {
   const { shouldShowModal, handleOverlayClick, handleContentClick } = useCheckInMessage({

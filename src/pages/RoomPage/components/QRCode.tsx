@@ -1,10 +1,7 @@
 import QRCodeLib from "react-qr-code";
 import { QRContainer } from "../styles";
 import { QR_CODE_CONFIG, QR_ROUTES } from "../constants/RoomPage.constants";
-
-interface QRCodeProps {
-    roomEmail: string;
-}
+import type { QRCodeProps } from "../types/RoomPage.types";
 
 export const QRCode = ({ roomEmail }: QRCodeProps) => {
     const baseUrl = import.meta.env.VITE_APP_URL;

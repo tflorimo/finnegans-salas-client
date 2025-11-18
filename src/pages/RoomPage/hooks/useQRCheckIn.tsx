@@ -4,18 +4,7 @@ import { AuthContext } from "../../../context/auth/authContext";
 import { roomService } from "../../../services/rooms/room.service";
 import { findUserEligibleEvent, validateCheckInEligibility, isCheckInAlreadyDoneError } from "../utils/QR.utils";
 import { QR_MESSAGES, QR_ROUTES } from "../constants/RoomPage.constants";
-import type { RoomResponseDTO } from "../../../shared/types/room.types";
-
-interface QRCheckInState {
-    isProcessing: boolean;
-    message: string | null;
-    redirectPath: string | null;
-    roomData: RoomResponseDTO | null;
-}
-
-type CheckInResult =
-    | { success: true; message: string; roomData: RoomResponseDTO }
-    | { success: false; message: string; redirectPath: string; roomData?: RoomResponseDTO };
+import type { CheckInResult, QRCheckInState } from "../types/RoomPage.types";
 
 export const useQRCheckIn = (roomEmailProp?: string) => {
     const navigate = useNavigate();

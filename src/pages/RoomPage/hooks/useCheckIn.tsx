@@ -1,34 +1,12 @@
 import { useContext, useState, useCallback } from "react";
 import { AuthContext } from "../../../context/auth/authContext";
 import { roomService } from "../../../services/rooms/room.service";
-import type { RoomResponseDTO } from "../../../shared/types/room.types";
-import type { EventResponseDTO } from "../../../shared/types/event.types";
 import { CheckInStatus } from "../../../shared/types/event.types";
 import { findAllCheckInEligibleEvents, isCheckInAlreadyDoneError } from "../utils/CheckIn.utils";
 import { isEventInProgress } from "../../../shared/utils/event.utils";
-
-interface CheckInState {
-  isLoading: boolean;
-  message: string | null;
-  isSuccess: boolean | null;
-  checkingInEventId: string | null;
-}
-
-interface UseCheckInParams {
-  onSuccess?: (room: RoomResponseDTO) => void;
-}
-
-type CheckInValidation =
-  | {
-      isValid: true;
-      event: EventResponseDTO;
-      room: RoomResponseDTO;
-      userEmail: string;
-    }
-  | {
-      isValid: false;
-      error: string;
-    };
+import type { RoomResponseDTO } from "../../../shared/types/room.types";
+import type { EventResponseDTO } from "../../../shared/types/event.types";
+import type { CheckInState, CheckInValidation, UseCheckInParams } from "../types/RoomPage.types";
 
 export const useCheckIn = ({ onSuccess }: UseCheckInParams = {}) => {
   const { userEmail } = useContext(AuthContext);
@@ -38,7 +16,6 @@ export const useCheckIn = ({ onSuccess }: UseCheckInParams = {}) => {
     isSuccess: null,
     checkingInEventId: null,
   });
-
 
   const getEligibleEvents = useCallback(
     (room: RoomResponseDTO | undefined): EventResponseDTO[] => {
@@ -68,8 +45,8 @@ export const useCheckIn = ({ onSuccess }: UseCheckInParams = {}) => {
         };
       }
 
-      return { 
-        isValid: true, 
+      return {
+        isValid: true,
         event,
         room,
         userEmail
@@ -112,7 +89,7 @@ export const useCheckIn = ({ onSuccess }: UseCheckInParams = {}) => {
   const handleCheckIn = useCallback(
     async (room: RoomResponseDTO | undefined, eventId: string) => {
       const validation = validateCheckIn(room, eventId);
-      
+
       if (!validation.isValid) {
         setState((prev) => ({
           ...prev,

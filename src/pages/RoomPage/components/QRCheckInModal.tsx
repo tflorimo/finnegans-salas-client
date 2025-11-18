@@ -9,12 +9,7 @@ import {
   QRModalLoader,
 } from "../styles";
 import { QR_MESSAGES } from "../constants/RoomPage.constants";
-
-interface QRCheckInModalProps {
-  isProcessing: boolean;
-  message: string | null;
-  onClose: () => void;
-}
+import type { QRCheckInModalProps } from "../types/RoomPage.types";
 
 export const QRCheckInModal = ({ isProcessing, message, onClose }: QRCheckInModalProps) => {
   if (!isProcessing && !message) return null;
