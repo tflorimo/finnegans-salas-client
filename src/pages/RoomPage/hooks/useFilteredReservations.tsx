@@ -18,21 +18,23 @@ export const useFilteredReservations = (
     const now = new Date();
     const today = new Date();
     today.setHours(0, 0, 0, 0);
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
 
     const todayReservations = events
       .filter((event) => {
-        const eventDate = new Date(event.date);
-        eventDate.setHours(0, 0, 0, 0);
+        const eventStartTime = new Date(event.startTime);
         const eventEndTime = new Date(event.endTime);
-        return eventDate.getTime() === today.getTime() && eventEndTime > now;
+        return eventEndTime > now && (eventStartTime >= today || eventEndTime >= today);
       })
       .sort((a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime());
 
     const weekReservations = events
       .filter((event) => {
-        const eventDate = new Date(event.date);
-        eventDate.setHours(0, 0, 0, 0);
-        return eventDate.getTime() > today.getTime();
+        const eventStartTime = new Date(event.startTime);
+        const eventEndTime = new Date(event.endTime);
+        
+        return eventStartTime >= tomorrow && eventEndTime > now;
       })
       .sort((a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime());
 

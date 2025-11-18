@@ -14,19 +14,27 @@ import {
   RoomListContainerStyles,
   RoomStatusSectionStyles,
 } from "../styles";
-import type { RoomItemProps } from "../types/RoomPage.types";
+import type { RoomItemProps } from "../types/HomePage.types";
 import { RoomEventItem } from "./RoomEventItem";
 import { useRoomFormattedTimes } from "../hooks/useRoomFormattedTimes";
+import { selectDisplayEvents } from "../utils/eventSelection.utils";
+import { encodeRoomEmail } from "../../../shared/utils/roomURL.utils";
 
 export const RoomItem = ({ room }: RoomItemProps) => {
   const navigate = useNavigate();
   const roomTimes = useRoomFormattedTimes(room);
 
   const handleClick = () => {
-    navigate(`/room/${room.email}`, { state: { room } });
+    const encodedId = encodeRoomEmail(room.email);
+    navigate(`/room/${encodedId}`, { state: { room } });
   };
 
   if (!roomTimes) return null;
+
+  const displayEvents = selectDisplayEvents(
+    roomTimes.events,
+    roomTimes.current_event?.id
+  );
 
   return (
     <CardContainer
@@ -52,10 +60,10 @@ export const RoomItem = ({ room }: RoomItemProps) => {
       </RoomInfoSectionStyles>
 
       <RoomEventsSectionStyles>
-        {roomTimes.events.slice(0, 3).map((event) => (
-          <RoomEventItem 
-            key={event.id} 
-            event={event} 
+        {displayEvents.map((event) => (
+          <RoomEventItem
+            key={event.id}
+            event={event}
             currentEventId={roomTimes.current_event?.id}
           />
         ))}

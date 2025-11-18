@@ -1,33 +1,12 @@
 import { useContext, useState, useCallback } from "react";
 import { AuthContext } from "../../../context/auth/authContext";
 import { roomService } from "../../../services/rooms/room.service";
+import { CheckInStatus } from "../../../shared/types/event.types";
+import { findAllCheckInEligibleEvents, isCheckInAlreadyDoneError } from "../utils/CheckIn.utils";
+import { isEventInProgress } from "../../../shared/utils/event.utils";
 import type { RoomResponseDTO } from "../../../shared/types/room.types";
 import type { EventResponseDTO } from "../../../shared/types/event.types";
-import { findAllCheckInEligibleEvents } from "../utils/CheckIn.utils";
-import { isEventInProgress } from "../../../shared/utils/event.utils";
-
-interface CheckInState {
-  isLoading: boolean;
-  message: string | null;
-  isSuccess: boolean | null;
-  checkingInEventId: string | null;
-}
-
-interface UseCheckInParams {
-  onSuccess?: (room: RoomResponseDTO) => void;
-}
-
-type CheckInValidation =
-  | {
-      isValid: true;
-      event: EventResponseDTO;
-      room: RoomResponseDTO;
-      userEmail: string;
-    }
-  | {
-      isValid: false;
-      error: string;
-    };
+import type { CheckInState, CheckInValidation, UseCheckInParams } from "../types/RoomPage.types";
 
 export const useCheckIn = ({ onSuccess }: UseCheckInParams = {}) => {
   const { userEmail } = useContext(AuthContext);
@@ -37,7 +16,6 @@ export const useCheckIn = ({ onSuccess }: UseCheckInParams = {}) => {
     isSuccess: null,
     checkingInEventId: null,
   });
-
 
   const getEligibleEvents = useCallback(
     (room: RoomResponseDTO | undefined): EventResponseDTO[] => {
@@ -58,19 +36,18 @@ export const useCheckIn = ({ onSuccess }: UseCheckInParams = {}) => {
         };
       }
 
-      const eligibleEvents = findAllCheckInEligibleEvents(room, userEmail);
-      const eventToCheckIn = eligibleEvents.find((event) => event.id === eventId);
+      const event = room.events?.find((e) => e.id === eventId);
 
-      if (!eventToCheckIn) {
+      if (!event) {
         return {
           isValid: false,
-          error: "El evento no está disponible para check-in",
+          error: "El evento no existe en esta sala",
         };
       }
 
-      return { 
-        isValid: true, 
-        event: eventToCheckIn,
+      return {
+        isValid: true,
+        event,
         room,
         userEmail
       };
@@ -86,23 +63,22 @@ export const useCheckIn = ({ onSuccess }: UseCheckInParams = {}) => {
     ): RoomResponseDTO => {
       const updatedEvents = room.events?.map((event) =>
         event.id === eventId
-          ? { ...event, checkInStatus: "checked_in" as const }
+          ? { ...event, checkInStatus: CheckInStatus.CHECKED_IN }
           : event
       );
-
-      const updatedCurrentEvent =
-        room.current_event?.id === eventId
-          ? { ...room.current_event, checkInStatus: "checked_in" as const }
-          : room.current_event;
 
       const eventIsInProgress = isEventInProgress(
         eventToCheckIn.startTime,
         eventToCheckIn.endTime
       );
 
+      const updatedCurrentEvent = eventIsInProgress && room.current_event?.id === eventId
+        ? { ...room.current_event, checkInStatus: CheckInStatus.CHECKED_IN }
+        : room.current_event;
+
       return {
         ...room,
-        is_busy: eventIsInProgress ? true : false,
+        is_busy: eventIsInProgress && room.current_event?.id === eventId ? true : room.is_busy,
         current_event: updatedCurrentEvent,
         events: updatedEvents,
       };
@@ -113,7 +89,7 @@ export const useCheckIn = ({ onSuccess }: UseCheckInParams = {}) => {
   const handleCheckIn = useCallback(
     async (room: RoomResponseDTO | undefined, eventId: string) => {
       const validation = validateCheckIn(room, eventId);
-      
+
       if (!validation.isValid) {
         setState((prev) => ({
           ...prev,
@@ -152,6 +128,15 @@ export const useCheckIn = ({ onSuccess }: UseCheckInParams = {}) => {
       } catch (error) {
         const errorMessage =
           error instanceof Error ? error.message : "Error al realizar check-in";
+
+        if (isCheckInAlreadyDoneError(errorMessage) && onSuccess && validatedRoom) {
+          try {
+            const refreshedRoom = await roomService.getRoom(validatedRoom.email);
+            onSuccess(refreshedRoom);
+          } catch (refreshError) {
+            console.error('Error al actualizar sala:', refreshError);
+          }
+        }
 
         setState((prev) => ({
           ...prev,

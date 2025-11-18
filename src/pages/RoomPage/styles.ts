@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import { FinishedEventIconWrapper, InProgressEventIconWrapper } from "../../shared/components/EventStatusIcon";
+import { SUCCESS_COLOR, DANGER_COLOR, DARK_COLOR, PRIMARY_COLOR, WHITE_COLOR } from "../../assets/colors/global-colors";
 
 export const FinishedEventIcon = FinishedEventIconWrapper;
 export const InProgressEventIcon = InProgressEventIconWrapper;
@@ -54,17 +55,6 @@ export const FilaEstado = styled.div`
   &:first-of-type { border-top: none; }
   span { color: #6b7280; font-size: 14px; }
   strong { color: #0f172a; font-weight: 700; font-size: 14px; }
-`;
-
-export const QRBox = styled.div`
-  width: 160px;
-  height: 160px;
-  margin: 8px auto 0;
-  border-radius: 12px;
-  background: #eef2f7;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `;
 
 export const ReservationList = styled.div`
@@ -259,26 +249,33 @@ export const CheckInModalOverlay = styled.div`
 `;
 
 export const CheckInModalContent = styled.div<{ $isSuccess: boolean }>`
-  background: white;
+  background: ${WHITE_COLOR};
   padding: 2rem;
   border-radius: 12px;
   max-width: 400px;
   width: 90%;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  border-left: 4px solid ${({ $isSuccess }) => $isSuccess ? '#28a745' : '#dc3545'};
+  border-left: 4px solid ${({ $isSuccess }) => $isSuccess ? SUCCESS_COLOR : DANGER_COLOR};
   text-align: center;
+`;
+
+export const CheckInModalIconWrapper = styled.div`
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const CheckInMessageText = styled.p`
   margin: 0 0 1.5rem 0;
   font-size: 1rem;
-  color: #343a40;
+  color: ${DARK_COLOR};
   text-align: center;
 `;
 
 export const CheckInCloseButton = styled.button`
-  background: #007bff;
-  color: white;
+  background: ${PRIMARY_COLOR};
+  color: ${WHITE_COLOR};
   border: none;
   padding: 0.5rem 1.5rem;
   border-radius: 6px;
@@ -294,7 +291,7 @@ export const CheckInCloseButton = styled.button`
 
 export const ErrorMessage = styled.p`
   text-align: center;
-  color: #ef4444;
+  color: #000000;
   padding: 2rem;
   margin: 0;
 `;
@@ -340,5 +337,109 @@ export const ReservationSectionTitle = styled.div`
     width: 20px;
     height: 20px;
     color: #2563eb;
+  }
+`;
+
+// Estilos de QR
+export const QRContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 160px;
+  height: 160px;
+  margin: 8px auto 0;
+  padding: 12px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+`;
+
+export const QRModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+`;
+
+export const QRModalCard = styled.div`
+  background: white;
+  border-radius: 16px;
+  padding: 3rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+`;
+
+export const QRModalIcon = styled.div<{ $isSuccess?: boolean }>`
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: ${({ $isSuccess }) => ($isSuccess ? "#10b981" : "#6b7280")};
+  color: white;
+
+  svg {
+    width: 40px;
+    height: 40px;
+  }
+`;
+
+export const QRModalTitle = styled.h2`
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 1rem;
+`;
+
+export const QRModalMessage = styled.p`
+  font-size: 1rem;
+  color: #6b7280;
+  margin: 0 0 2rem;
+  line-height: 1.5;
+`;
+
+export const QRModalButton = styled.button`
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+
+  &:hover {
+    background: #1d4ed8;
+  }
+
+  &:disabled {
+    background: #9ca3af;
+    cursor: not-allowed;
+  }
+`;
+
+export const QRModalLoader = styled.div`
+  width: 40px;
+  height: 40px;
+  border: 4px solid #f3f4f6;
+  border-top: 4px solid #2563eb;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
   }
 `;

@@ -1,11 +1,12 @@
 import { css } from "styled-components";
+import { useState } from "react";
 import { Calendar } from "lucide-react";
 import { Button } from "../../components/Button/Button";
 import { CardContainer } from "../../components/CardContainer/CardContainer";
 import { Tag } from "../../components/Tag/Tag";
 import { BackButton } from "../../shared/components/BackButton/BackButton";
 import { EquipmentItem } from "./components/EquipmentItem";
-import { QRCodeSection } from "./components/QRCodeSection";
+import { QRCode } from "./components/QRCode";
 import { ReservationItemComponent } from "./components/ReservationItemComponent";
 import { RoomHeader } from "./components/RoomHeader";
 import { CheckInMessageModal } from "./components/CheckInMessageModal";
@@ -13,7 +14,7 @@ import { ROOM_PAGE_MESSAGES, CHECK_IN_STATUS_DISPLAY } from "./constants/RoomPag
 import { useCheckIn } from "./hooks/useCheckIn";
 import { useGetRoom } from "./hooks/useGetRoom";
 import { useFilteredReservations } from "./hooks/useFilteredReservations";
-import { renderStatusTag, cleanEventTitle, sortEligibleEvents } from "./utils/RoomPageUtils";
+import { renderStatusTag, sortEligibleEvents } from "./utils/RoomPageUtils";
 import { truncateText } from "../../shared/utils/text.utils";
 import { formatTime } from "../HomePage/utils/formatTime.utils";
 import type { CheckInStatus } from "../../shared/types/event.types";
@@ -43,7 +44,8 @@ import {
 export const RoomPage = () => {
   const { loading, roomData, error, updateRoomData } = useGetRoom();
   const { todayReservations, weekReservations, finishedReservations } = useFilteredReservations(roomData?.events);
-  
+  const [clickedEventIds, setClickedEventIds] = useState<Set<string>>(new Set());
+
   const { handleCheckIn, getEligibleEvents, clearMessage, message, isSuccess, checkingInEventId } = useCheckIn({
     onSuccess: (updatedRoom) => {
       updateRoomData(() => updatedRoom);
@@ -51,6 +53,15 @@ export const RoomPage = () => {
   });
 
   const eligibleEvents = getEligibleEvents(roomData);
+  const visibleEligibleEvents = eligibleEvents.filter(event => {
+
+    return !clickedEventIds.has(event.id);
+  });
+
+  const handleCheckInClick = (eventId: string) => {
+    setClickedEventIds(prev => new Set(prev).add(eventId));
+    handleCheckIn(roomData, eventId);
+  };
 
   const getCheckInButtonStyle = (isDisabled: boolean) => css`
     ${CheckInButtonStyle}
@@ -61,7 +72,7 @@ export const RoomPage = () => {
 
   const renderCheckInStatusTag = (status: CheckInStatus | undefined) => {
     if (!status) return null;
-    
+
     const config = CHECK_IN_STATUS_DISPLAY[status];
     return <Tag text={config.text} type={config.type} />;
   };
@@ -111,16 +122,16 @@ export const RoomPage = () => {
               <CheckInSubtitle>
                 {ROOM_PAGE_MESSAGES.CHECK_IN_SUBTITLE}
               </CheckInSubtitle>
-              
-              {eligibleEvents.length > 0 ? (
-                sortEligibleEvents(eligibleEvents, roomData?.current_event?.id)
+
+              {visibleEligibleEvents.length > 0 ? (
+                sortEligibleEvents(visibleEligibleEvents, roomData?.current_event?.id)
                   .map((event) => {
                     const isCheckingIn = checkingInEventId === event.id;
                     return (
                       <Button
                         key={event.id}
-                        text={`Check-in: ${truncateText(cleanEventTitle(event.title), 10)}`}
-                        onClick={() => handleCheckIn(roomData, event.id)}
+                        text={`Check-in: ${truncateText(event.title, 10)}`}
+                        onClick={() => handleCheckInClick(event.id)}
                         customStyle={getCheckInButtonStyle(isCheckingIn)}
                       />
                     );
@@ -137,7 +148,7 @@ export const RoomPage = () => {
                 <Calendar />
                 {ROOM_PAGE_MESSAGES.TODAY_RESERVATIONS_TITLE}
               </ReservationSectionTitle>
-              
+
               {todayReservations.length > 0 ? (
                 <ReservationList>
                   {todayReservations.map((event) => (
@@ -165,7 +176,7 @@ export const RoomPage = () => {
                 <Calendar />
                 {ROOM_PAGE_MESSAGES.WEEK_RESERVATIONS_TITLE}
               </ReservationsSectionSeparator>
-              
+
               {weekReservations.length > 0 ? (
                 <ReservationList>
                   {weekReservations.map((event) => (
@@ -193,7 +204,7 @@ export const RoomPage = () => {
                 <Calendar />
                 {ROOM_PAGE_MESSAGES.FINISHED_RESERVATIONS_TITLE}
               </ReservationsSectionSeparator>
-              
+
               {finishedReservations.length > 0 ? (
                 <ReservationList>
                   {finishedReservations.map((event) => (
@@ -250,11 +261,7 @@ export const RoomPage = () => {
             <CardContainer customStyle={QRCardStyle}>
               <TitleStyle>{ROOM_PAGE_MESSAGES.QR_SECTION_TITLE}</TitleStyle>
               <p>{ROOM_PAGE_MESSAGES.QR_SECTION_DESCRIPTION}</p>
-              <QRCodeSection
-                //TODO: A desarrollar
-                qrImageUrl="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=sala-ejecutiva-02"
-                roomName={roomData?.name}
-              />
+              {roomData?.email && <QRCode roomEmail={roomData.email} />}
             </CardContainer>
           </ColumnaLateral>
         </ContentGrid>

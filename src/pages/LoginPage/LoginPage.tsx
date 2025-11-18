@@ -21,8 +21,15 @@ export const LoginPage = () => {
   const navigate = useNavigate();
 
   const locationError = useMemo(() => {
-    const message = location.state?.authError;
+    const messageFromState = location.state?.authError || location.state?.loginMessage;
+    const messageFromStorage = sessionStorage.getItem('loginMessage');
+    const message = messageFromState || messageFromStorage;
+
     return typeof message === "string" && message.length > 0 ? message : null;
+  }, [location.state]);
+
+  const isAuthError = useMemo(() => {
+    return Boolean(location.state?.authError);
   }, [location.state]);
 
   const [errorMessage, setErrorMessage] = useState<string | null>(locationError);
@@ -30,13 +37,30 @@ export const LoginPage = () => {
   useEffect(() => {
     if (locationError) {
       setErrorMessage(locationError);
-      navigate(".", { replace: true, state: null });
+      const returnToFromState = location.state?.returnTo;
+      const returnToFromStorage = sessionStorage.getItem('returnTo');
+      const returnTo = returnToFromState || returnToFromStorage;
+
+      if (returnTo) {
+        sessionStorage.setItem('returnTo', returnTo);
+      }
+
+      sessionStorage.removeItem('loginMessage');
+
+      navigate(".", { replace: true, state: { returnTo } });
     }
-  }, [locationError, navigate]);
+  }, [locationError, navigate, location.state?.returnTo]);
 
   const handleGoogleLogin = () => {
     setErrorMessage(null);
-    window.location.href = import.meta.env.VITE_GOOGLE_AUTH_URL;
+    const returnTo = location.state?.returnTo;
+    const authUrl = import.meta.env.VITE_GOOGLE_AUTH_URL;
+
+    if (returnTo) {
+      sessionStorage.setItem('returnTo', returnTo);
+    }
+
+    window.location.href = authUrl;
   };
 
   return (
@@ -44,7 +68,7 @@ export const LoginPage = () => {
       {errorMessage && (
         <AuthErrorOverlay role="alertdialog" aria-modal="true">
           <AuthErrorModal>
-            <AuthErrorTitle>Acceso denegado</AuthErrorTitle>
+            <AuthErrorTitle>{isAuthError ? "Acceso denegado" : "Inicio de sesión requerido"}</AuthErrorTitle>
             <AuthErrorText>{errorMessage}</AuthErrorText>
             <Button text="Entendido" onClick={() => setErrorMessage(null)} />
           </AuthErrorModal>
