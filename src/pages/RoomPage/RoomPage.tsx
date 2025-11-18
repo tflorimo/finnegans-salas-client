@@ -55,10 +55,7 @@ export const RoomPage = () => {
   const eligibleEvents = getEligibleEvents(roomData);
   const visibleEligibleEvents = eligibleEvents.filter(event => {
 
-    if (clickedEventIds.has(event.id)) {
-      return false;
-    }
-    return true;
+    return !clickedEventIds.has(event.id);
   });
 
   const handleCheckInClick = (eventId: string) => {
