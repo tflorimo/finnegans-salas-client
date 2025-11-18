@@ -1,4 +1,8 @@
 import styled, { css } from "styled-components";
+import { FinishedEventIconWrapper, InProgressEventIconWrapper } from "../../shared/components/EventStatusIcon";
+
+export const FinishedEventIcon = FinishedEventIconWrapper;
+export const InProgressEventIcon = InProgressEventIconWrapper;
 
 export const RoomPageContainer = styled.div`
   width: 100%;
@@ -64,56 +68,77 @@ export const QRBox = styled.div`
 `;
 
 export const ReservationList = styled.div`
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 14px;
+  width: 75%;
 `;
 
 export const ReservationItem = styled.div`
   display: grid;
   grid-template-columns: 40px 1fr auto;
   align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  column-gap: 14px;
-`;
-
-export const ResLeft = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 70px;
-  min-width: 0;
+  gap: 16px;
+  padding: 12px 16px;
+  background: #f9fafb;
+  border-radius: 8px;
+  border: 1px solid #f3f4f6;
+  width: 100%;
+  box-sizing: border-box;
 `;
 
 export const Avatar = styled.div`
   width: 40px;
   height: 40px;
-  padding: 0 12px;
-  border-radius: 999px;
+  min-width: 40px;
+  min-height: 40px;
+  border-radius: 50%;
   background: #0b5be7;
   color: #fff;
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-weight: 800;
   font-size: 14px;
+  flex-shrink: 0;
 `;
 
 export const ResInfo = styled.div`
   display: flex;
   flex-direction: column;
-  line-height: 1.2;
-  span { color: #0f172a; font-weight: 700; font-size: 14px; white-space: nowrap; }
-  small { color: #6b7280; font-size: 12px; }
+  gap: 2px;
+  line-height: 1.5;
+  min-width: 0;
+  flex: 1;
+  
+  span { 
+    color: #1f2937; 
+    font-weight: 600; 
+    font-size: 14px; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  small { 
+    color: #6b7280; 
+    font-size: 12px; 
+  }
 `;
 
 export const ResRight = styled.div`
   display: inline-flex;
   align-items: center;
-  gap: 430px;
-  color: #0f172a;
-  font-weight: 600;
+  gap: 6px;
+  color: #9ca3af;
+  font-weight: 500;
+  font-size: 14px;
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
-  svg { color: #64748b; }
+  flex-shrink: 0;
+  svg { 
+    color: #9ca3af;
+    flex-shrink: 0;
+  }
 `;
 
 export const RoomInfoCardStyle = css`
@@ -124,6 +149,7 @@ export const RoomInfoCardStyle = css`
 `;
 
 export const ReservationsCardStyle = css`
+  width: 100%;
   h1 { color: rgba(0, 0, 0, 1); margin-bottom: 8px; font-size: 24px; }
 `;
 
@@ -141,11 +167,12 @@ export const QRCardStyle = css`
 `;
 
 export const TitleStyle = styled.h2`
-  color: rgba(0, 0, 0, 1);
+  color: #111827;
   margin-bottom: 8px;
   margin-top: -8px; 
-  font-size: 20px; 
+  font-size: 1.25rem; 
   font-weight: 700;
+  line-height: 1.2;
 `;
 
 export const EquipmentContainer = styled.div`
@@ -155,7 +182,7 @@ export const EquipmentContainer = styled.div`
 `;
 
 export const CheckInButtonStyle = css`
-  width: 100%;
+  width: 75%;
   justify-content: center;
   gap: 10px;
   background: rgba(0, 66, 206, 1);
@@ -179,10 +206,11 @@ export const RoomHeaderInfo = styled.div`
 `;
 
 export const RoomTitle = styled.h1`
-  color: rgba(0, 0, 0, 1);
+  color: #111827;
   margin: 0;
-  font-size: 24px;
-  font-weight: 700;
+  font-size: 1.5rem;
+  font-weight: 750;
+  line-height: 1.2;
 `;
 
 export const RoomCapacityInfo = styled.div`
@@ -279,6 +307,38 @@ export const NoReservationsMessage = styled.p`
   margin: 0;
 `;
 
-export const ReservationsSectionSeparator = styled(TitleStyle)`
+export const ReservationsSectionSeparator = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #111827;
+  margin-bottom: 8px;
   margin-top: 1.5rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.2;
+  
+  svg {
+    width: 20px;
+    height: 20px;
+    color: #2563eb;
+  }
+`;
+
+export const ReservationSectionTitle = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #111827;
+  margin-bottom: 8px;
+  margin-top: -8px;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.2;
+  
+  svg {
+    width: 20px;
+    height: 20px;
+    color: #2563eb;
+  }
 `;

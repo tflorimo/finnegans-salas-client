@@ -4,7 +4,10 @@ export interface RoomEventTimeProps {
     title: string;
     startTime?: Date | string;
     endTime?: Date | string;
+    originalStartTime?: Date | string;
+    originalEndTime?: Date | string; 
   };
+  currentEventId?: string;
 }
 
 export const formatTime = (dateInput?: Date | string | null): string => {

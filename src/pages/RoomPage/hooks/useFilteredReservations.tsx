@@ -1,8 +1,10 @@
 import { useMemo } from "react";
 import type { EventResponseDTO } from "../../../shared/types/event.types";
+import { isEventFinished } from "../../../shared/utils/event.utils";
 interface UseFilteredReservationsReturn {
   todayReservations: EventResponseDTO[];
   weekReservations: EventResponseDTO[];
+  finishedReservations: EventResponseDTO[];
 }
 
 export const useFilteredReservations = (
@@ -10,24 +12,34 @@ export const useFilteredReservations = (
 ): UseFilteredReservationsReturn => {
   return useMemo(() => {
     if (!events || events.length === 0) {
-      return { todayReservations: [], weekReservations: [] };
+      return { todayReservations: [], weekReservations: [], finishedReservations: [] };
     }
 
+    const now = new Date();
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    const todayReservations = events.filter((event) => {
-      const eventDate = new Date(event.date);
-      eventDate.setHours(0, 0, 0, 0);
-      return eventDate.getTime() === today.getTime();
-    });
+    const todayReservations = events
+      .filter((event) => {
+        const eventDate = new Date(event.date);
+        eventDate.setHours(0, 0, 0, 0);
+        const eventEndTime = new Date(event.endTime);
+        return eventDate.getTime() === today.getTime() && eventEndTime > now;
+      })
+      .sort((a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime());
 
-    const weekReservations = events.filter((event) => {
-      const eventDate = new Date(event.date);
-      eventDate.setHours(0, 0, 0, 0);
-      return eventDate.getTime() !== today.getTime();
-    });
+    const weekReservations = events
+      .filter((event) => {
+        const eventDate = new Date(event.date);
+        eventDate.setHours(0, 0, 0, 0);
+        return eventDate.getTime() > today.getTime();
+      })
+      .sort((a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime());
 
-    return { todayReservations, weekReservations };
+    const finishedReservations = events
+      .filter((event) => isEventFinished(event.endTime))
+      .sort((a, b) => new Date(b.endTime).getTime() - new Date(a.endTime).getTime());
+
+    return { todayReservations, weekReservations, finishedReservations };
   }, [events]);
 };
