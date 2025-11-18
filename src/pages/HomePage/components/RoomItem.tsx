@@ -14,7 +14,7 @@ import {
   RoomListContainerStyles,
   RoomStatusSectionStyles,
 } from "../styles";
-import type { RoomItemProps } from "../types/RoomPage.types";
+import type { RoomItemProps } from "../types/HomePage.types";
 import { RoomEventItem } from "./RoomEventItem";
 import { useRoomFormattedTimes } from "../hooks/useRoomFormattedTimes";
 import { selectDisplayEvents } from "../utils/eventSelection.utils";

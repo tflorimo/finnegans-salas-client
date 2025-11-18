@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import type { RoomResponseDTO } from "../../../shared/types/room.types";
-import { RoomStatusOptionsEnum } from "../types/RoomPage.types";
+import { RoomStatusOptionsEnum } from "../types/HomePage.types";
 
 interface UseRoomFiltersProps {
   roomsData: RoomResponseDTO[];
