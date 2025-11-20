@@ -1,11 +1,16 @@
 import axios, { AxiosError, type InternalAxiosRequestConfig } from "axios";
-import { getAuthToken } from "../../shared/utils/localStorage.utils";
 import { authService } from "../../services/auth/auth.service";
 import {
   applyAuthorizationHeader,
   isRefreshCall,
   isTokenExpiringSoon,
 } from "./axios.helpers";
+
+let onUnauthenticated: (() => void) | null = null;
+
+export const setUnauthenticatedHandler = (handler: () => void) => {
+  onUnauthenticated = handler;
+};
 
 type RetriableConfig = InternalAxiosRequestConfig & { _retry?: boolean };
 
@@ -31,18 +36,32 @@ const getOrStartRefresh = (): Promise<string | null> => {
 };
 
 axiosInstance.interceptors.request.use(async (config) => {
-  const token = getAuthToken();
-  if (!token) return config;
+  const currentAuthHeader = axiosInstance.defaults.headers.common.Authorization as string | undefined;
 
-  if (!isRefreshCall(config) && isTokenExpiringSoon(token, 10)) {
+  if (!currentAuthHeader && !isRefreshCall(config)) {
     const newToken = await getOrStartRefresh();
     if (newToken) {
       applyAuthorizationHeader(config, newToken);
       return config;
     }
-  }
 
-  applyAuthorizationHeader(config, token);
+    return config;
+  }
+  
+  if (currentAuthHeader) {
+    const token = currentAuthHeader.replace('Bearer ', '');
+    
+    if (!isRefreshCall(config) && isTokenExpiringSoon(token, 30)) {
+      const newToken = await getOrStartRefresh();
+      if (newToken) {
+        applyAuthorizationHeader(config, newToken);
+        return config;
+      }
+    }
+    
+    applyAuthorizationHeader(config, token);
+  }
+  
   return config;
 });
 
@@ -62,6 +81,11 @@ axiosInstance.interceptors.response.use(
       if (newToken) {
         applyAuthorizationHeader(originalConfig, newToken);
         return axiosInstance(originalConfig);
+      }
+      
+      delete axiosInstance.defaults.headers.common.Authorization;
+      if (onUnauthenticated) {
+        onUnauthenticated();
       }
     }
 
