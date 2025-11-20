@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { CardContainer } from "../../../components/CardContainer/CardContainer";
 import { ThemeContext } from "../../../context/theme/themeContext";
 import type { EventResponseDTO } from "../../../shared/types/event.types";
@@ -11,7 +12,7 @@ interface EventsTableProps {
   onView: (event: EventResponseDTO) => void;
 }
 
-export const EventsTable = ({ events, onView }: EventsTableProps) => {
+export const EventsTable = memo(({ events, onView }: EventsTableProps) => {
   const { theme } = useContext(ThemeContext);
   return (
     <CardContainer customStyle={tableCardStyle}>
@@ -46,4 +47,5 @@ export const EventsTable = ({ events, onView }: EventsTableProps) => {
       </Table>
     </CardContainer>
   );
-};
+});
+
