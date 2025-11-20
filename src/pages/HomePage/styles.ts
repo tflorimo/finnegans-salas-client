@@ -1,4 +1,9 @@
 import styled, { css } from "styled-components";
+import { 
+  EventIconWrapper as SharedEventIconWrapper,
+  FinishedEventIconWrapper as SharedFinishedEventIconWrapper, 
+  InProgressEventIconWrapper as SharedInProgressEventIconWrapper 
+} from "../../shared/components/EventStatusIcon";
 
 export const ROOM_PAGE_COLORS = {
   roomTitleFree: "#16a249",
@@ -11,6 +16,7 @@ export const HomePageStyled = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 100vh;
 `;
 
 export const RoomStatusContainer = styled.section`
@@ -29,8 +35,9 @@ export const RoomListContainer = styled(RoomStatusContainer)`
 `;
 
 export const SelectFilterContainer = styled(RoomStatusContainer)`
+  display: flex;
   justify-content: flex-start;
-  aligmn-items: center;
+  align-items: center;
 `;
 
 export const AllRoomsCardContainerStyles = css`
@@ -143,4 +150,16 @@ export const RoomEventTimeSectionStyles = styled.div`
     margin: 0;
     font-weight: normal;
   }
+`;
+
+export const EventIconWrapper = styled(SharedEventIconWrapper)`
+  margin-right: 0.25rem;
+`;
+
+export const FinishedEventIconWrapper = styled(SharedFinishedEventIconWrapper)`
+  margin-right: 0.25rem;
+`;
+
+export const InProgressEventIconWrapper = styled(SharedInProgressEventIconWrapper)`
+  margin-right: 0.25rem;
 `;
