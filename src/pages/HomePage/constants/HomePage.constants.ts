@@ -1,5 +1,5 @@
 import { Tags } from "../../../components/Tag/types";
-import { RoomStatusOptionsEnum } from "./../types/RoomPage.types";
+import { RoomStatusOptionsEnum } from "../types/HomePage.types";
 
 export const ROOM_SELECT_OPTIONS = [
   {
