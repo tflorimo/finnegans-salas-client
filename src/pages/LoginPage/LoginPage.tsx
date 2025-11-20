@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import LogoFinnegans from "../../assets/images/Finnegans Logo Principal Celeste.svg";
+import LogoFinnegans from "../../assets/images/FinnegansLogoMainLightblue.svg";
 import { Button } from "../../components/Button/Button";
 import { CardContainer } from "../../components/CardContainer/CardContainer";
 import {
