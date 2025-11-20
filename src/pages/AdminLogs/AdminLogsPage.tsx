@@ -1,39 +1,44 @@
 import { useContext, useState } from 'react';
 import { Download } from 'lucide-react';
-import { SideBar } from '../../shared/components/SideBar/SideBar';
-import Header from '../../shared/components/Header/Header';
+import type { LogDTO } from '../../services/admin/logs/types';
 import { BackButton } from '../../shared/components/BackButton/BackButton';
-import { useLogsFetch } from './hooks/useLogsFetch';
+import { FilterToolbar } from '../../shared/components/FilterToolbar/FilterToolbar';
+import Header from '../../shared/components/Header/Header';
+import { SideBar } from '../../shared/components/SideBar/SideBar';
+import { useFilteredEvents } from '../AdminEvents/hooks/useFilteredEvents';
 import { LogItem } from './components/LogItem';
-import { ADMIN_LOGS_MESSAGES } from './constants/AdminLogs.constants';
 import { ThemeContext } from '../../context/theme/themeContext';
+import { ADMIN_FILTER_PLACEHOLDER, ADMIN_LOGS_MESSAGES } from './constants/AdminLogs.constants';
+import { useLogsFetch } from './hooks/useLogsFetch';
 import {
-  AdminLogsPageWrapper,
   AdminHeaderWrapper,
   AdminLogsContainer,
-  PageInner,
-  PageHeader,
-  HeaderContent,
-  PageTitle,
+  AdminLogsPageWrapper,
+  EmptyState,
   ExportButton,
-  MainContent,
-  LogsGrid,
+  FilterLogsContainer,
+  HeaderContent,
   LoadingContainer,
-  EmptyState
+  LogsGrid,
+  MainContent,
+  PageHeader,
+  PageInner,
+  PageTitle
 } from './styles';
 
 export const AdminLogsPage = () => {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const { loading, logs } = useLogsFetch();
+  const { filteredData, onKeywordSelected } = useFilteredEvents<LogDTO>(logs);
 
-  const hasLogs = !loading && logs.length > 0;
-  const isEmpty = !loading && logs.length === 0;
+  const hasLogs = !loading && filteredData.length > 0;
+  const isEmpty = !loading && filteredData.length === 0;
 
   const {theme} = useContext(ThemeContext);
 
   return (
     <AdminLogsPageWrapper>
-      <SideBar 
+      <SideBar
         isCollapsed={isSidebarCollapsed}
         onToggle={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
       />
@@ -46,10 +51,13 @@ export const AdminLogsPage = () => {
           <PageHeader>
             <HeaderContent>
               <PageTitle $theme={theme}>{ADMIN_LOGS_MESSAGES.PAGE_TITLE}</PageTitle>
-              <ExportButton onClick={() => {}}>
-                <Download />
-                {ADMIN_LOGS_MESSAGES.EXPORT_BUTTON}
-              </ExportButton>
+              <FilterLogsContainer>
+                <FilterToolbar placeholder={ADMIN_FILTER_PLACEHOLDER} onKeywordSelected={onKeywordSelected} />
+                <ExportButton onClick={() => { }}>
+                  <Download />
+                  {ADMIN_LOGS_MESSAGES.EXPORT_BUTTON}
+                </ExportButton>
+              </FilterLogsContainer>
             </HeaderContent>
           </PageHeader>
 
@@ -59,7 +67,7 @@ export const AdminLogsPage = () => {
                 <p>{ADMIN_LOGS_MESSAGES.LOADING}</p>
               </LoadingContainer>
             )}
-            
+
             {isEmpty && (
               <EmptyState>
                 <h3>{ADMIN_LOGS_MESSAGES.EMPTY_TITLE}</h3>
@@ -69,7 +77,7 @@ export const AdminLogsPage = () => {
 
             {hasLogs && (
               <LogsGrid $theme={theme}>
-                {logs.map((log) => (
+                {filteredData.map((log) => (
                   <LogItem key={log.id} log={log} />
                 ))}
               </LogsGrid>
