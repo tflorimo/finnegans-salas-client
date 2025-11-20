@@ -2,12 +2,12 @@ import { useContext, useState } from "react";
 import { SideBar } from "../../shared/components/SideBar/SideBar";
 import Header from "../../shared/components/Header/Header";
 import { BackButton } from "../../shared/components/BackButton/BackButton";
-import { useGetAdminEvents } from "./hooks/useGetAdminEvents";
-//import { useFilteredEvents } from "./hooks/useFilteredEvents";
-import { EventsTable } from "./components/EventsTable";
-import { EventsToolbar } from "./components/EventsToolbar";
-import { ADMIN_EVENTS_MESSAGES } from "./constants/AdminEvents.constants";
+import { FilterToolbar } from "../../shared/components/FilterToolbar/FilterToolbar";
 import type { EventResponseDTO } from "../../shared/types/event.types";
+import { EventDetailsModal } from "./components/EventDetailsModal";
+import { EventsTable } from "./components/EventsTable";
+import { ADMIN_EVENTS_MESSAGES, EVENT_FILTER_PLACEHOLDER } from "./constants/AdminEvents.constants";
+import { useGetAdminEvents } from "./hooks/useGetAdminEvents";
 import {
   AdminEventsContainer,
   AdminEventsPageWrapper,
@@ -17,25 +17,26 @@ import {
   PageInner,
   PageTitle,
 } from "./styles";
-import { EventDetailsModal } from "./components/EventDetailsModal";
 import { ThemeContext } from '../../context/theme/themeContext';
+import { useFilteredEvents } from "./hooks/useFilteredEvents";
 
 
-// TODO: Implementar búsqueda y filtrado de eventos
 export const AdminEventsPage = () => {
+  const {theme} = useContext(ThemeContext);
+
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(false);
-  //const [eventSearched, setEventSearched] = useState<string>("");
   const [selectedEvent, setSelectedEvent] = useState<EventResponseDTO | null>(null);
-  const { events } = useGetAdminEvents();
-  //const filteredEvents = useFilteredEvents(events, eventSearched);
-const {theme} = useContext(ThemeContext);
+  
+  const { events = [] } = useGetAdminEvents();
+  const { filteredData, onKeywordSelected } = useFilteredEvents<EventResponseDTO>(events);
+
   return (
     <AdminEventsPageWrapper>
       <SideBar
         isCollapsed={isSidebarCollapsed}
         onToggle={() => setIsSidebarCollapsed((prevState) => !prevState)}
       />
-      
+
       <AdminHeaderWrapper $collapsed={isSidebarCollapsed}>
         <Header />
       </AdminHeaderWrapper>
@@ -49,10 +50,10 @@ const {theme} = useContext(ThemeContext);
             </HeaderContent>
           </PageHeader>
 
-          <EventsToolbar />
+          <FilterToolbar placeholder={EVENT_FILTER_PLACEHOLDER} onKeywordSelected={onKeywordSelected} />
 
           <EventsTable
-            events={events}
+            events={filteredData}
             onView={(ev) => setSelectedEvent(ev)}
           />
 
