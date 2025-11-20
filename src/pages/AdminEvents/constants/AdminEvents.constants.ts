@@ -1,5 +1,5 @@
 import { Tags } from "../../../components/Tag/types";
-import type { ResponseStatus, CheckInStatus } from "../../../shared/types/event.types";
+import type { CheckInStatus, ResponseStatus } from "../../../shared/types/event.types";
 
 export const ADMIN_EVENTS_MESSAGES = {
   PAGE_TITLE: "Eventos Programados",
@@ -47,3 +47,5 @@ export const CHECK_IN_STATUS_TAG_MAP: Record<CheckInStatus, { text: string; type
   pending: { text: EVENT_MODAL.CHECK_IN_PENDING, type: Tags.warning },
   expired: { text: EVENT_MODAL.CHECK_IN_EXPIRED, type: Tags.danger },
 };
+
+export const EVENT_FILTER_PLACEHOLDER = "Buscar por nombre de Evento...";
