@@ -1,17 +1,32 @@
-import { useMemo } from "react";
-import type { EventResponseDTO } from "../../../shared/types/event.types";
+import { useCallback, useEffect, useState } from "react";
 
-export const useFilteredEvents = (
-  events: EventResponseDTO[],
-  searchTerm: string
+export const useFilteredEvents = <T extends Record<string, unknown>>(
+  data: T[],
 ) => {
-  return useMemo(() => {
-    const term = searchTerm.trim().toLowerCase();
-    if (!term) return events;
-    
-    return events.filter((ev) =>
-      ev.title?.toLowerCase().includes(term) ||
-      ev.roomName?.toLowerCase().includes(term)
-    );
-  }, [searchTerm, events]);
+  const [filteredData, setFilteredData] = useState<T[]>([]);
+
+  useEffect(() => {
+    setFilteredData(data);
+  }, [data]);
+
+  const onKeywordSelected = useCallback(
+    (input: string) => {
+      const value = input.trim().toLowerCase();
+
+      if (!value) {
+        setFilteredData(data);
+        return;
+      }
+
+      const dataFiltered = data.filter((item) =>
+        Object.values(item).some((field) =>
+          String(field).toLowerCase().includes(value)
+        )
+      );
+      setFilteredData(dataFiltered);
+    },
+    [data]
+  );
+
+  return { onKeywordSelected, filteredData }
 };
