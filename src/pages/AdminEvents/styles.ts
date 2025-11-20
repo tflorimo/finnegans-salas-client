@@ -69,6 +69,7 @@ export const HeaderContent = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin: 0.5rem 0;
 `;
 
 export const PageTitle = styled.h1<{ $theme: ThemeType }>`
