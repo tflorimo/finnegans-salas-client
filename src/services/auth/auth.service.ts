@@ -4,7 +4,7 @@ import { getErrorMessage } from "../../api/axios/axios.utils";
 import type { AuthResponse } from "./auth.types";
 import axiosInstance from "../../api/axios/axios.instance";
 import type { AxiosRequestConfig } from "axios";
-import { clearAuthToken, clearStoredUserEmail, setAuthToken } from "../../shared/utils/localStorage.utils";
+import { clearStoredUserEmail } from "../../shared/utils/localStorage.utils";
 
 const AUTH_HEADER = (token: string) => `Bearer ${token}`;
 const REFRESH_REQUEST_CONFIG: AxiosRequestConfig = {
@@ -31,8 +31,6 @@ export const authService = {
       const message = getErrorMessage(error, ROOM_ERROR_MESSAGES.logoutError);
       throw new Error(message);
     } finally {
-      // Aunque falle la llamada, vaciamos la sesión del front.
-      clearAuthToken();
       clearStoredUserEmail();
       delete axiosInstance.defaults.headers.common.Authorization;
     }
@@ -49,17 +47,14 @@ export const authService = {
       const newToken = data.accessToken ?? null;
 
       if (newToken) {
-        setAuthToken(newToken);
         axiosInstance.defaults.headers.common.Authorization = AUTH_HEADER(newToken);
       } else {
-        clearAuthToken();
         delete axiosInstance.defaults.headers.common.Authorization;
       }
 
       return newToken;
     } catch (error) {
       console.error("Error al refrescar token:", error);
-      clearAuthToken();
       delete axiosInstance.defaults.headers.common.Authorization;
       return null;
     }
