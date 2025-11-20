@@ -1,24 +1,29 @@
-import { useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useContext, useEffect, useRef } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../../context/auth/authContext";
+import { getReturnTo, clearReturnTo } from "../../shared/utils/localStorage.utils";
+import { readAndClearTempAuthCookies } from "../../services/auth/auth.utils";
 import { resolveAuthErrorMessage } from "./constants/LoginPage.constants";
 
 export const AuthCallback = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { login } = useContext(AuthContext);
+  const hasProcessed = useRef(false);
 
   useEffect(() => {
+
+    if (!location.pathname.includes('/auth/callback') || hasProcessed.current) {
+      return;
+    }
+
+    hasProcessed.current = true;
+
     const params = new URLSearchParams(window.location.search);
     const successParam = params.get("success");
     const errorCode = params.get("error") ?? params.get("message");
-    const token = params.get("token");
-    const email = params.get("email");
 
-    const hasError =
-      successParam === "false" ||
-      Boolean(errorCode) ||
-      !token ||
-      !email;
+    const hasError = successParam === "false" || Boolean(errorCode);
 
     if (hasError) {
       const authError = resolveAuthErrorMessage(errorCode);
@@ -29,9 +34,27 @@ export const AuthCallback = () => {
       return;
     }
 
-    login(token, email);
-    navigate("/home", { replace: true });
-  }, [login, navigate]);
+    const authData = readAndClearTempAuthCookies();
+
+    if (!authData) {
+      navigate("/login", {
+        replace: true,
+        state: { authError: "No se pudo obtener el token de acceso" },
+      });
+      return;
+    }
+
+    login(authData.token, authData.email);
+
+    const returnToFromStorage = getReturnTo();
+    const returnToFromState = (location.state as { returnTo?: string })?.returnTo;
+    const returnTo = returnToFromStorage || returnToFromState;
+
+    clearReturnTo();
+    const redirectPath = returnTo || "/home";
+
+    navigate(redirectPath, { replace: true });
+  }, [login, navigate, location.pathname]);
 
   return (
     <div style={{ textAlign: "center", marginTop: "4rem" }}>
