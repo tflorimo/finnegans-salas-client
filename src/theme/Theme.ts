@@ -18,7 +18,7 @@ export const themes = {
     BACKGROUND_COLOR: "#f9f9fa",
     CONTAINER_COLOR: "#ffffff",
     TEXT_COLOR: "#0F172A",
-    SIDEBAR_COLOR: "#f8fafc",
+    SIDEBAR_COLOR: "#ebebebff",
     TEXT_SIDEBAR_COLOR: "#0F172A",
 },
 [Themes.dark]: {
