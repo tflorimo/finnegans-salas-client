@@ -9,3 +9,8 @@ export const DARK_COLOR = "#343a40";
 export const WHITE_COLOR = "#ffffff";
 export const GLASS_COLOR = "#23688aff";
 export const BLACK_COLOR = "#000000";
+
+// Event Status Colors
+export const EVENT_STATUS_FINISHED_COLOR = "#10b981";  
+export const EVENT_STATUS_IN_PROGRESS_COLOR = "#2563eb";  
+export const EVENT_STATUS_UPCOMING_COLOR = "#9ca3af";  
