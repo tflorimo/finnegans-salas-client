@@ -22,3 +22,15 @@ export enum RoomStatusOptionsEnum {
 }
 
 export type RoomStatusOptions = keyof typeof RoomStatusOptionsEnum;
+
+export interface RoomEventTimeProps {
+  event: {
+    id: string;
+    title: string;
+    startTime?: Date | string;
+    endTime?: Date | string;
+    originalStartTime?: Date | string;
+    originalEndTime?: Date | string; 
+  };
+  currentEventId?: string;
+}

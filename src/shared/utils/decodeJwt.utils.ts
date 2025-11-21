@@ -1,6 +1,5 @@
 /**
- *
- *  @description: Decodifica un token JWT y devuelve su payload como un objeto.
+ * @description: Decodifica un token JWT y devuelve su payload como un objeto.
  * @param {string} token
  * @return {*}  {({ [key: string]: unknown } | null)}
  */

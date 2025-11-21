@@ -19,7 +19,6 @@ import { truncateText } from "../../shared/utils/text.utils";
 import { formatTime } from "../HomePage/utils/formatTime.utils";
 import type { CheckInStatus } from "../../shared/types/event.types";
 import {
-  CheckInButtonStyle,
   CheckInSubtitle,
   ColumnaLateral,
   ColumnaPrincipal,
@@ -69,7 +68,14 @@ export const RoomPage = () => {
 
   const getCheckInButtonStyle = (isDisabled: boolean) =>
   css<{ $theme: ThemeType }>`
-    ${CheckInButtonStyle}
+    width: 75%;
+    justify-content: center;
+    gap: 10px;
+    background: rgba(0, 66, 206, 1);
+    color: #ffffff;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 8px rgba(2, 8, 23, 0.05);
+    &:hover { background: rgba(92, 0, 104, 1); }
     opacity: ${isDisabled ? 0.5 : 1};
     pointer-events: ${isDisabled ? "none" : "auto"};
     margin-bottom: 12px;

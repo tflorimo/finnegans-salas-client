@@ -25,7 +25,6 @@ export const CheckInMessageModal = ({ message, isSuccess, onClose }: CheckInMess
   return (
     <CheckInModalOverlay $theme={theme} onClick={handleOverlayClick}>
       <CheckInModalContent onClick={handleContentClick} $isSuccess={isSuccess ?? false}>
-        <CheckInMessageText $theme={theme}>{message}</CheckInMessageText>
         <CheckInModalIconWrapper>
           {isSuccess ? (
             <CheckCircle size={48} color={EVENT_STATUS_FINISHED_COLOR} />
