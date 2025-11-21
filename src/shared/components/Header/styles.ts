@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import type { ThemeType } from "../../../theme/Types";
+import { themes } from "../../../theme/Theme";
 
-const TOPBAR_BG_LIGHT = "#768ecaff";
+const TOPBAR_BG_LIGHT = "#a8b9e3";
 const TOPBAR_BG_DARK = "#000000";
-const TOPBAR_BORDER_BOTTOM = "#e5e7eb";
 
 const TOPBAR_TITLE_COLOR = "#4bc3fe";
 const TOPBAR_SUBTITLE_COLOR = "#ffffffff";
@@ -11,13 +11,17 @@ const TOPBAR_SUBTITLE_COLOR = "#ffffffff";
 const TOPBAR_ICON_COLOR = "#ffffffff";
 const TOPBAR_ICON_HOVER_COLOR = "#2563eb";
 
-export const TopBar = styled.header<{theme: ThemeType}>`
+export const TopBar = styled.header<{ theme: ThemeType }>`
   width: 100%;
   top: 0;
   z-index: 100;
   background: ${({ theme }) => (theme === "light" ? TOPBAR_BG_LIGHT : TOPBAR_BG_DARK)};
-  border-bottom: 1px solid ${TOPBAR_BORDER_BOTTOM};
+  border-bottom: 1px solid ${({ theme }) => {
+    const themeKey = theme as ThemeType;
+    return themes[themeKey].BORDER_COLOR;
+  }};
   height: 64px;
+  transition: background 0.3s ease, border-color 0.3s ease;
 `;
 
 export const TopBarInner = styled.div`
