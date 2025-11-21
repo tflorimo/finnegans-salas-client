@@ -1,4 +1,3 @@
-import { css } from "styled-components";
 import { useState } from "react";
 import { Calendar } from "lucide-react";
 import { Button } from "../../components/Button/Button";
@@ -38,8 +37,9 @@ import {
   RoomInfoCardStyle,
   RoomPageContainer,
   NoEquipmentMessage,
+  getCheckInButtonStyle,
+  CheckInSectionStyle,
 } from "./styles";
-import type { ThemeType } from "../../theme/Types";
 import { ThemeContext } from "../../context/theme/themeContext";
 import { useContext } from "react";
 
@@ -65,21 +65,6 @@ export const RoomPage = () => {
     setClickedEventIds(prev => new Set(prev).add(eventId));
     handleCheckIn(roomData, eventId);
   };
-
-  const getCheckInButtonStyle = (isDisabled: boolean) =>
-  css<{ $theme: ThemeType }>`
-    width: 75%;
-    justify-content: center;
-    gap: 10px;
-    background: rgba(0, 66, 206, 1);
-    color: #ffffff;
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 2px 8px rgba(2, 8, 23, 0.05);
-    &:hover { background: rgba(92, 0, 104, 1); }
-    opacity: ${isDisabled ? 0.5 : 1};
-    pointer-events: ${isDisabled ? "none" : "auto"};
-    margin-bottom: 12px;
-  `;
 
   const renderCheckInStatusTag = (status: CheckInStatus | undefined) => {
     if (!status) return null;
@@ -128,7 +113,7 @@ export const RoomPage = () => {
               )}
             </CardContainer>
 
-            <CardContainer>
+            <CardContainer customStyle={CheckInSectionStyle(theme)}>
               <TitleStyle $theme={theme}>{ROOM_PAGE_MESSAGES.CHECK_IN_TITLE}</TitleStyle>
               <CheckInSubtitle $theme={theme}>
                 {ROOM_PAGE_MESSAGES.CHECK_IN_SUBTITLE}
@@ -143,13 +128,13 @@ export const RoomPage = () => {
                         key={event.id}
                         text={`Check-in: ${truncateText(event.title, 10)}`}
                         onClick={() => handleCheckInClick(event.id)}
-                        customStyle={getCheckInButtonStyle(isCheckingIn)}
+                        customStyle={getCheckInButtonStyle(isCheckingIn, theme)}
                       />
                     );
                   })
               ) : (
                 <NoEquipmentMessage $theme={theme}>
-                  No hay eventos disponibles para check-in en este momento
+                  {ROOM_PAGE_MESSAGES.NO_CHECK_IN_EVENTS_AVAILABLE}
                 </NoEquipmentMessage>
               )}
             </CardContainer>

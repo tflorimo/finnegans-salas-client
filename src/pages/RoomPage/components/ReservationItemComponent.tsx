@@ -29,7 +29,7 @@ export const ReservationItemComponent = ({
 }: ReservationItemComponentProps) => {
   const {theme} = useContext(ThemeContext);
   return (
-    <ReservationItem>
+    <ReservationItem $theme={theme}>
       <Avatar>{initials(organizer)}</Avatar>
       <ResInfo $theme={theme}>
         <span>
