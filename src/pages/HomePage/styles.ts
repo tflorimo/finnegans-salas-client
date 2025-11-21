@@ -140,7 +140,6 @@ export const RoomEventItemStyles = styled.div`
   p {
     margin: 0;
     font-weight: bold;
-    color: ${ROOM_PAGE_COLORS.roomText};
   }
 `;
 
