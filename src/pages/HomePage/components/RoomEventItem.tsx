@@ -1,5 +1,5 @@
 import { ROOM_PAGE_COLORS, RoomEventItemStyles, RoomEventTimeSectionStyles, FinishedEventIconWrapper, EventIconWrapper, InProgressEventIconWrapper } from "../styles";
-import type { RoomEventTimeProps } from "../utils/formatTime.utils";
+import type { RoomEventTimeProps } from "../types/HomePage.types";
 import { truncateTextByLength } from "../../../shared/utils/text.utils";
 import { EventStatusIcon } from "../../../shared/components/EventStatusIcon";
 

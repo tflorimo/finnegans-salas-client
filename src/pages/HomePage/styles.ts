@@ -10,6 +10,7 @@ export const ROOM_PAGE_COLORS = {
   roomTitleOccupied: "#ef4343",
   roomBorder: "#B6CBD5",
   roomBoxShadow: "#0000001a",
+  roomText: "#64748b",
 };
 
 export const HomePageStyled = styled.section`
@@ -139,6 +140,7 @@ export const RoomEventItemStyles = styled.div`
   p {
     margin: 0;
     font-weight: bold;
+    color: ${ROOM_PAGE_COLORS.roomText};
   }
 `;
 
