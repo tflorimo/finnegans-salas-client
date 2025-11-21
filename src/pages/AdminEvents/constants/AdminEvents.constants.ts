@@ -6,8 +6,6 @@ export const ADMIN_EVENTS_MESSAGES = {
   FILTER_BUTTON: "Filtrar",
   EMPTY_TITLE: "Sin resultados",
   EMPTY_DESCRIPTION: "Probá con otro término de búsqueda.",
-  // TODO: Descomentar cuando se implemente el componente InputSearch
-  // SEARCH_PLACEHOLDER: "Buscar eventos...",
 };
 
 export const TABLE_HEADERS = {
@@ -23,7 +21,7 @@ export const EVENT_MODAL = {
   DATE: "Fecha",
   TIME: "Horario",
   ROOM: "Sala",
-  ID: "ID de la sala", // Coloco ID porque los csv del cliente creo que no tienen email (a confirmar).
+  ID: "ID de la sala", 
   CREATOR_MAIL: "Mail del Responsable",
   CREATOR_NAME: "Creador del evento",
   CHECK_IN: "Check-in",
@@ -49,3 +47,5 @@ export const CHECK_IN_STATUS_TAG_MAP: Record<CheckInStatus, { text: string; type
 };
 
 export const EVENT_FILTER_PLACEHOLDER = "Buscar por nombre de Evento...";
+
+export const EXPORT_FILE_NAME = "events-export";

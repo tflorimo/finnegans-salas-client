@@ -67,16 +67,25 @@ export const PageHeader = styled.header`
 
 export const HeaderContent = styled.div`
   display: flex;
+  gap: 1rem;
+  flex-direction: column;
+  align-items: stretch;
+  margin: 0.375rem 0 0 0;
+`;
+
+export const ButtonsEventsContainer = styled.div`
+  display: flex;
+  gap: 12px;
   align-items: center;
   justify-content: space-between;
-  margin: 0.5rem 0;
+  flex-wrap: wrap;
 `;
 
 export const PageTitle = styled.h1<{ $theme: ThemeType }>`
   font-size: 1.5rem;
   font-weight: 750;
   color: ${({ $theme }) => themes[$theme].TEXT_COLOR};
-  margin: -8px 0 0 0;
+  margin: 0;
   line-height: 1.2;
 `;
 
@@ -170,7 +179,6 @@ export const attendeesTagStyle = css`
   font-size: 12px;
 `;
 
-//TODO: EventDetailsModal styles (Quizá lo correcto sea modularizar los styles también)
 export const Overlay = styled.div`
   position: fixed;
   inset: 0;

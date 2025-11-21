@@ -2,7 +2,8 @@ import { X } from "lucide-react";
 import { CardContainer } from "../../../components/CardContainer/CardContainer";
 import { Tag } from "../../../components/Tag/Tag";
 import type { EventResponseDTO } from "../../../shared/types/event.types";
-import { formatDate, formatTime, formatTimeRange } from "../utils/dateUtils";
+import { formatTimeRange } from "../../../shared/utils/format.utils";
+import { formatDate, formatTime } from "../utils/dateUtils";
 import {
   Overlay,
   ModalBody,
