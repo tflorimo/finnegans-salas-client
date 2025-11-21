@@ -479,3 +479,11 @@ export const CheckInSectionStyle = (theme: ThemeType) => css`
   background: ${theme === "dark" ? themes[theme].CONTAINER_COLOR : "#ffffff"} !important;
   transition: border-color 0.3s ease, background 0.3s ease;
 `;
+
+export const QRDescriptionText = styled.p<{ $theme: ThemeType }>`
+  color: ${({ $theme }) => $theme === "dark" ? "#ffffff" : "#000000"} !important;
+  text-align: center;
+  margin: 0 0 1rem 0;
+  font-size: 0.875rem;
+  transition: color 0.3s ease;
+`;

@@ -39,6 +39,7 @@ import {
   NoEquipmentMessage,
   getCheckInButtonStyle,
   CheckInSectionStyle,
+  QRDescriptionText,
 } from "./styles";
 import { ThemeContext } from "../../context/theme/themeContext";
 import { useContext } from "react";
@@ -257,7 +258,7 @@ export const RoomPage = () => {
 
             <CardContainer customStyle={QRCardStyle}>
               <TitleStyle $theme={theme}>{ROOM_PAGE_MESSAGES.QR_SECTION_TITLE}</TitleStyle>
-              <p>{ROOM_PAGE_MESSAGES.QR_SECTION_DESCRIPTION}</p>
+              <QRDescriptionText $theme={theme}>{ROOM_PAGE_MESSAGES.QR_SECTION_DESCRIPTION}</QRDescriptionText>
               {roomData?.email && <QRCode roomEmail={roomData.email} />}
             </CardContainer>
           </ColumnaLateral>

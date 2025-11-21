@@ -1,6 +1,7 @@
 const USER_EMAIL_STORAGE_KEY = "userEmail";
 const RETURN_TO_KEY = "returnTo";
 const LOGIN_MESSAGE_KEY = "loginMessage";
+const CURRENT_PATH_KEY = "currentPath";
 
 export const getStoredUserEmail = (): string | null =>
   localStorage.getItem(USER_EMAIL_STORAGE_KEY);
@@ -11,6 +12,17 @@ export const setStoredUserEmail = (email: string): void => {
 
 export const clearStoredUserEmail = (): void => {
   localStorage.removeItem(USER_EMAIL_STORAGE_KEY);
+};
+
+export const getCurrentPath = (): string | null =>
+  sessionStorage.getItem(CURRENT_PATH_KEY);
+
+export const setCurrentPath = (path: string): void => {
+  sessionStorage.setItem(CURRENT_PATH_KEY, path);
+};
+
+export const clearCurrentPath = (): void => {
+  sessionStorage.removeItem(CURRENT_PATH_KEY);
 };
 
 export const getReturnTo = (): string | null =>
@@ -38,5 +50,6 @@ export const clearLoginMessage = (): void => {
 export const clearNavigationState = (): void => {
   clearReturnTo();
   clearLoginMessage();
+  clearCurrentPath();
 };
 
