@@ -5,7 +5,7 @@ import { themes } from "../../../theme/Theme";
 export const SIDEBAR_WIDTH = 240;
 export const SIDEBAR_COLLAPSED_WIDTH = 80;
 
-const SIDEBAR_BG_LIGHT = "#a8b9e3";
+const SIDEBAR_BG_LIGHT = "#f0f4f8";
 const SIDEBAR_BG_DARK = "#000000";
 
 export const getBaseButtonStyles = (isActive: boolean, theme: ThemeType, isCollapsed: boolean) => css`

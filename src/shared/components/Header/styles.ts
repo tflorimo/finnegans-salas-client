@@ -2,13 +2,15 @@ import styled from "styled-components";
 import type { ThemeType } from "../../../theme/Types";
 import { themes } from "../../../theme/Theme";
 
-const TOPBAR_BG_LIGHT = "#a8b9e3";
+const TOPBAR_BG_LIGHT = "#f0f4f8";
 const TOPBAR_BG_DARK = "#000000";
 
 const TOPBAR_TITLE_COLOR = "#4bc3fe";
 const TOPBAR_SUBTITLE_COLOR = "#ffffffff";
+const TOPBAR_SUBTITLE_COLOR_LIGHT = "#000000";
 
 const TOPBAR_ICON_COLOR = "#ffffffff";
+const TOPBAR_ICON_COLOR_LIGHT = "#000000";
 const TOPBAR_ICON_HOVER_COLOR = "#2563eb";
 
 export const TopBar = styled.header<{ theme: ThemeType }>`
@@ -34,7 +36,7 @@ export const TopBarInner = styled.div`
   padding: 0 5rem;
 `;
 
-export const TopBarLeft = styled.div`
+export const TopBarLeft = styled.div<{ $theme: ThemeType }>`
   display: flex;
   align-items: center;
   gap: 10px;
@@ -49,20 +51,20 @@ export const TopBarLeft = styled.div`
   h2 {
     font-size: 12px;
     font-weight: 400;
-    color: ${TOPBAR_SUBTITLE_COLOR};
+    color: ${({ $theme }) => ($theme === "light" ? TOPBAR_SUBTITLE_COLOR_LIGHT : TOPBAR_SUBTITLE_COLOR)};
     margin: 0;
   }
     margin-left: -60px;
 `;
 
-export const TopBarRight = styled.div`
+export const TopBarRight = styled.div<{ $theme: ThemeType }>`
   display: flex;
   align-items: center;
   gap: 16px;
 
   svg {
     cursor: pointer;
-    color: ${TOPBAR_ICON_COLOR};
+    color: ${({ $theme }) => ($theme === "light" ? TOPBAR_ICON_COLOR_LIGHT : TOPBAR_ICON_COLOR)};
 
     &:hover {
       color: ${TOPBAR_ICON_HOVER_COLOR};

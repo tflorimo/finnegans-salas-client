@@ -1,4 +1,4 @@
-import { /*Bell,*/ LogOut, Settings, Sun } from "lucide-react";
+import { LogOut, Settings, Sun } from "lucide-react";
 import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import LogoFinnegans from "../../../assets/images/Isotipo Celeste.svg";
@@ -27,17 +27,15 @@ export const Header = () => {
   return (
     <TopBar theme={theme}>
       <TopBarInner>
-        <TopBarLeft>
+        <TopBarLeft $theme={theme}>
           <img src={LogoFinnegans} alt="Finnegans" width={32} height={32} />
           <div>
             <h1>Finnegans</h1>
             <h2>Reservas de Sala In-Situ</h2>
           </div>
         </TopBarLeft>
-        <TopBarRight>
+        <TopBarRight $theme={theme}>
           <Sun onClick={toggleTheme}/>
-          {/*TODO: Descomentar cuando se implementen las notificaciones */}
-          {/* <Bell size={20} /> */}
           <NavLink
             to="/admin/logs"
             style={({ isActive, isPending, isTransitioning }) => {
