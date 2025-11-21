@@ -1,3 +1,5 @@
+import type { ThemeType } from "../../theme/Types";
+
 export type Base = { id: string } | string;
 
 export type GenericSelectProps<TValue> = {
@@ -5,4 +7,5 @@ export type GenericSelectProps<TValue> = {
   onChange: (value: TValue) => void;
   values: TValue[];
   selected?: TValue;
+  theme?: ThemeType;
 };
