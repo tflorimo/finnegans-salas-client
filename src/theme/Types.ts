@@ -3,7 +3,6 @@ export enum Themes {
     dark = 'dark',
 }
 export type ThemeType = keyof typeof Themes;
-
   export interface DefaultTheme {
     PRIMARY_COLOR: String;
     SECONDARY_COLOR: String;

@@ -4,6 +4,8 @@ import {
   FinishedEventIconWrapper as SharedFinishedEventIconWrapper, 
   InProgressEventIconWrapper as SharedInProgressEventIconWrapper 
 } from "../../shared/components/EventStatusIcon";
+import type { ThemeType } from "../../theme/Types";
+import { themes } from "../../theme/Theme";
 
 export const ROOM_PAGE_COLORS = {
   roomTitleFree: "#16a249",
@@ -13,11 +15,13 @@ export const ROOM_PAGE_COLORS = {
   roomText: "#64748b",
 };
 
-export const HomePageStyled = styled.section`
+export const HomePageStyled = styled.section<{ $theme: ThemeType }>`
   display: flex;
   flex-direction: column;
   align-items: center;
   height: 100vh;
+  background: ${({ $theme }) => themes[$theme].BACKGROUND_COLOR};
+  transition: background 0.3s ease;
 `;
 
 export const RoomStatusContainer = styled.section`
@@ -41,12 +45,12 @@ export const SelectFilterContainer = styled(RoomStatusContainer)`
   align-items: center;
 `;
 
-export const AllRoomsCardContainerStyles = css`
+export const AllRoomsCardContainerStyles = ($theme: ThemeType) => css`
   border-radius: 0.75rem;
-  border-width: 1px;
-  border-color: ${ROOM_PAGE_COLORS.roomBorder};
+  border: 1px solid ${themes[$theme].BORDER_COLOR};
   box-shadow: 0 1px 2px ${ROOM_PAGE_COLORS.roomBoxShadow};
   padding: 1.5rem;
+  transition: border-color 0.3s ease;
   h2 {
     margin: 0 0 0.5rem;
     font-weight: bold;
@@ -56,12 +60,12 @@ export const AllRoomsCardContainerStyles = css`
   }
 `;
 
-export const FreeRoomsCardContainerStyles = css`
+export const FreeRoomsCardContainerStyles = ($theme: ThemeType) => css`
   border-radius: 0.75rem;
-  border-width: 1px;
-  border-color: ${ROOM_PAGE_COLORS.roomBorder};
+  border: 1px solid ${themes[$theme].BORDER_COLOR};
   box-shadow: 0 1px 2px ${ROOM_PAGE_COLORS.roomBoxShadow};
   padding: 1.5rem;
+  transition: border-color 0.3s ease;
   h2 {
     margin: 0 0 0.5rem;
     color: ${ROOM_PAGE_COLORS.roomTitleFree};
@@ -72,12 +76,12 @@ export const FreeRoomsCardContainerStyles = css`
   }
 `;
 
-export const OccupiedRoomsCardContainerStyles = css`
+export const OccupiedRoomsCardContainerStyles = ($theme: ThemeType) => css`
   border-radius: 0.75rem;
-  border-width: 1px;
-  border-color: ${ROOM_PAGE_COLORS.roomBorder};
+  border: 1px solid ${themes[$theme].BORDER_COLOR};
   box-shadow: 0 1px 2px ${ROOM_PAGE_COLORS.roomBoxShadow};
   padding: 1.5rem;
+  transition: border-color 0.3s ease;
   h2 {
     margin: 0 0 0.5rem;
     color: ${ROOM_PAGE_COLORS.roomTitleOccupied};
@@ -87,19 +91,19 @@ export const OccupiedRoomsCardContainerStyles = css`
     margin: 0;
   }
 `;
-export const RoomListContainerStyles = css`
+export const RoomListContainerStyles = ($theme: ThemeType) => css`
   display: flex;
   flex-direction: column;
   gap: 1rem;
   justify-content: flex-start;
   align-items: flex-start;
   border-radius: 0.75rem;
-  border: 1px solid ${ROOM_PAGE_COLORS.roomBorder};
+  border: 1px solid ${themes[$theme].BORDER_COLOR};
   box-shadow: 0 1px 2px ${ROOM_PAGE_COLORS.roomBoxShadow};
   padding: 1.5rem;
   width: 28%;
   cursor: pointer;
-  transition: box-shadow 0.2s ease;
+  transition: box-shadow 0.2s ease, border-color 0.3s ease;
   
   &:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);

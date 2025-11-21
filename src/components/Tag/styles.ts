@@ -27,13 +27,14 @@ const TYPE_STYLES = {
     color: ${DARK_COLOR};
   `,
   warning: css`
-    background-color: #facc15;
-    color: ${DARK_COLOR};
+    background-color: ${"#facc1519"};
+    color: ${"#ca8a04ff"};
+    border: 1px solid ${"#eacc16ff"};
   `,
   succesOutput: css`
-    background-color: ${"#edfdf3"};
-    color: ${"#16a249"};
-    border: 1px solid ${"#96d794ff"};
+    background-color: ${"#40eb7f19"};
+    color: ${"#3be077ff"};
+    border: 1px solid ${"#91d38eff"};
   `,
   dangerOutput: css`
     background-color: ${"#ef43431a"};
@@ -45,6 +46,10 @@ const TYPE_STYLES = {
     color: ${DARK_COLOR};
     border: 1px solid ${"#97a0a5ff"};
   `,
+  empty: css`
+    background-color: transparent;
+    color: ${DARK_COLOR};
+  `,
 };
 
 // Base styles for the Tag
@@ -55,12 +60,11 @@ const TagBaseStyles = css`
   padding: 0.5rem;
   border: none;
   border-radius: 0.65rem;
-  background-color: #ffffff;
 `;
 
 // Styled component for the Tag
 export const TagStyled = styled.button<TagProps>`
   ${TagBaseStyles}
-  ${({ $customStyle }) => $customStyle && $customStyle};
   ${({ $type }) => TYPE_STYLES[$type]};
+  ${({ $customStyle }) => $customStyle && $customStyle};
 `;

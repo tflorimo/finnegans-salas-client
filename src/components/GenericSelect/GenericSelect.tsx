@@ -11,7 +11,7 @@ const getStringFromValue = <TValue extends Base>(value: TValue) => {
 export const GenericSelect = <TValue extends Base>(
     props: GenericSelectProps<TValue>
 ) => {
-    const { values, onChange, formatLabel, selected } = props;
+    const { values, onChange, formatLabel, selected, theme } = props;
     const [current, setCurrent] = useState<TValue | undefined>(selected);
 
     const onSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -24,14 +24,14 @@ export const GenericSelect = <TValue extends Base>(
 
     return (
         <SelectContainer>
-            <StyledSelect value={current ? getStringFromValue(current) : ""} onChange={onSelectChange}>
+            <StyledSelect $theme={theme} value={current ? getStringFromValue(current) : ""} onChange={onSelectChange}>
                 {values.map((value) => (
                     <option key={getStringFromValue(value)} value={getStringFromValue(value)}>
                         {formatLabel(value)}
                     </option>
                 ))}
             </StyledSelect>
-            <ArrowIcon>
+            <ArrowIcon $theme={theme}>
                 <LucideChevronDown size={16} />
             </ArrowIcon>
         </SelectContainer>

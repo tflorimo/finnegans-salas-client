@@ -1,7 +1,9 @@
 import { Calendar, UsersIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
 import { CardContainer } from "../../../components/CardContainer/CardContainer";
 import { Tag } from "../../../components/Tag/Tag";
+import { ThemeContext } from "../../../context/theme/themeContext";
 import {
   EVENTOS_SEMANA,
   getRoomStatusConfig,
@@ -22,6 +24,7 @@ import { encodeRoomEmail } from "../../../shared/utils/roomURL.utils";
 
 export const RoomItem = ({ room }: RoomItemProps) => {
   const navigate = useNavigate();
+  const { theme } = useContext(ThemeContext);
   const roomTimes = useRoomFormattedTimes(room);
 
   const handleClick = () => {
@@ -39,7 +42,7 @@ export const RoomItem = ({ room }: RoomItemProps) => {
   return (
     <CardContainer
       onClick={handleClick}
-      customStyle={RoomListContainerStyles}
+      customStyle={RoomListContainerStyles(theme)}
     >
       <RoomStatusSectionStyles>
         <h2>{roomTimes.name}</h2>

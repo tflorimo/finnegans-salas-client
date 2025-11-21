@@ -1,4 +1,7 @@
+import type { ThemeType } from "../../theme/Types";
+
 export interface InputSearchProps {
-    onFilter: (value: string) => void;
+    onFilter: (query: string) => void;
     placeholder?: string;
+    theme?: ThemeType;
 }
