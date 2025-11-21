@@ -1,5 +1,7 @@
 import styled, { css } from 'styled-components';
-import { SIDEBAR_COLLAPSED_WIDTH, SIDEBAR_WIDTH } from '../../shared/components/SideBar/styles';
+import { SIDEBAR_WIDTH, SIDEBAR_COLLAPSED_WIDTH } from '../../shared/components/SideBar/styles';
+import type { ThemeType } from '../../theme/Types';
+import { themes } from '../../theme/Theme';
 
 export const AdminLogsPageWrapper = styled.div`
   display: flex;
@@ -74,10 +76,10 @@ export const HeaderContent = styled.div`
   margin: 1.5rem 0 0 0.8rem;
 `;
 
-export const PageTitle = styled.h1`
+export const PageTitle = styled.h1<{ $theme: ThemeType }>`
   font-size: 1.5rem;
   font-weight: 750;
-  color: #111827;
+  color: ${({ $theme }) => themes[$theme].TEXT_COLOR};
   margin: -20px 0 0 0;
   line-height: 1.2;
 `;
@@ -114,11 +116,12 @@ export const MainContent = styled.main`
   gap: 24px;
 `;
 
-export const LogsGrid = styled.div`
+export const LogsGrid = styled.div<{ $theme: ThemeType }>`
   display: flex;
   flex-direction: column;
   gap: 12px;
   width: 100%;
+  background-color: ${({ $theme }) => themes[$theme].BACKGROUND_COLOR};
 `;
 
 export const LogHeader = styled.div`
@@ -150,18 +153,18 @@ export const LogInfo = styled.div`
   margin-left: 8px;
 `;
 
-export const LogTitle = styled.h3`
+export const LogTitle = styled.h3<{ $theme: ThemeType }>`
   font-size: 16px;
   font-weight: 600;
-  color: #1f2937;
+  color: ${({ $theme }) => themes[$theme].TEXT_COLOR};
   margin: 0;
   line-height: 1.5;
 `;
 
-export const LogUser = styled.p`
+export const LogUser = styled.p<{ $theme: ThemeType }>`
   font-size: 14px;
   font-weight: 400;
-  color: #6b7280;
+  color: ${({ $theme }) => themes[$theme].TEXT_COLOR};
   margin: 0;
   line-height: 1.5;
 `;

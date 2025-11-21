@@ -1,0 +1,42 @@
+import type { DefaultTheme } from "styled-components";
+import { Themes } from "./Types";
+
+
+export const themes = {
+    [Themes.light]: {
+    PRIMARY_COLOR: "#007bff",
+    SECONDARY_COLOR: "#6c757d",
+    SUCCESS_COLOR: "#28a745",
+    DANGER_COLOR: "#dc3545",
+    WARNING_COLOR: "#ffc107",
+    INFO_COLOR: "#17a2b8",
+    LIGHT_COLOR: "#f9faf8ff",
+    DARK_COLOR: "#343a40",
+    WHITE_COLOR: "#ffffff",
+    GLASS_COLOR: "#23688aff",
+    BLACK_COLOR: "#000000",
+    BACKGROUND_COLOR: "#f9f9fa",
+    CONTAINER_COLOR: "#ffffff",
+    TEXT_COLOR: "#0F172A",
+    SIDEBAR_COLOR: "#ebebebff",
+    TEXT_SIDEBAR_COLOR: "#0F172A",
+},
+[Themes.dark]: {
+    PRIMARY_COLOR: "#007bff",
+    SECONDARY_COLOR: "#6c757d",
+    SUCCESS_COLOR: "#28a745",
+    DANGER_COLOR: "#dc3545",
+    WARNING_COLOR: "#ffc107",
+    INFO_COLOR: "#17a2b8",
+    LIGHT_COLOR: "#0377e4ff",
+    DARK_COLOR: "#343a40",
+    WHITE_COLOR: "#ffffff",
+    GLASS_COLOR: "#23688aff",
+    BLACK_COLOR: "#000000",
+    BACKGROUND_COLOR: "#212121",
+    CONTAINER_COLOR: "#171717",
+    TEXT_COLOR: "#ffffff",
+    SIDEBAR_COLOR: "#171717",
+    TEXT_SIDEBAR_COLOR: "#ffffffff",
+}
+};

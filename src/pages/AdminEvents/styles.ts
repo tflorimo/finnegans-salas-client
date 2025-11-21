@@ -1,5 +1,7 @@
 import styled, { css } from "styled-components";
-import { SIDEBAR_COLLAPSED_WIDTH, SIDEBAR_WIDTH } from "../../shared/components/SideBar/styles";
+import { SIDEBAR_WIDTH, SIDEBAR_COLLAPSED_WIDTH } from "../../shared/components/SideBar/styles";
+import type { ThemeType } from '../../theme/Types';
+import { themes } from '../../theme/Theme';
 
 export const AdminEventsPageWrapper = styled.div`
   display: flex;
@@ -70,10 +72,10 @@ export const HeaderContent = styled.div`
   margin: 0.5rem 0;
 `;
 
-export const PageTitle = styled.h1`
+export const PageTitle = styled.h1<{ $theme: ThemeType }>`
   font-size: 1.5rem;
   font-weight: 750;
-  color: #111827;
+  color: ${({ $theme }) => themes[$theme].TEXT_COLOR};
   margin: -8px 0 0 0;
   line-height: 1.2;
 `;
@@ -85,30 +87,31 @@ export const Toolbar = styled.div`
   flex-wrap: wrap;
 `;
 
-export const Table = styled.table`
+export const Table = styled.table<{ $theme: ThemeType }>`
   width: 100%;
   border-collapse: collapse;
   font-size: 14px;
-
+  
   thead th {
     text-align: left;
-    color: #64748b;
+    color: ${({ $theme }) => themes[$theme].TEXT_COLOR};
     font-weight: 600;
     padding: 14px 16px;
-    border-bottom: 1px solid #eef2f7;
-    background: #fafbfd;
+    border-bottom: 1px solid ${({ $theme }) => themes[$theme].BACKGROUND_COLOR};
+    background: ${({ $theme }) => themes[$theme].BACKGROUND_COLOR};
   }
 
   tbody td {
     padding: 14px 16px;
-    border-bottom: 1px solid #f1f5f9;
-    color: #0f172a;
+    border-bottom: 1px solid ${({ $theme }) => themes[$theme].BACKGROUND_COLOR};
+    color: ${({ $theme }) => themes[$theme].TEXT_COLOR};
     vertical-align: middle;
   }
 
+  /*
   tbody tr:hover {
     background: #fbfdff;
-  }
+  } */
 
   tbody tr:last-child td {
     border-bottom: none;
@@ -150,9 +153,9 @@ export const filterButtonStyle = css`
   &:hover { background: #f8fafc; }
 `;
 
-export const tableCardStyle = css`
+export const tableCardStyle = css<{ $theme: ThemeType }>`
   padding: 0;
-  border: 1px solid #e5e7eb;
+  border: 1px solid ${({ $theme }) => themes[$theme].BACKGROUND_COLOR};
   border-radius: 14px;
   overflow: hidden;
   align-items: stretch;

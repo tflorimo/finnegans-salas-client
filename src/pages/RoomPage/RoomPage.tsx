@@ -40,8 +40,12 @@ import {
   RoomPageContainer,
   NoEquipmentMessage,
 } from "./styles";
+import type { ThemeType } from "../../theme/Types";
+import { ThemeContext } from "../../context/theme/themeContext";
+import { useContext } from "react";
 
 export const RoomPage = () => {
+  const {theme} = useContext(ThemeContext);
   const { loading, roomData, error, updateRoomData } = useGetRoom();
   const { todayReservations, weekReservations, finishedReservations } = useFilteredReservations(roomData?.events);
   const [clickedEventIds, setClickedEventIds] = useState<Set<string>>(new Set());
@@ -63,7 +67,8 @@ export const RoomPage = () => {
     handleCheckIn(roomData, eventId);
   };
 
-  const getCheckInButtonStyle = (isDisabled: boolean) => css`
+  const getCheckInButtonStyle = (isDisabled: boolean) =>
+  css<{ $theme: ThemeType }>`
     ${CheckInButtonStyle}
     opacity: ${isDisabled ? 0.5 : 1};
     pointer-events: ${isDisabled ? "none" : "auto"};
@@ -79,7 +84,7 @@ export const RoomPage = () => {
 
   if (error) {
     return (
-      <RoomPageContainer>
+      <RoomPageContainer $theme={theme}>
         <BackButton />
         <PageInner>
           <CardContainer>
@@ -91,7 +96,7 @@ export const RoomPage = () => {
   }
 
   return (
-    <RoomPageContainer>
+    <RoomPageContainer $theme={theme}>
       <BackButton />
       <PageInner>
         <ContentGrid>
@@ -104,7 +109,7 @@ export const RoomPage = () => {
                 loading={loading}
               />
 
-              <TitleStyle>{ROOM_PAGE_MESSAGES.EQUIPMENT_TITLE}</TitleStyle>
+              <TitleStyle $theme={theme}>{ROOM_PAGE_MESSAGES.EQUIPMENT_TITLE}</TitleStyle>
 
               {(roomData?.resources ?? []).length > 0 ? (
                 <EquipmentContainer>
@@ -113,13 +118,13 @@ export const RoomPage = () => {
                   ))}
                 </EquipmentContainer>
               ) : (
-                <NoEquipmentMessage>{ROOM_PAGE_MESSAGES.NO_EQUIPMENT}</NoEquipmentMessage>
+                <NoEquipmentMessage $theme={theme}>{ROOM_PAGE_MESSAGES.NO_EQUIPMENT}</NoEquipmentMessage>
               )}
             </CardContainer>
 
             <CardContainer>
-              <TitleStyle>{ROOM_PAGE_MESSAGES.CHECK_IN_TITLE}</TitleStyle>
-              <CheckInSubtitle>
+              <TitleStyle $theme={theme}>{ROOM_PAGE_MESSAGES.CHECK_IN_TITLE}</TitleStyle>
+              <CheckInSubtitle $theme={theme}>
                 {ROOM_PAGE_MESSAGES.CHECK_IN_SUBTITLE}
               </CheckInSubtitle>
 
@@ -137,14 +142,15 @@ export const RoomPage = () => {
                     );
                   })
               ) : (
-                <NoEquipmentMessage>
+                <NoEquipmentMessage $theme={theme}>
                   No hay eventos disponibles para check-in en este momento
                 </NoEquipmentMessage>
               )}
             </CardContainer>
 
             <CardContainer customStyle={ReservationsCardStyle}>
-              <ReservationSectionTitle>
+              <TitleStyle $theme={theme}/>
+              <ReservationSectionTitle $theme={theme}>
                 <Calendar />
                 {ROOM_PAGE_MESSAGES.TODAY_RESERVATIONS_TITLE}
               </ReservationSectionTitle>
@@ -167,12 +173,12 @@ export const RoomPage = () => {
                   ))}
                 </ReservationList>
               ) : (
-                <NoReservationsMessage>
+                <NoReservationsMessage $theme={theme}>
                   {ROOM_PAGE_MESSAGES.NO_TODAY_RESERVATIONS}
                 </NoReservationsMessage>
               )}
 
-              <ReservationsSectionSeparator>
+              <ReservationsSectionSeparator $theme={theme}>
                 <Calendar />
                 {ROOM_PAGE_MESSAGES.WEEK_RESERVATIONS_TITLE}
               </ReservationsSectionSeparator>
@@ -195,12 +201,12 @@ export const RoomPage = () => {
                   ))}
                 </ReservationList>
               ) : (
-                <NoReservationsMessage>
+                <NoReservationsMessage $theme={theme}>
                   {ROOM_PAGE_MESSAGES.NO_WEEK_RESERVATIONS}
                 </NoReservationsMessage>
               )}
 
-              <ReservationsSectionSeparator>
+              <ReservationsSectionSeparator $theme={theme}>
                 <Calendar />
                 {ROOM_PAGE_MESSAGES.FINISHED_RESERVATIONS_TITLE}
               </ReservationsSectionSeparator>
@@ -223,7 +229,7 @@ export const RoomPage = () => {
                   ))}
                 </ReservationList>
               ) : (
-                <NoReservationsMessage>
+                <NoReservationsMessage $theme={theme}>
                   {ROOM_PAGE_MESSAGES.NO_FINISHED_RESERVATIONS}
                 </NoReservationsMessage>
               )}
@@ -232,25 +238,25 @@ export const RoomPage = () => {
 
           <ColumnaLateral>
             <CardContainer customStyle={CurrentStatusCardStyle}>
-              <TitleStyle>{ROOM_PAGE_MESSAGES.CURRENT_STATUS_TITLE}</TitleStyle>
-              <FilaEstado>
+              <TitleStyle $theme={theme}>{ROOM_PAGE_MESSAGES.CURRENT_STATUS_TITLE}</TitleStyle>
+              <FilaEstado $theme={theme}>
                 <span>{ROOM_PAGE_MESSAGES.STATUS_LABEL}</span>
                 {renderStatusTag(loading, roomData?.is_busy)}
               </FilaEstado>
               {roomData?.current_event && (
-                <FilaEstado>
+                <FilaEstado $theme={theme}>
                   <span>{ROOM_PAGE_MESSAGES.CHECK_IN_STATUS_LABEL}</span>
                   {renderCheckInStatusTag(roomData.current_event.checkInStatus)}
                 </FilaEstado>
               )}
-              <FilaEstado>
+              <FilaEstado $theme={theme}>
                 <span>{ROOM_PAGE_MESSAGES.CAPACITY_LABEL}</span>
                 <strong>
                   {loading ? ROOM_PAGE_MESSAGES.LOADING : roomData?.capacity ?? "-"}{" "}
                   {ROOM_PAGE_MESSAGES.CAPACITY_UNIT}
                 </strong>
               </FilaEstado>
-              <FilaEstado>
+              <FilaEstado $theme={theme}>
                 <span>{ROOM_PAGE_MESSAGES.TODAY_RESERVATIONS_COUNT_LABEL}</span>
                 <strong>
                   {todayReservations.length}
@@ -259,7 +265,7 @@ export const RoomPage = () => {
             </CardContainer>
 
             <CardContainer customStyle={QRCardStyle}>
-              <TitleStyle>{ROOM_PAGE_MESSAGES.QR_SECTION_TITLE}</TitleStyle>
+              <TitleStyle $theme={theme}>{ROOM_PAGE_MESSAGES.QR_SECTION_TITLE}</TitleStyle>
               <p>{ROOM_PAGE_MESSAGES.QR_SECTION_DESCRIPTION}</p>
               {roomData?.email && <QRCode roomEmail={roomData.email} />}
             </CardContainer>

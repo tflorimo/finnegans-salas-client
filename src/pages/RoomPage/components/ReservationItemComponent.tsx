@@ -1,6 +1,8 @@
 import { Avatar, ResInfo, ResRight, ReservationItem, FinishedEventIcon, InProgressEventIcon } from "../styles";
 import { initials, getDayName } from "../utils/RoomPageUtils";
 import { truncateTextByLength } from "../../../shared/utils/text.utils";
+import { ThemeContext } from "../../../context/theme/themeContext";
+import { useContext } from "react";
 import { EventStatusIcon } from "../../../shared/components/EventStatusIcon";
 
 interface ReservationItemComponentProps {
@@ -14,7 +16,6 @@ interface ReservationItemComponentProps {
   eventId: string;
   currentEventId?: string;
 }
-
 export const ReservationItemComponent = ({
   organizer,
   start,
@@ -26,17 +27,17 @@ export const ReservationItemComponent = ({
   eventId,
   currentEventId,
 }: ReservationItemComponentProps) => {
-
+  const {theme} = useContext(ThemeContext);
   return (
     <ReservationItem>
       <Avatar>{initials(organizer)}</Avatar>
-      <ResInfo>
+      <ResInfo $theme={theme}>
         <span>
           {organizer} - {truncateTextByLength(title, 50)}
         </span>
         <small>{getDayName(date)}</small>
       </ResInfo>
-      <ResRight>
+      <ResRight $theme={theme}>
         <EventStatusIcon
           startTime={startTime}
           endTime={endTime}

@@ -1,6 +1,8 @@
 import styled from "styled-components";
+import { themes } from "../../../theme/Theme";
+import type { ThemeType } from "../../../theme/Types";
 
-export const BackButtonStyled = styled.button`
+export const BackButtonStyled = styled.button<{ $theme: ThemeType }>`
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -8,7 +10,7 @@ export const BackButtonStyled = styled.button`
   padding: 0;
   font-size: 14px;
   font-weight: 500;
-  color: #2563eb;
+  color: ${({ $theme }) => themes[$theme].TEXT_COLOR};
   background: none;
   border: none;
   cursor: pointer;

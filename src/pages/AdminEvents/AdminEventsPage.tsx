@@ -1,13 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { SideBar } from "../../shared/components/SideBar/SideBar";
+import Header from "../../shared/components/Header/Header";
 import { BackButton } from "../../shared/components/BackButton/BackButton";
 import { FilterToolbar } from "../../shared/components/FilterToolbar/FilterToolbar";
-import Header from "../../shared/components/Header/Header";
-import { SideBar } from "../../shared/components/SideBar/SideBar";
 import type { EventResponseDTO } from "../../shared/types/event.types";
 import { EventDetailsModal } from "./components/EventDetailsModal";
 import { EventsTable } from "./components/EventsTable";
 import { ADMIN_EVENTS_MESSAGES, EVENT_FILTER_PLACEHOLDER } from "./constants/AdminEvents.constants";
-import { useFilteredEvents } from "./hooks/useFilteredEvents";
 import { useGetAdminEvents } from "./hooks/useGetAdminEvents";
 import {
   AdminEventsContainer,
@@ -18,10 +17,16 @@ import {
   PageInner,
   PageTitle,
 } from "./styles";
+import { ThemeContext } from '../../context/theme/themeContext';
+import { useFilteredEvents } from "./hooks/useFilteredEvents";
+
 
 export const AdminEventsPage = () => {
+  const {theme} = useContext(ThemeContext);
+
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(false);
   const [selectedEvent, setSelectedEvent] = useState<EventResponseDTO | null>(null);
+  
   const { events = [] } = useGetAdminEvents();
   const { filteredData, onKeywordSelected } = useFilteredEvents<EventResponseDTO>(events);
 
@@ -41,7 +46,7 @@ export const AdminEventsPage = () => {
           <BackButton />
           <PageHeader>
             <HeaderContent>
-              <PageTitle>{ADMIN_EVENTS_MESSAGES.PAGE_TITLE}</PageTitle>
+              <PageTitle $theme={theme}>{ADMIN_EVENTS_MESSAGES.PAGE_TITLE}</PageTitle>
             </HeaderContent>
           </PageHeader>
 

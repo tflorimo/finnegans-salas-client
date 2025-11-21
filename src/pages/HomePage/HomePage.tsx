@@ -17,6 +17,7 @@ import {
   RoomStatusContainer,
   SelectFilterContainer,
 } from "./styles";
+import { FullScreenLoader } from "../../components/Loaders/FullScreenLoader/FullScreenLoader";
 
 export const HomePage = () => {
   const [roomStatusSelected, setRoomStatusSelected] = useState<string>("all");
@@ -33,11 +34,10 @@ export const HomePage = () => {
 
   const filteredRooms = useMemo(() => filterRooms(), [filterRooms]);
 
-  if (loading) {
-    return <p>Cargando salas...</p>;
-  }
-
   return (
+    <>
+    <FullScreenLoader isLoading={loading} />
+
     <HomePageStyled>
       {/* Contadores de salas */}
       <RoomStatusContainer>
@@ -59,7 +59,7 @@ export const HomePage = () => {
 
       {/* Filtros */}
       <SelectFilterContainer>
-        <Funnel size={20} color={ROOM_PAGE_COLORS.roomText} />
+        <Funnel size={20} color={ROOM_PAGE_COLORS.roomBoxShadow} />
 
         <GenericSelect
           values={ROOM_SELECT_OPTIONS}
@@ -80,6 +80,7 @@ export const HomePage = () => {
         ))}
       </RoomListContainer>
     </HomePageStyled>
+    </>
   );
 };
 

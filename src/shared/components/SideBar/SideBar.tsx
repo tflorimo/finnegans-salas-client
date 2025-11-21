@@ -1,5 +1,5 @@
 import { BarChart3, ChevronLeft, ChevronRight, FileText } from "lucide-react";
-import type { JSX } from "react";
+import { useContext, type JSX } from "react";
 import { NavLink } from "react-router-dom";
 import { css } from "styled-components";
 import { Button } from "../../../components/Button/Button";
@@ -14,6 +14,7 @@ import {
   ToggleButton
 } from "./styles";
 import type { SideBarProps } from "./types";
+import { ThemeContext } from "../../../context/theme/themeContext";
 
 /**
  * @description SideBar component that provides collapsible navigation with toggle functionality.
@@ -36,6 +37,8 @@ export const SideBar = ({
   onEventsClick
 }: SideBarProps): JSX.Element => {
 
+  const {theme} = useContext(ThemeContext);
+
   const getBaseButtonStyles = (isActive: boolean) => css`
     width: 100%;
     justify-content: ${isCollapsed ? "center" : "flex-start"};
@@ -57,7 +60,7 @@ export const SideBar = ({
   `;
 
   return (
-    <SideBarContainer $collapsed={isCollapsed}>
+    <SideBarContainer $collapsed={isCollapsed} $theme={theme}>
       <SideBarHeader $collapsed={isCollapsed}>
         {isCollapsed ? (
           <ToggleButton
@@ -78,8 +81,8 @@ export const SideBar = ({
             >
               <ChevronLeft size={18} />
             </ToggleButton>
-            <SideBarTitle>Finnegans Admin</SideBarTitle>
-            <SideBarSubtitle>Panel de Control</SideBarSubtitle>
+            <SideBarTitle $theme={theme}>Finnegans Admin</SideBarTitle>
+            <SideBarSubtitle $theme={theme}>Panel de Control</SideBarSubtitle>
           </>
         )}
       </SideBarHeader>
