@@ -1,6 +1,4 @@
-import type { DefaultTheme } from "styled-components";
 import { Themes } from "./Types";
-
 
 export const themes = {
     [Themes.light]: {
@@ -20,6 +18,7 @@ export const themes = {
     TEXT_COLOR: "#0F172A",
     SIDEBAR_COLOR: "#ebebebff",
     TEXT_SIDEBAR_COLOR: "#0F172A",
+    BORDER_COLOR: "#e5e7eb",
 },
 [Themes.dark]: {
     PRIMARY_COLOR: "#007bff",
@@ -38,5 +37,6 @@ export const themes = {
     TEXT_COLOR: "#ffffff",
     SIDEBAR_COLOR: "#171717",
     TEXT_SIDEBAR_COLOR: "#ffffffff",
+    BORDER_COLOR: "#6b7280",
 }
 };
