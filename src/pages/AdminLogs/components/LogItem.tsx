@@ -1,7 +1,8 @@
 import { CardContainer } from '../../../components/CardContainer/CardContainer';
 import { Tag } from '../../../components/Tag/Tag';
 import type { LogDTO } from '../../../services/admin/logs/types';
-import { formatTimestamp, getTagType, formatUserInfo, translateLogStatus } from '../utils/logsUtils';
+import { formatTimestamp } from '../../../shared/utils/format.utils';
+import { getTagType, formatUserInfo, translateLogStatus } from '../utils/logsUtils';
 import {
   LogHeader,
   TagContainer,

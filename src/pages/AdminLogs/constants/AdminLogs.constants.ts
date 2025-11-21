@@ -31,3 +31,5 @@ export const TIMESTAMP_FORMAT_OPTIONS: Intl.DateTimeFormatOptions = {
 export const ADMIN_FILTER_PLACEHOLDER = 'Buscar por tipo de Log...';
 
 export const LOCALE_ES = 'es-ES';
+
+export const EXPORT_FILE_NAME = 'system-logs';

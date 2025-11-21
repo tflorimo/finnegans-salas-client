@@ -29,10 +29,9 @@ export const AdminHeaderWrapper = styled.div<{ $collapsed: boolean }>`
 `;
 
 export const AdminLogsContainer = styled.div<{ $collapsed: boolean }>`
-  flex: 1;
-  max-width: ${({ $collapsed }) =>
-    `calc(100vw - ${$collapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_WIDTH
-    }px)`};
+  flex: none;
+  width: ${({ $collapsed }) =>
+    `calc(100vw - ${$collapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_WIDTH}px)`};
   margin-left: ${({ $collapsed }) =>
     `${$collapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_WIDTH}px`};
   margin-top: 0;
@@ -41,7 +40,7 @@ export const AdminLogsContainer = styled.div<{ $collapsed: boolean }>`
   display: flex;
   flex-direction: column;
   gap: 24px;
-  transition: margin-left 0.25s ease, max-width 0.25s ease;
+  transition: margin-left 0.25s ease, width 0.25s ease;
 
   @media (max-width: 1200px) {
     padding: 10px 32px 32px;
@@ -49,7 +48,7 @@ export const AdminLogsContainer = styled.div<{ $collapsed: boolean }>`
 
   @media (max-width: 768px) {
     margin-left: 0;
-    max-width: 100vw;
+    width: 100vw;
     padding: 5px 16px 10px;
   }
 `;
@@ -73,40 +72,15 @@ export const HeaderContent = styled.div`
   gap: 1rem;
   flex-direction: column;
   align-items: stretch;
-  margin: 1.5rem 0 0 0.8rem;
+  margin: 0.375rem 0 0 0;
 `;
 
 export const PageTitle = styled.h1<{ $theme: ThemeType }>`
   font-size: 1.5rem;
   font-weight: 750;
   color: ${({ $theme }) => themes[$theme].TEXT_COLOR};
-  margin: -20px 0 0 0;
+  margin: 0;
   line-height: 1.2;
-`;
-
-export const ExportButton = styled.button`
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  background: #ffffff;
-  border: 1px solid #d1d5db;
-  border-radius: 0.375rem;
-  color: #374151;
-  font-size: 0.800rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
-
-  &:hover {
-    background: #f9fafb;
-    border-color: #9ca3af;
-  }
-
-  svg {
-    width: 16px;
-    height: 16px;
-  }
 `;
 
 export const MainContent = styled.main`
@@ -207,10 +181,12 @@ export const EmptyState = styled.div`
   }
 `;
 
-export const FilterLogsContainer = styled.div`
+export const ButtonsLogsContainer = styled.div`
   display: flex;
-  justify-content: space-between;
+  gap: 12px;
   align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
 `;
 
 export const LogItemCardStyle = css`
