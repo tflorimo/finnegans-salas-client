@@ -7,7 +7,11 @@ import { ExportButton } from "../../shared/components/ExportButton";
 import type { EventResponseDTO } from "../../shared/types/event.types";
 import { EventDetailsModal } from "./components/EventDetailsModal";
 import { EventsTable } from "./components/EventsTable";
-import { ADMIN_EVENTS_MESSAGES, EVENT_FILTER_PLACEHOLDER, EXPORT_FILE_NAME } from "./constants/AdminEvents.constants";
+import {
+  ADMIN_EVENTS_MESSAGES,
+  EVENT_FILTER_PLACEHOLDER,
+  EXPORT_FILE_NAME,
+} from "./constants/AdminEvents.constants";
 import { useGetAdminEvents } from "./hooks/useGetAdminEvents";
 import {
   AdminEventsContainer,
@@ -18,25 +22,34 @@ import {
   PageHeader,
   PageInner,
   PageTitle,
+  TableWrapper,
 } from "./styles";
-import { ThemeContext } from '../../context/theme/themeContext';
+import { ThemeContext } from "../../context/theme/themeContext";
 import { useFilteredEvents } from "./hooks/useFilteredEvents";
-
+import { SidebarBackdrop } from "../../shared/components/SideBar/styles";
 
 export const AdminEventsPage = () => {
-  const {theme} = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
 
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(false);
-  const [selectedEvent, setSelectedEvent] = useState<EventResponseDTO | null>(null);
-  
+  const [selectedEvent, setSelectedEvent] = useState<EventResponseDTO | null>(
+    null
+  );
+
   const { events = [] } = useGetAdminEvents();
-  const { filteredData, onKeywordSelected } = useFilteredEvents<EventResponseDTO>(events);
+  const { filteredData, onKeywordSelected } =
+    useFilteredEvents<EventResponseDTO>(events);
 
   return (
     <AdminEventsPageWrapper>
       <SideBar
         isCollapsed={isSidebarCollapsed}
         onToggle={() => setIsSidebarCollapsed((prevState) => !prevState)}
+      />
+
+      <SidebarBackdrop
+        $isOpen={!isSidebarCollapsed}
+        onClick={() => setIsSidebarCollapsed(true)}
       />
 
       <AdminHeaderWrapper $collapsed={isSidebarCollapsed}>
@@ -48,19 +61,30 @@ export const AdminEventsPage = () => {
           <BackButton />
           <PageHeader>
             <HeaderContent>
-              <PageTitle $theme={theme}>{ADMIN_EVENTS_MESSAGES.PAGE_TITLE}</PageTitle>
+              <PageTitle $theme={theme}>
+                {ADMIN_EVENTS_MESSAGES.PAGE_TITLE}
+              </PageTitle>
               <ButtonsEventsContainer>
-                <FilterToolbar placeholder={EVENT_FILTER_PLACEHOLDER} onKeywordSelected={onKeywordSelected} />
-                <ExportButton data={events} fileName={EXPORT_FILE_NAME} disabled={events.length === 0} />
+                <FilterToolbar
+                  placeholder={EVENT_FILTER_PLACEHOLDER}
+                  onKeywordSelected={onKeywordSelected}
+                />
+                <ExportButton
+                  data={events}
+                  fileName={EXPORT_FILE_NAME}
+                  disabled={events.length === 0}
+                />
               </ButtonsEventsContainer>
             </HeaderContent>
           </PageHeader>
 
-          <EventsTable
-            events={filteredData}
-            onView={(ev) => setSelectedEvent(ev)}
-          />
-
+          <TableWrapper>
+            <EventsTable
+              events={filteredData}
+              onView={(ev) => setSelectedEvent(ev)}
+            />
+          </TableWrapper>
+          
           {selectedEvent && (
             <EventDetailsModal
               event={selectedEvent}

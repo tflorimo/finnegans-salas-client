@@ -38,6 +38,18 @@ export const LoginPageContainer = styled.div`
   padding: 24px;
   text-align: center;
   overflow: hidden;
+
+  @media (max-width: 768px) {
+    position: relative;
+    inset: auto;
+    min-height: 100vh;
+    width: 100%;
+    padding: 24px 12px 32px;
+    gap: 24px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    justify-content: flex-start;
+  }
 `;
 
 export const ImageFinnegans = styled.img`
@@ -99,6 +111,22 @@ export const LoginCardStyle = css`
   p.instruction {
     color: ${COLOR_TEXT_WHITE};
     font-size: 14px;
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    max-width: 330px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1.2rem 0.1rem;
+
+    h2 {
+      font-size: 20px;
+    }
+
+    p.instruction {
+      font-size: 13px;
+    }
   }
 `;
 

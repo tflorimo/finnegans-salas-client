@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
 import type { ThemeType } from "../../../theme/Types";
 import { themes } from "../../../theme/Theme";
+import { media } from "../../Styles/media";
 
 export const SIDEBAR_WIDTH = 240;
 export const SIDEBAR_COLLAPSED_WIDTH = 80;
@@ -47,7 +48,6 @@ export const getBaseButtonStyles = (isActive: boolean, theme: ThemeType, isColla
 `;
 
 export const SideBarContainer = styled.aside<{ $theme: ThemeType, $collapsed: boolean }>`
-  width: ${({ $collapsed }) => ($collapsed ? `${SIDEBAR_COLLAPSED_WIDTH}px` : `${SIDEBAR_WIDTH}px`)};
   min-height: 100vh;
   background: ${({ $theme }) => ($theme === "light" ? SIDEBAR_BG_LIGHT : SIDEBAR_BG_DARK)};
   border-right: 1px solid ${({ $theme }) => themes[$theme].BORDER_COLOR};
@@ -55,11 +55,48 @@ export const SideBarContainer = styled.aside<{ $theme: ThemeType, $collapsed: bo
   position: fixed;
   left: 0;
   top: 0;
-  z-index: 50;
+  z-index: 200;
   display: flex;
   flex-direction: column;
-  transition: width 0.25s ease, background 0.3s ease;
+  transition:
+    width 0.25s ease,
+    background 0.3s ease,
+    transform 0.25s ease;
   overflow: hidden;
+
+  /* DESKTOP / TABLET */
+  @media (min-width: 769px) {
+    width: ${({ $collapsed }) =>
+      $collapsed ? `${SIDEBAR_COLLAPSED_WIDTH}px` : `${SIDEBAR_WIDTH}px`};
+    transform: translateX(0);
+  }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    width: ${({ $collapsed }) =>
+      $collapsed ? `${SIDEBAR_COLLAPSED_WIDTH}px` : `${SIDEBAR_WIDTH}px`};
+    height: 100vh;
+    transform: translateX(0);
+  }
+`;
+
+/* Fondo oscuro atrás de la sidebar en mobile */
+export const SidebarBackdrop = styled.div<{ $isOpen: boolean }>`
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  opacity: ${({ $isOpen }) => ($isOpen ? 1 : 0)};
+  pointer-events: ${({ $isOpen }) => ($isOpen ? "auto" : "none")};
+  transition: opacity 0.25s ease;
+  z-index: 150;
+
+  ${media.md} {
+    display: block;
+  }
+
+  @media (min-width: 769px) {
+    display: none;
+  }
 `;
 
 export const ToggleButton = styled.button<{ $collapsed: boolean, $theme: ThemeType }>`
