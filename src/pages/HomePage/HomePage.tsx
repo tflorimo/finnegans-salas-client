@@ -1,5 +1,8 @@
-import { Funnel } from "lucide-react";
+import { BarChart2, Funnel } from "lucide-react";
 import { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Button } from "../../components/Button/Button";
+import { ButtonVariant } from "../../components/Button/types";
 import { CardContainer } from "../../components/CardContainer/CardContainer";
 import { GenericSelect } from "../../components/GenericSelect/GenericSelect";
 import { InputSearch } from "../../components/InputSearch/InputSearch";
@@ -10,11 +13,13 @@ import { useRoomFilters } from "./hooks/useRoomFilters";
 import {
   AllRoomsCardContainerStyles,
   FreeRoomsCardContainerStyles,
+  HeatmapButtonStyle,
   HomePageStyled,
   OccupiedRoomsCardContainerStyles,
   ROOM_PAGE_COLORS,
   RoomListContainer,
   RoomStatusContainer,
+  SelectActionsContainer,
   SelectFilterContainer,
 } from "./styles";
 
@@ -22,6 +27,7 @@ export const HomePage = () => {
   const [roomStatusSelected, setRoomStatusSelected] = useState<string>("all");
   const [roomKeywordSelected, setRoomKeywordSelected] = useState<string>("");
 
+  const navigate = useNavigate();
 
   const { roomsData, loading } = useGetRooms();
 
@@ -30,6 +36,11 @@ export const HomePage = () => {
     roomStatusSelected,
     roomKeywordSelected,
   });
+
+  const handleGoToHeatmap = () => {
+    const roomEmails = roomsData.map((room) => room.email);
+    navigate("/heatmap", { state: { roomEmails } });
+  }
 
   const filteredRooms = useMemo(() => filterRooms(), [filterRooms]);
 
@@ -58,20 +69,30 @@ export const HomePage = () => {
       </RoomStatusContainer>
 
       {/* Filtros */}
-      <SelectFilterContainer>
-        <Funnel size={20} color={ROOM_PAGE_COLORS.roomText} />
+      <SelectActionsContainer>
+        <SelectFilterContainer>
+          <Funnel size={20} color={ROOM_PAGE_COLORS.roomText} />
 
-        <GenericSelect
-          values={ROOM_SELECT_OPTIONS}
-          formatLabel={(value) => value.description}
-          onChange={(value) => setRoomStatusSelected(value.status)}
-        />
+          <GenericSelect
+            values={ROOM_SELECT_OPTIONS}
+            formatLabel={(value) => value.description}
+            onChange={(value) => setRoomStatusSelected(value.status)}
+          />
 
-        <InputSearch
-          placeholder="Buscar por nombre..."
-          onFilter={setRoomKeywordSelected}
+          <InputSearch
+            placeholder="Buscar por nombre..."
+            onFilter={setRoomKeywordSelected}
+          />
+        </SelectFilterContainer>
+
+        <Button
+          icon={<BarChart2 size={18} />}
+          text="Ver Mapa de Disponibilidad"
+          variant={ButtonVariant.white}
+          onClick={handleGoToHeatmap}
+          customStyle={HeatmapButtonStyle}
         />
-      </SelectFilterContainer>
+      </SelectActionsContainer>
 
       {/* Listado de salas */}
       <RoomListContainer>

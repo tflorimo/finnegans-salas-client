@@ -1,8 +1,8 @@
 import styled, { css } from "styled-components";
-import { 
+import {
   EventIconWrapper as SharedEventIconWrapper,
-  FinishedEventIconWrapper as SharedFinishedEventIconWrapper, 
-  InProgressEventIconWrapper as SharedInProgressEventIconWrapper 
+  FinishedEventIconWrapper as SharedFinishedEventIconWrapper,
+  InProgressEventIconWrapper as SharedInProgressEventIconWrapper,
 } from "../../shared/components/EventStatusIcon";
 
 export const ROOM_PAGE_COLORS = {
@@ -12,6 +12,10 @@ export const ROOM_PAGE_COLORS = {
   roomText: "#64748b",
   roomBorder: "#e5e7eb",
   roomBoxShadow: "#0000001a",
+  heatmapButtonBg: "#ffffff",
+  heatmapButtonText: "#333333",
+  heatmapButtonBorder: "#d9d9d9",
+  heatmapButtonHoverBorder: "#f5f5f5",
 };
 
 export const HomePageStyled = styled.section`
@@ -33,6 +37,12 @@ export const RoomStatusContainer = styled.section`
 
 export const RoomListContainer = styled(RoomStatusContainer)`
   flex-wrap: wrap;
+`;
+
+export const SelectActionsContainer = styled(RoomStatusContainer)`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 export const SelectFilterContainer = styled(RoomStatusContainer)`
@@ -104,11 +114,9 @@ export const RoomListContainerStyles = css`
   width: 28%;
   cursor: pointer;
   transition: box-shadow 0.2s ease;
-  
   &:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 8px ${ROOM_PAGE_COLORS.roomBoxShadow};
   }
-  
   p {
     color: ${ROOM_PAGE_COLORS.roomText};
     margin: 0;
@@ -167,6 +175,19 @@ export const FinishedEventIconWrapper = styled(SharedFinishedEventIconWrapper)`
   margin-right: 0.25rem;
 `;
 
-export const InProgressEventIconWrapper = styled(SharedInProgressEventIconWrapper)`
+export const InProgressEventIconWrapper = styled(
+  SharedInProgressEventIconWrapper
+)`
   margin-right: 0.25rem;
+`;
+
+export const HeatmapButtonStyle = css`
+  width: 400px;
+  background: ${ROOM_PAGE_COLORS.heatmapButtonBg};
+  color: ${ROOM_PAGE_COLORS.heatmapButtonText};
+  border: 1px solid ${ROOM_PAGE_COLORS.heatmapButtonBorder};
+
+  &:hover {
+    background: ${ROOM_PAGE_COLORS.heatmapButtonHoverBorder};
+  }
 `;
