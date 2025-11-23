@@ -7,6 +7,7 @@ import type { InputSearchProps } from "./types";
 export const InputSearch: React.FC<InputSearchProps> = ({
     onFilter,
     placeholder = "Buscar...",
+    theme,
 }) => {
     const [query, setQuery] = useState<string>("");
 
@@ -23,16 +24,17 @@ export const InputSearch: React.FC<InputSearchProps> = ({
 
     return (
         <form onSubmit={(e) => e.preventDefault()}>
-            <InputContainer>
+            <InputContainer $theme={theme}>
                 <LucideSearch size={18} />
                 <SearchInput
+                    $theme={theme}
                     type="text"
                     value={query}
                     onChange={handleChange}
                     placeholder={placeholder}
                 />
                 {query && (
-                    <IconButton type="button" onClick={handleClear}>
+                    <IconButton $theme={theme} type="button" onClick={handleClear}>
                         <LucideX size={16} />
                     </IconButton>
                 )}

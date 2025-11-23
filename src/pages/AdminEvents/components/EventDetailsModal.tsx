@@ -1,8 +1,11 @@
 import { X } from "lucide-react";
+import { useContext } from "react";
 import { CardContainer } from "../../../components/CardContainer/CardContainer";
 import { Tag } from "../../../components/Tag/Tag";
 import type { EventResponseDTO } from "../../../shared/types/event.types";
-import { formatDate, formatTime, formatTimeRange } from "../utils/dateUtils";
+import { formatTimeRange } from "../../../shared/utils/format.utils";
+import { formatDate, formatTime } from "../utils/dateUtils";
+import { ThemeContext } from "../../../context/theme/themeContext";
 import {
   Overlay,
   ModalBody,
@@ -25,6 +28,7 @@ interface EventDetailsModalProps {
 }
 
 export const EventDetailsModal = ({ event, onClose }: EventDetailsModalProps) => {
+  const { theme } = useContext(ThemeContext);
   const handleOverlayClick: React.MouseEventHandler<HTMLDivElement> = () => onClose();
   const stop: React.MouseEventHandler<HTMLDivElement> = (e) => e.stopPropagation();
 
@@ -35,47 +39,47 @@ export const EventDetailsModal = ({ event, onClose }: EventDetailsModalProps) =>
 
   return (
     <Overlay onClick={handleOverlayClick} aria-modal="true" role="dialog">
-      <ModalBody onClick={stop}>
+      <ModalBody $theme={theme} onClick={stop}>
         <CardContainer customStyle={ModalCardStyle}>
-          <ModalHeader>
+          <ModalHeader $theme={theme}>
             <h3 title={event.title}>{truncateTextByLength(event.title, 40)}</h3>
-            <CloseBtn aria-label="Cerrar" onClick={onClose}>
+            <CloseBtn $theme={theme} aria-label="Cerrar" onClick={onClose}>
               <X size={18} />
             </CloseBtn>
           </ModalHeader>
 
           <FieldsWrapper>
-            <Field>
+            <Field $theme={theme}>
               <label>{EVENT_MODAL.DATE}</label>
               <div>{formatDate(event.startTime)}</div>
             </Field>
 
-            <Field>
+            <Field $theme={theme}>
               <label>{EVENT_MODAL.TIME}</label>
               <div>{formatTimeRange(event.startTime, event.endTime)}</div>
             </Field>
 
-            <Field>
+            <Field $theme={theme}>
               <label>{EVENT_MODAL.ROOM}</label>
               <div>{event.roomName}</div>
             </Field>
 
-            <Field>
+            <Field $theme={theme}>
               <label>{EVENT_MODAL.ID}</label>
               <div>{event.roomEmail}</div>
             </Field>
 
-            <Field>
+            <Field $theme={theme}>
               <label>{EVENT_MODAL.CREATOR_MAIL}</label>
               <div>{event.creatorMail}</div>
             </Field>
 
-            <Field>
+            <Field $theme={theme}>
               <label>{EVENT_MODAL.CREATOR_NAME}</label>
               <div>{event.creatorName}</div>
             </Field>
 
-            <Field>
+            <Field $theme={theme}>
               <label>{EVENT_MODAL.CHECK_IN}</label>
               <div>
                 <Tag
@@ -86,18 +90,18 @@ export const EventDetailsModal = ({ event, onClose }: EventDetailsModalProps) =>
             </Field>
 
             {event.deletedAt && (
-              <Field>
+              <Field $theme={theme}>
                 <label>{EVENT_MODAL.DELETED_AT}</label>
                 <div>{formatDate(event.deletedAt)} - {formatTime(event.deletedAt)}</div>
               </Field>
             )}
 
-            <Field>
+            <Field $theme={theme}>
               <label>{EVENT_MODAL.ATTENDEES}</label>
               {filteredAttendees.length === 0 ? (
                 <div>{EVENT_MODAL.WITHOUT_ATTENDEES}</div>
               ) : (
-                <AttendeeList>
+                <AttendeeList $theme={theme}>
                   {filteredAttendees.map((attendee) => (
                     <li key={attendee.email}>
                       <span>{attendee.email}</span>

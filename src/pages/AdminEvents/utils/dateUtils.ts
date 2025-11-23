@@ -14,6 +14,3 @@ export const formatTime = (iso: Date | string): string => {
     minute: "2-digit" 
   });
 };
-
-export const formatTimeRange = (start: Date | string, end: Date | string): string =>
-  `${formatTime(start)} - ${formatTime(end)}`;

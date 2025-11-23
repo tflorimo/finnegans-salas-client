@@ -7,6 +7,8 @@ import {
   RoomTitle,
   RoomCapacityInfo,
 } from "../styles";
+import { ThemeContext } from "../../../context/theme/themeContext";
+import { useContext } from "react";
 
 interface RoomHeaderProps {
   name?: string;
@@ -16,13 +18,14 @@ interface RoomHeaderProps {
 }
 
 export const RoomHeader = ({ name, capacity, isBusy, loading }: RoomHeaderProps) => {
+  const {theme} = useContext(ThemeContext);
   return (
     <RoomHeaderContainer>
       <RoomHeaderInfo>
-        <RoomTitle>
+        <RoomTitle $theme={theme}>
           {loading ? ROOM_PAGE_MESSAGES.LOADING : name ?? ROOM_PAGE_MESSAGES.ROOM_DEFAULT}
         </RoomTitle>
-        <RoomCapacityInfo>
+        <RoomCapacityInfo $theme={theme}>
           <Users size={16} />
           <span>
             {ROOM_PAGE_MESSAGES.CAPACITY_LABEL} {loading ? ROOM_PAGE_MESSAGES.LOADING : capacity ?? "-"}{" "}

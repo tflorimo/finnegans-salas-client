@@ -1,7 +1,7 @@
-import { /*Bell,*/ LogOut, Settings } from "lucide-react";
+import { LogOut, Settings, Sun } from "lucide-react";
 import { useContext } from "react";
 import { NavLink } from "react-router-dom";
-import LogoFinnegans from "../../../assets/images/logoFinnegans.svg";
+import LogoFinnegans from "../../../assets/images/Isotipo Celeste.svg";
 import { AuthContext } from "../../../context/auth/authContext";
 import { decodeJwt } from "../../utils/decodeJwt.utils";
 import {
@@ -10,6 +10,7 @@ import {
   TopBarLeft,
   TopBarRight,
 } from "./styles";
+import { ThemeContext } from "../../../context/theme/themeContext";
 
 /**
  * @description Header component that displays the top navigation bar with logo and admin controls.
@@ -18,23 +19,23 @@ import {
 export const Header = () => {
 
   const { authToken, logout } = useContext(AuthContext)
+  const {theme, toggleTheme } = useContext(ThemeContext);
 
   const decodedToken = authToken ? decodeJwt(authToken) : null;
   const isAdmin = decodedToken?.role === "admin";
 
   return (
-    <TopBar>
+    <TopBar theme={theme}>
       <TopBarInner>
-        <TopBarLeft>
+        <TopBarLeft $theme={theme}>
           <img src={LogoFinnegans} alt="Finnegans" width={32} height={32} />
           <div>
             <h1>Finnegans</h1>
             <h2>Reservas de Sala In-Situ</h2>
           </div>
         </TopBarLeft>
-        <TopBarRight>
-          {/*TODO: Descomentar cuando se implementen las notificaciones */}
-          {/* <Bell size={20} /> */}
+        <TopBarRight $theme={theme}>
+          <Sun onClick={toggleTheme}/>
           <NavLink
             to="/admin/logs"
             style={({ isActive, isPending, isTransitioning }) => {

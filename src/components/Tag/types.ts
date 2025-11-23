@@ -16,6 +16,7 @@ export enum Tags {
   succesOutput = "succesOutput",
   dangerOutput = "dangerOutput",
   infoOutput = "infoOutput",
+  empty = "empty",
 }
 
 export type TagsTypes = keyof typeof Tags;

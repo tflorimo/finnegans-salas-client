@@ -1,9 +1,7 @@
 import { BarChart3, ChevronLeft, ChevronRight, FileText } from "lucide-react";
-import type { JSX } from "react";
+import { useContext, type JSX } from "react";
 import { NavLink } from "react-router-dom";
-import { css } from "styled-components";
 import { Button } from "../../../components/Button/Button";
-import { VARIANT_STYLES } from "../../../components/Button/styles";
 import { ButtonVariant } from "../../../components/Button/types";
 import {
   SideBarContainer,
@@ -11,9 +9,11 @@ import {
   SideBarNav,
   SideBarSubtitle,
   SideBarTitle,
-  ToggleButton
+  ToggleButton,
+  getBaseButtonStyles
 } from "./styles";
 import type { SideBarProps } from "./types";
+import { ThemeContext } from "../../../context/theme/themeContext";
 
 /**
  * @description SideBar component that provides collapsible navigation with toggle functionality.
@@ -28,7 +28,6 @@ import type { SideBarProps } from "./types";
  * @return {JSX.Element}
  */
 
-// TODO: Queda pendiente agregar la navegación entre LOGS y Eventos
 export const SideBar = ({
   isCollapsed,
   onToggle,
@@ -36,34 +35,17 @@ export const SideBar = ({
   onEventsClick
 }: SideBarProps): JSX.Element => {
 
-  const getBaseButtonStyles = (isActive: boolean) => css`
-    width: 100%;
-    justify-content: ${isCollapsed ? "center" : "flex-start"};
-    align-items: center;
-    gap: ${isCollapsed ? "0" : "12px"};
-    padding: 12px ${isCollapsed ? "0" : "16px"};
-    border-radius: 12px;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 500;
-    box-shadow: none;
-    text-align: ${isCollapsed ? "center" : "left"};
-    white-space: nowrap;
-    overflow: hidden;
-    svg {
-      color: inherit;
-    }
-    ${isActive ? VARIANT_STYLES.primary : VARIANT_STYLES.white}
-  `;
+  const {theme} = useContext(ThemeContext);
 
   return (
-    <SideBarContainer $collapsed={isCollapsed}>
-      <SideBarHeader $collapsed={isCollapsed}>
+    <SideBarContainer $collapsed={isCollapsed} $theme={theme}>
+      <SideBarHeader $collapsed={isCollapsed} $theme={theme}>
         {isCollapsed ? (
           <ToggleButton
             type="button"
             onClick={onToggle}
             $collapsed={isCollapsed}
+            $theme={theme}
             aria-label="Expandir menú"
           >
             <ChevronRight size={18} />
@@ -74,12 +56,13 @@ export const SideBar = ({
               type="button"
               onClick={onToggle}
               $collapsed={isCollapsed}
+              $theme={theme}
               aria-label="Contraer menú"
             >
               <ChevronLeft size={18} />
             </ToggleButton>
-            <SideBarTitle>Finnegans Admin</SideBarTitle>
-            <SideBarSubtitle>Panel de Control</SideBarSubtitle>
+            <SideBarTitle $theme={theme}>Finnegans Admin</SideBarTitle>
+            <SideBarSubtitle $theme={theme}>Panel de Control</SideBarSubtitle>
           </>
         )}
       </SideBarHeader>
@@ -93,10 +76,7 @@ export const SideBar = ({
                 icon={<FileText size={18} />}
                 variant={ButtonVariant.primary}
                 onClick={onLogsClick || (() => { })}
-                customStyle={css`
-                  ${getBaseButtonStyles(isActive)}
-                `
-                }
+                customStyle={getBaseButtonStyles(isActive, theme, isCollapsed)}
               />
             )
           }
@@ -110,10 +90,7 @@ export const SideBar = ({
               icon={<BarChart3 size={18} />}
               variant={ButtonVariant.light}
               onClick={onEventsClick || (() => { })}
-              customStyle={css`
-                  ${getBaseButtonStyles(isActive)}
-                `
-              }
+              customStyle={getBaseButtonStyles(isActive, theme, isCollapsed)}
             />
           )}
         </NavLink>

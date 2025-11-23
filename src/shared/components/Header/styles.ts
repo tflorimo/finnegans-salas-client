@@ -1,12 +1,29 @@
 import styled from "styled-components";
+import type { ThemeType } from "../../../theme/Types";
+import { themes } from "../../../theme/Theme";
 
-export const TopBar = styled.header`
+const TOPBAR_BG_LIGHT = "#f0f4f8";
+const TOPBAR_BG_DARK = "#000000";
+
+const TOPBAR_TITLE_COLOR = "#4bc3fe";
+const TOPBAR_SUBTITLE_COLOR = "#ffffffff";
+const TOPBAR_SUBTITLE_COLOR_LIGHT = "#000000";
+
+const TOPBAR_ICON_COLOR = "#ffffffff";
+const TOPBAR_ICON_COLOR_LIGHT = "#000000";
+const TOPBAR_ICON_HOVER_COLOR = "#2563eb";
+
+export const TopBar = styled.header<{ theme: ThemeType }>`
   width: 100%;
   top: 0;
   z-index: 100;
-  background: #fff;
-  border-bottom: 1px solid #e5e7eb;
+  background: ${({ theme }) => (theme === "light" ? TOPBAR_BG_LIGHT : TOPBAR_BG_DARK)};
+  border-bottom: 1px solid ${({ theme }) => {
+    const themeKey = theme as ThemeType;
+    return themes[themeKey].BORDER_COLOR;
+  }};
   height: 64px;
+  transition: background 0.3s ease, border-color 0.3s ease;
 `;
 
 export const TopBarInner = styled.div`
@@ -19,7 +36,7 @@ export const TopBarInner = styled.div`
   padding: 0 5rem;
 `;
 
-export const TopBarLeft = styled.div`
+export const TopBarLeft = styled.div<{ $theme: ThemeType }>`
   display: flex;
   align-items: center;
   gap: 10px;
@@ -27,30 +44,30 @@ export const TopBarLeft = styled.div`
   h1 {
     font-size: 16px;
     font-weight: 700;
-    color: #1d4ed8; /* azul */
+    color: ${TOPBAR_TITLE_COLOR};
     margin: 0;
   }
 
   h2 {
     font-size: 12px;
     font-weight: 400;
-    color: #64748b; /* gris */
+    color: ${({ $theme }) => ($theme === "light" ? TOPBAR_SUBTITLE_COLOR_LIGHT : TOPBAR_SUBTITLE_COLOR)};
     margin: 0;
   }
     margin-left: -60px;
 `;
 
-export const TopBarRight = styled.div`
+export const TopBarRight = styled.div<{ $theme: ThemeType }>`
   display: flex;
   align-items: center;
   gap: 16px;
 
   svg {
     cursor: pointer;
-    color: #111827;
+    color: ${({ $theme }) => ($theme === "light" ? TOPBAR_ICON_COLOR_LIGHT : TOPBAR_ICON_COLOR)};
 
     &:hover {
-      color: #2563eb;
+      color: ${TOPBAR_ICON_HOVER_COLOR};
     }
   }
 `;
