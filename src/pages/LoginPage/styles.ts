@@ -16,7 +16,7 @@ const COLOR_CARD_BACKGROUND = "#23688a";
 const COLOR_GOOGLE_BUTTON_BG = "#174d68ff";
 const COLOR_GOOGLE_BUTTON_TEXT = "#ffffffd5";
 const COLOR_GOOGLE_BUTTON_BORDER = "#23688a";
-const COLOR_GOOGLE_BUTTON_HOVER_BG = "#68faff93";
+const COLOR_GOOGLE_BUTTON_HOVER_BG = "#2ed0d693";
 const COLOR_GOOGLE_BUTTON_SHADOW = "rgba(2, 8, 23, 0.05)";
 
 const COLOR_AUTH_OVERLAY_BG = "rgba(15, 23, 42, 0.55)";
@@ -33,29 +33,17 @@ export const LoginPageContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 32px;
+  gap: 40px;
   background: ${COLOR_LOGIN_BACKGROUND};
   padding: 24px;
   text-align: center;
   overflow: hidden;
-
-  @media (max-width: 768px) {
-    position: relative;
-    inset: auto;
-    min-height: 100vh;
-    width: 100%;
-    padding: 24px 12px 32px;
-    gap: 24px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    justify-content: flex-start;
-  }
 `;
 
 export const ImageFinnegans = styled.img`
   width: 800px;
   height: 80px;
-  margin-bottom: 16px;
+  margin-bottom: 0px;
 `;
 
 export const LoginHeader = styled.header`
@@ -63,7 +51,7 @@ export const LoginHeader = styled.header`
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 8px;
+  gap: 4px;
 
   h1 {
     font-size: 32px;
@@ -111,22 +99,6 @@ export const LoginCardStyle = css`
   p.instruction {
     color: ${COLOR_TEXT_WHITE};
     font-size: 14px;
-  }
-
-  @media (max-width: 768px) {
-    width: 100%;
-    max-width: 330px;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 1.2rem 0.1rem;
-
-    h2 {
-      font-size: 20px;
-    }
-
-    p.instruction {
-      font-size: 13px;
-    }
   }
 `;
 

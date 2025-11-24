@@ -7,9 +7,14 @@ import {
 import { themes } from "../../theme/Theme";
 import type { ThemeType } from "../../theme/Types";
 
+// Color Constants
+const COLOR_GREEN_FREE = "#16a249";
+const COLOR_RED_OCCUPIED = "#ef4343";
+const COLOR_HOVER_SHADOW = "rgba(0, 0, 0, 0.15)";
+
 export const ROOM_PAGE_COLORS = {
-  roomTitleFree: "#16a249",
-  roomTitleOccupied: "#ef4343",
+  roomTitleFree: COLOR_GREEN_FREE,
+  roomTitleOccupied: COLOR_RED_OCCUPIED,
   roomBorder: "#B6CBD5",
   roomBoxShadow: "#0000001a",
   roomText: "#64748b",
@@ -19,10 +24,9 @@ export const HomePageStyled = styled.section<{ $theme: ThemeType }>`
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 100vh;
+  height: 100vh;
   background: ${({ $theme }) => themes[$theme].BACKGROUND_COLOR};
   transition: background 0.3s ease;
-  padding: 1.25rem 0;
 
   @media (max-width: 768px) {
     height: auto;
@@ -33,7 +37,7 @@ export const HomePageStyled = styled.section<{ $theme: ThemeType }>`
 export const RoomStatusContainer = styled.section`
   display: flex;
   gap: 1rem;
-  margin: 1rem 0;
+  padding: 1rem;
   justify-content: center;
   width: 90%;
   div:has(> select) {
@@ -58,7 +62,6 @@ export const SelectFilterContainer = styled(RoomStatusContainer)`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  flex-wrap: wrap;
 
   @media (max-width: 768px) {
   justify-content: center;
@@ -153,19 +156,19 @@ export const OccupiedRoomsCardContainerStyles = ($theme: ThemeType) => css`
 export const RoomListContainerStyles = ($theme: ThemeType) => css`
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 1rem;
   justify-content: flex-start;
   align-items: flex-start;
   border-radius: 0.75rem;
   border: 1px solid ${themes[$theme].BORDER_COLOR};
   box-shadow: 0 1px 2px ${ROOM_PAGE_COLORS.roomBoxShadow};
-  padding: 1.2rem;
+  padding: 1.5rem;
   width: 28%;
   cursor: pointer;
   transition: box-shadow 0.2s ease, border-color 0.3s ease;
 
   &:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 8px ${COLOR_HOVER_SHADOW};
   }
 
   p {
