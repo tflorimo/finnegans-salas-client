@@ -18,7 +18,7 @@ export const InProgressEventIcon = InProgressEventIconWrapper;
 export const RoomPageContainer = styled.div<{ $theme: ThemeType }>`
   width: 100%;
   max-width: 100%;
-  padding: 5px 20px 10px;
+  padding: 5px 30px 10px 18px;
   box-sizing: border-box;
   overflow-x: hidden;
 
