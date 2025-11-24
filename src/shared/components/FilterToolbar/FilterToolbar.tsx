@@ -25,6 +25,7 @@ export const FilterToolbar = ({ placeholder, onKeywordSelected }: FilterToolbarP
       {showFilters && <InputSearch
         placeholder={placeholder}
         onFilter={onKeywordSelected}
+        theme={theme}
       />}
     </Toolbar>
   );
