@@ -22,8 +22,12 @@ export const AdminHeaderWrapper = styled.div<{ $collapsed: boolean }>`
   transition: left 0.25s ease, width 0.25s ease;
 
   @media (max-width: 768px) {
-    left: 0;
-    width: 100%;
+    left: ${({ $collapsed }) =>
+      $collapsed ? `${SIDEBAR_COLLAPSED_WIDTH}px` : "0"};
+    width: ${({ $collapsed }) =>
+      $collapsed
+        ? `calc(100vw - ${SIDEBAR_COLLAPSED_WIDTH}px)`
+        : "100vw"};
   }
 `;
 
@@ -42,13 +46,13 @@ export const AdminEventsContainer = styled.div<{ $collapsed: boolean }>`
   transition: margin-left 0.25s ease, width 0.25s ease;
   overflow-x: hidden;
 
-  @media (max-width: 1200px) {
-    padding: 10px 32px 32px 32px;
-  }
-
   @media (max-width: 768px) {
-    margin-left: 0;
-    width: 100vw;
+    margin-left: ${({ $collapsed }) =>
+      $collapsed ? `${SIDEBAR_COLLAPSED_WIDTH}px` : "0"};
+    width: ${({ $collapsed }) =>
+      $collapsed
+        ? `calc(100% - ${SIDEBAR_COLLAPSED_WIDTH}px)`
+        : "100%"};
     padding: 5px 16px 10px 16px;
   }
 `;
@@ -81,6 +85,22 @@ export const ButtonsEventsContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+
+    & > * {
+      width: 100%;
+      max-width: 360px;
+    }
+
+    & > :last-child {
+      margin-top: 0.25rem;
+    }
+  }
 `;
 
 export const PageTitle = styled.h1<{ $theme: ThemeType }>`
@@ -103,37 +123,49 @@ export const Table = styled.table<{ $theme: ThemeType }>`
   border-collapse: collapse;
   font-size: 14px;
   
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+
   thead th {
     text-align: left;
     color: ${({ $theme }) => themes[$theme].TEXT_COLOR};
     font-weight: 600;
     padding: 14px 16px;
     border-bottom: 1px solid ${({ $theme }) => themes[$theme].BACKGROUND_COLOR};
-    background: ${({ $theme }) => ($theme === "dark" ? "#2d2d2d" : "#f1f5f9")};
-    
-    &:nth-child(5) {
-      text-align: center;
-    }
   }
 
   tbody td {
-    padding: 14px 16px;
+    padding: 12px 16px;
     border-bottom: 1px solid ${({ $theme }) => themes[$theme].BACKGROUND_COLOR};
-    color: ${({ $theme }) => themes[$theme].TEXT_COLOR};
-    vertical-align: middle;
-    
-    &:nth-child(5) {
-      text-align: center;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 12px;
+
+    thead th,
+    tbody td {
+      padding: 8px 10px;
+      white-space: nowrap;
     }
   }
 
-  /*
-  tbody tr:hover {
-    background: #fbfdff;
-  } */
-
   tbody tr:last-child td {
     border-bottom: none;
+  }
+`;
+
+export const TableWrapper = styled.div`
+  width: 100%;
+
+  @media (max-width: 768px) {
+    margin-top: 4px;
+    overflow-x: scroll;
+    -webkit-overflow-scrolling: touch;
+
+    & > table {
+      min-width: 640px;
+    }
   }
 `;
 

@@ -1,8 +1,16 @@
 import styled, { css } from "styled-components";
 import type { ThemeType } from "../../theme/Types";
 import { themes } from "../../theme/Theme";
-import { FinishedEventIconWrapper, InProgressEventIconWrapper } from "../../shared/components/EventStatusIcon";
-import { SUCCESS_COLOR, DANGER_COLOR, PRIMARY_COLOR, WHITE_COLOR } from "../../assets/colors/global-colors";
+import {
+  FinishedEventIconWrapper,
+  InProgressEventIconWrapper,
+} from "../../shared/components/EventStatusIcon";
+import {
+  SUCCESS_COLOR,
+  DANGER_COLOR,
+  PRIMARY_COLOR,
+  WHITE_COLOR,
+} from "../../assets/colors/global-colors";
 
 export const FinishedEventIcon = FinishedEventIconWrapper;
 export const InProgressEventIcon = InProgressEventIconWrapper;
@@ -10,7 +18,7 @@ export const InProgressEventIcon = InProgressEventIconWrapper;
 export const RoomPageContainer = styled.div<{ $theme: ThemeType }>`
   width: 100%;
   max-width: 100%;
-  padding: 5px 20px 10px;
+  padding: 5px 30px 10px 18px;
   box-sizing: border-box;
   overflow-x: hidden;
 
@@ -19,16 +27,30 @@ export const RoomPageContainer = styled.div<{ $theme: ThemeType }>`
   padding-bottom: 80px;
   transition: background 0.3s ease;
 
-  @media (min-width: 768px) { padding: 10px 40px 20px; }
-  @media (min-width: 1024px) { padding: 10px 80px 20px; }
-  @media (min-width: 1440px) { padding: 10px 160px 20px; }
+  & > :first-child {
+    margin-top: 10px;
+  }
+
+  @media (min-width: 768px) {
+    padding: 10px 40px 20px;
+
+    & > :first-child {
+      margin-top: 12px;
+    }
+  }
+  @media (min-width: 1024px) {
+    padding: 10px 80px 20px;
+  }
+  @media (min-width: 1440px) {
+    padding: 10px 160px 20px;
+  }
 `;
 
 export const PageInner = styled.div`
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0;
+  padding: 0rem 0.3rem 1.75rem;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -39,7 +61,9 @@ export const ContentGrid = styled.div`
   display: grid;
   grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
   gap: 75px;
-  @media (max-width: 1024px) { grid-template-columns: 1fr; }
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 export const ColumnaPrincipal = styled.main`
@@ -60,9 +84,18 @@ export const FilaEstado = styled.div<{ $theme: ThemeType }>`
   padding: 8px 0;
   gap: 8px;
   border-top: 1px solid #eef2f7;
-  &:first-of-type { border-top: none; }
-  span { color: ${({ $theme }) => themes[$theme].TEXT_COLOR}; font-size: 14px; }
-  strong { color: ${({ $theme }) => themes[$theme].TEXT_COLOR}; font-weight: 700; font-size: 14px; }
+  &:first-of-type {
+    border-top: none;
+  }
+  span {
+    color: ${({ $theme }) => themes[$theme].TEXT_COLOR};
+    font-size: 14px;
+  }
+  strong {
+    color: ${({ $theme }) => themes[$theme].TEXT_COLOR};
+    font-weight: 700;
+    font-size: 14px;
+  }
 `;
 
 export const ReservationList = styled.div`
@@ -71,27 +104,38 @@ export const ReservationList = styled.div`
   gap: 14px;
   width: 75%;
   margin: 0 auto;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    gap: 10px;
+  }
 `;
 
 export const ReservationItem = styled.div<{ $theme: ThemeType }>`
   display: grid;
-  grid-template-columns: 40px 1fr auto;
+  grid-template-columns: 32px 1fr auto;
   align-items: center;
-  gap: 16px;
-  padding: 12px 16px;
-  background: ${({ $theme }) => $theme === "dark" ? "#1f2937" : "#f9fafb"};
-  border-radius: 8px;
-  border: 1px solid ${({ $theme }) => $theme === "dark" ? "#9ca3af" : "#f3f4f6"};
+  gap: 10px;
+  padding: 6px 10px;
+  background: ${({ $theme }) => ($theme === "dark" ? "#1f2937" : "#f9fafb")};
+  border-radius: 6px;
+  border: 1px solid
+    ${({ $theme }) => ($theme === "dark" ? "#9ca3af" : "#f3f4f6")};
   width: 100%;
   box-sizing: border-box;
   transition: background 0.3s ease, border-color 0.3s ease;
+
+  @media (max-width: 768px) {
+    padding: 6px 8px;
+    gap: 8px;
+  }
 `;
 
 export const Avatar = styled.div`
-  width: 40px;
-  height: 40px;
-  min-width: 40px;
-  min-height: 40px;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  min-height: 32px;
   border-radius: 50%;
   background: #0b5be7;
   color: #fff;
@@ -99,26 +143,46 @@ export const Avatar = styled.div`
   align-items: center;
   justify-content: center;
   font-weight: 800;
-  font-size: 14px;
+  font-size: 12px;
   flex-shrink: 0;
 `;
 
 export const ResInfo = styled.div<{ $theme: ThemeType }>`
   display: flex;
   flex-direction: column;
-  span { color: ${({ $theme }) => $theme === "dark" ? "#ffffff" : themes[$theme].TEXT_COLOR}; font-weight: 700; font-size: 14px; white-space: nowrap; overflow: hidden;
-    text-overflow: ellipsis; transition: color 0.3s ease;}
-  small { color: ${({ $theme }) => $theme === "dark" ? "#ffffff" : themes[$theme].TEXT_COLOR}; font-size: 12px; transition: color 0.3s ease; }
+  span {
+    color: ${({ $theme }) =>
+      $theme === "dark" ? "#ffffff" : themes[$theme].TEXT_COLOR};
+    font-weight: 700;
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: color 0.3s ease;
+    flex-wrap: wrap;
+  }
+  small {
+    color: ${({ $theme }) =>
+      $theme === "dark" ? "#ffffff" : themes[$theme].TEXT_COLOR};
+    font-size: 12px;
+    transition: color 0.3s ease;
+  }
   gap: 2px;
   line-height: 1.5;
   min-width: 0;
   flex: 1;
+
+  @media (max-width: 768px) {
+    padding: 3px;
+    gap: 8.5px;
+  }
 `;
 
 export const ResRight = styled.div<{ $theme: ThemeType }>`
   display: inline-flex;
   align-items: center;
-  color: ${({ $theme }) => $theme === "dark" ? "#ffffff" : themes[$theme].TEXT_COLOR};
+  color: ${({ $theme }) =>
+    $theme === "dark" ? "#ffffff" : themes[$theme].TEXT_COLOR};
   gap: 6px;
   font-weight: 500;
   font-size: 14px;
@@ -126,7 +190,7 @@ export const ResRight = styled.div<{ $theme: ThemeType }>`
   font-variant-numeric: tabular-nums;
   flex-shrink: 0;
   transition: color 0.3s ease;
-  svg { 
+  svg {
     color: #9ca3af;
     flex-shrink: 0;
   }
@@ -136,43 +200,121 @@ export const RoomInfoCardStyle = css`
   width: 100%;
   text-align: left;
   display: flow-root;
+  margin-top: 0.75rem;
   h1, h2 { margin-top: 0; }
+
+  @media (max-width: 768px) {
+    padding: 0.9rem 0.4rem;
+    h1, h2 {
+      font-size: 0.9rem;
+    }
+    p {
+      font-size: 0.9rem;
+    }
 `;
 
 export const ReservationsCardStyle = css<{ $theme: ThemeType }>`
-  h1 { color: ${({ $theme }) => themes[$theme].TEXT_COLOR};; margin-bottom: 8px; font-size: 24px; }
+  h1 {
+    color: ${({ $theme }) => themes[$theme].TEXT_COLOR};
+    margin-bottom: 8px;
+    font-size: 24px;
+  }
   width: 100%;
+
+  @media (max-width: 768px) {
+    padding: 0.7rem 0.4rem;
+    h1 {
+      font-size: 0rem;
+      padding: 0.7rem 0.4rem;
+      margin-bottom: 1px;
+    }
+      h2 {
+      font-size: 0rem;
+      padding: 0.7rem 0.4rem;
+      margin-bottom: 0.35rem;
+    }
+    p,
+    span {
+      font-size: 0.9rem;
+    }
+  }
 `;
 
 export const CurrentStatusCardStyle = css`
   width: 100%;
   text-align: left;
-  h3 { margin: 0 0 12px; font-size: 18px; font-weight: 700; }
+  h3 {
+    margin: 0 0 12px;
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.8rem 0.4rem;
+
+    h3 {
+      font-size: 1rem;
+      margin-bottom: 0.4rem;
+    }
+  }
 `;
 
 export const QRCardStyle = css`
   width: 100%;
   text-align: center;
-  h3 { margin: 0 0 12px; font-size: 18px; font-weight: 700; }
-  p { margin: 0 0 16px; color: #ffffffff; font-size: 14px; }
+  h3 {
+    margin: 0 0 12px;
+    font-size: 18px;
+    font-weight: 700;
+  }
+  p {
+    margin: 0 0 16px;
+    color: #ffffffff;
+    font-size: 14px;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.8rem 0.4rem;
+
+    h3 {
+      font-size: 1rem;
+      margin-bottom: 0.4rem;
+    }
+
+    p {
+      font-size: 0.9rem;
+      margin-bottom: 0.75rem;
+    }
+  }
 `;
 
 export const TitleStyle = styled.h2<{ $theme: ThemeType }>`
   color: ${({ $theme }) => themes[$theme].TEXT_COLOR};
   margin-bottom: 8px;
-  margin-top: -8px; 
-  font-size: 1.25rem; 
+  margin-top: -8px;
+  font-size: 1.25rem;
   font-weight: 700;
   line-height: 1.2;
+
+  @media (max-width: 768px) {
+    font-size: 0.7rem;
+    margin-bottom: 4px;
+  }
 `;
 
 export const CheckInTitleStyle = styled.h2<{ $theme: ThemeType }>`
-  color: ${({ $theme }) => ($theme === "dark" ? "#06b6d4" : themes[$theme].TEXT_COLOR)};
+  color: ${({ $theme }) =>
+    $theme === "dark" ? "#06b6d4" : themes[$theme].TEXT_COLOR};
   margin-bottom: 8px;
-  margin-top: -8px; 
-  font-size: 1.25rem; 
+  margin-top: -8px;
+  font-size: 1.25rem;
   font-weight: 700;
   line-height: 1.2;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+    margin-bottom: 4px;
+  }
 `;
 
 export const EquipmentContainer = styled.div`
@@ -189,7 +331,9 @@ export const CheckInButtonStyle = css<{ $theme: ThemeType }>`
   color: ${({ $theme }) => themes[$theme].TEXT_COLOR};
   border: 1px solid #e2e8f0;
   box-shadow: 0 2px 8px rgba(2, 8, 23, 0.05);
-  &:hover { background: rgba(92, 0, 104, 1); }
+  &:hover {
+    background: rgba(92, 0, 104, 1);
+  }
 `;
 
 export const RoomHeaderContainer = styled.div`
@@ -223,15 +367,18 @@ export const RoomCapacityInfo = styled.div<{ $theme: ThemeType }>`
 `;
 
 export const EQUIPMENT_ICON_SIZE = 18;
-export const EQUIPMENT_ICON_COLOR = '#2563eb';
+export const EQUIPMENT_ICON_COLOR = "#2563eb";
 
 export const EquipmentTagStyle = css<{ $theme: ThemeType }>`
-  background: ${({ $theme }) => ($theme === "dark" ? "#1f2937" : "#f3f4f6")} !important;
+  background: ${({ $theme }) =>
+    $theme === "dark" ? "#1f2937" : "#f3f4f6"} !important;
   color: ${({ $theme }) => themes[$theme].TEXT_COLOR} !important;
   border: 1px solid ${({ $theme }) => themes[$theme].BORDER_COLOR} !important;
+  font-size: 0.75rem;
   font-weight: 500;
-  padding: 8px 12px;
-  gap: 6px;
+  border-radius: 6px;
+  padding: 4px 8px;
+  gap: 4px;
 `;
 
 export const CheckInSubtitle = styled.p<{ $theme: ThemeType }>`
@@ -259,14 +406,19 @@ export const CheckInModalOverlay = styled.div<{ $theme: ThemeType }>`
   z-index: 1000;
 `;
 
-export const CheckInModalContent = styled.div<{ $isSuccess: boolean; $theme: ThemeType }>`
-  background: ${({ $theme }) => $theme === "dark" ? themes[$theme].CONTAINER_COLOR : WHITE_COLOR};
+export const CheckInModalContent = styled.div<{
+  $isSuccess: boolean;
+  $theme: ThemeType;
+}>`
+  background: ${({ $theme }) =>
+    $theme === "dark" ? themes[$theme].CONTAINER_COLOR : WHITE_COLOR};
   padding: 2rem;
   border-radius: 12px;
   max-width: 400px;
   width: 90%;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  border-left: 4px solid ${({ $isSuccess }) => $isSuccess ? SUCCESS_COLOR : DANGER_COLOR};
+  border-left: 4px solid
+    ${({ $isSuccess }) => ($isSuccess ? SUCCESS_COLOR : DANGER_COLOR)};
   text-align: center;
   transition: background 0.3s ease;
 `;
@@ -275,7 +427,7 @@ export const CheckInMessageText = styled.p<{ $theme: ThemeType }>`
   margin: 0 0 1.5rem 0;
   font-size: 1rem;
   text-align: center;
-  color: ${({ $theme }) => $theme === "dark" ? "#ffffff" : "#000000"};
+  color: ${({ $theme }) => ($theme === "dark" ? "#ffffff" : "#000000")};
   transition: color 0.3s ease;
 `;
 
@@ -327,11 +479,16 @@ export const ReservationsSectionSeparator = styled.div<{ $theme: ThemeType }>`
   font-size: 1.25rem;
   font-weight: 700;
   line-height: 1.2;
-  
+
   svg {
     width: 20px;
     height: 20px;
     color: #2563eb;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+    margin-bottom: 4px;
   }
 `;
 
@@ -345,11 +502,16 @@ export const ReservationSectionTitle = styled.div<{ $theme: ThemeType }>`
   font-size: 1.25rem;
   font-weight: 700;
   line-height: 1.2;
-  
+
   svg {
     width: 20px;
     height: 20px;
     color: #2563eb;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+    margin-bottom: 4px;
   }
 `;
 
@@ -452,36 +614,69 @@ export const QRModalLoader = styled.div`
   margin: 0 auto;
 
   @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
 `;
 
 export const getCheckInButtonStyle = (isDisabled: boolean, theme: ThemeType) =>
   css`
-    width: 75%;
+    width: 55%;
     justify-content: center;
-    gap: 10px;
+    gap: 6px;
+    padding: 6px 10px;
+    font-size: 0.8rem;
     background: ${theme === "dark" ? "#0f49b4ff" : "#0f49b4ff"};
     color: #ffffff;
     border: 1px solid ${themes[theme].BORDER_COLOR};
     box-shadow: 0 2px 8px rgba(2, 8, 23, 0.05);
-    border-radius: 8px;
+    border-radius: 6px;
     transition: background 0.3s ease, border-color 0.3s ease;
-    &:hover { background: ${theme === "dark" ? "#041755ff" : "#470c0cff" }; }
+    &:hover {
+      background: ${theme === "dark" ? "#041755ff" : "#470c0cff"};
+    }
     opacity: ${isDisabled ? 0.5 : 1};
     pointer-events: ${isDisabled ? "none" : "auto"};
-    margin-bottom: 12px;
+    margin-bottom: 10px;
+
+    @media (max-width: 768px) {
+      width: 65%;
+      font-size: 0.75rem;
+      padding: 5px 8px;
+    }
   `;
 
 export const CheckInSectionStyle = (theme: ThemeType) => css`
   border: 1px solid ${theme === "dark" ? themes[theme].BORDER_COLOR : "#e5e7eb"} !important;
-  background: ${theme === "dark" ? themes[theme].CONTAINER_COLOR : "#ffffff"} !important;
+  background: ${theme === "dark"
+    ? themes[theme].CONTAINER_COLOR
+    : "#ffffff"} !important;
   transition: border-color 0.3s ease, background 0.3s ease;
+
+  @media (max-width: 768px) {
+    padding: 0.8rem 0.4rem;
+    h2 {
+    text-align: left;
+      font-size: 0.8rem;
+      margin-bottom: 0.4rem;
+    }
+
+    p {
+    text-align: left;
+      font-size: 0.8rem;
+      line-height: 1.35;
+      margin-bottom: 0.25rem;
+    }
+  }
 `;
 
 export const QRDescriptionText = styled.p<{ $theme: ThemeType }>`
-  color: ${({ $theme }) => $theme === "dark" ? "#ffffff" : "#000000"} !important;
+  color: ${({ $theme }) =>
+    $theme === "dark" ? "#ffffff" : "#000000"} !important;
   text-align: center;
   margin: 0 0 1rem 0;
   font-size: 0.875rem;

@@ -1,15 +1,19 @@
-import { useContext, useState } from 'react';
-import type { LogDTO } from '../../services/admin/logs/types';
-import { BackButton } from '../../shared/components/BackButton/BackButton';
-import { FilterToolbar } from '../../shared/components/FilterToolbar/FilterToolbar';
-import { ExportButton } from '../../shared/components/ExportButton';
-import Header from '../../shared/components/Header/Header';
-import { SideBar } from '../../shared/components/SideBar/SideBar';
-import { useFilteredEvents } from '../AdminEvents/hooks/useFilteredEvents';
-import { LogItem } from './components/LogItem';
-import { ThemeContext } from '../../context/theme/themeContext';
-import { ADMIN_FILTER_PLACEHOLDER, ADMIN_LOGS_MESSAGES, EXPORT_FILE_NAME } from './constants/AdminLogs.constants';
-import { useLogsFetch } from './hooks/useLogsFetch';
+import { useContext, useState } from "react";
+import type { LogDTO } from "../../services/admin/logs/types";
+import { BackButton } from "../../shared/components/BackButton/BackButton";
+import { FilterToolbar } from "../../shared/components/FilterToolbar/FilterToolbar";
+import { ExportButton } from "../../shared/components/ExportButton";
+import Header from "../../shared/components/Header/Header";
+import { SideBar } from "../../shared/components/SideBar/SideBar";
+import { useFilteredEvents } from "../AdminEvents/hooks/useFilteredEvents";
+import { LogItem } from "./components/LogItem";
+import { ThemeContext } from "../../context/theme/themeContext";
+import {
+  ADMIN_FILTER_PLACEHOLDER,
+  ADMIN_LOGS_MESSAGES,
+  EXPORT_FILE_NAME,
+} from "./constants/AdminLogs.constants";
+import { useLogsFetch } from "./hooks/useLogsFetch";
 import {
   AdminHeaderWrapper,
   AdminLogsContainer,
@@ -22,8 +26,9 @@ import {
   MainContent,
   PageHeader,
   PageInner,
-  PageTitle
-} from './styles';
+  PageTitle,
+} from "./styles";
+import { SidebarBackdrop } from "../../shared/components/SideBar/styles";
 
 export const AdminLogsPage = () => {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
@@ -33,13 +38,17 @@ export const AdminLogsPage = () => {
   const hasLogs = !loading && filteredData.length > 0;
   const isEmpty = !loading && filteredData.length === 0;
 
-  const {theme} = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
 
   return (
     <AdminLogsPageWrapper>
       <SideBar
         isCollapsed={isSidebarCollapsed}
         onToggle={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+      />
+      <SidebarBackdrop
+        $isOpen={!isSidebarCollapsed}
+        onClick={() => setIsSidebarCollapsed(true)}
       />
       <AdminHeaderWrapper $collapsed={isSidebarCollapsed}>
         <Header />
@@ -49,10 +58,19 @@ export const AdminLogsPage = () => {
           <BackButton />
           <PageHeader>
             <HeaderContent>
-              <PageTitle $theme={theme}>{ADMIN_LOGS_MESSAGES.PAGE_TITLE}</PageTitle>
+              <PageTitle $theme={theme}>
+                {ADMIN_LOGS_MESSAGES.PAGE_TITLE}
+              </PageTitle>
               <ButtonsLogsContainer>
-                <FilterToolbar placeholder={ADMIN_FILTER_PLACEHOLDER} onKeywordSelected={onKeywordSelected} />
-                <ExportButton data={logs} fileName={EXPORT_FILE_NAME} disabled={loading || logs.length === 0} />
+                <FilterToolbar
+                  placeholder={ADMIN_FILTER_PLACEHOLDER}
+                  onKeywordSelected={onKeywordSelected}
+                />
+                <ExportButton
+                  data={logs}
+                  fileName={EXPORT_FILE_NAME}
+                  disabled={loading || logs.length === 0}
+                />
               </ButtonsLogsContainer>
             </HeaderContent>
           </PageHeader>
