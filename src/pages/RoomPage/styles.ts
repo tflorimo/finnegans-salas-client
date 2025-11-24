@@ -11,6 +11,7 @@ import {
   PRIMARY_COLOR,
   WHITE_COLOR,
 } from "../../assets/colors/global-colors";
+import { media, mediaMin } from "../../shared/styles/media";
 
 export const FinishedEventIcon = FinishedEventIconWrapper;
 export const InProgressEventIcon = InProgressEventIconWrapper;
@@ -48,13 +49,13 @@ export const RoomPageContainer = styled.div<{ $theme: ThemeType }>`
   padding-bottom: 80px;
   transition: background 0.3s ease;
 
-  @media (min-width: 768px) {
+  ${mediaMin.md} {
     padding: 10px 40px 20px 40px;
   }
-  @media (min-width: 1024px) {
+  ${mediaMin.lg} {
     padding: 10px 80px 20px 80px;
   }
-  @media (min-width: 1440px) {
+  ${mediaMin.xxxl} {
     padding: 10px 160px 20px 160px;
   }
 `;
@@ -69,7 +70,7 @@ export const PageInner = styled.div`
   gap: 12px;
   box-sizing: border-box;
   
-  @media (max-width: 768px) {
+  ${media.md} {
     gap: 12px;
   }
 `;
@@ -78,7 +79,7 @@ export const ContentGrid = styled.div`
   display: grid;
   grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
   gap: 75px;
-  @media (max-width: 1024px) {
+  ${media.lg} {
     grid-template-columns: 1fr;
     gap: 12px;
   }
@@ -88,7 +89,7 @@ export const ColumnaPrincipal = styled.main`
   display: grid;
   gap: 25px;
   
-  @media (max-width: 768px) {
+  ${media.md} {
     gap: 12px;
   }
 `;
@@ -98,7 +99,7 @@ export const ColumnaLateral = styled.aside`
   gap: 25px;
   align-content: start;
 
-  @media (max-width: 768px) {
+  ${media.md} {
     gap: 12px;
   }
 `;
@@ -131,7 +132,7 @@ export const ReservationList = styled.div`
   width: 75%;
   margin: 0 auto;
 
-  @media (max-width: 768px) {
+  ${media.md} {
     width: 100%;
     gap: 10px;
   }
@@ -150,7 +151,7 @@ export const ReservationItem = styled.div<{ $theme: ThemeType }>`
   box-sizing: border-box;
   transition: background 0.3s ease, border-color 0.3s ease;
 
-  @media (max-width: 768px) {
+  ${media.md} {
     padding: 6px 8px;
     gap: 8px;
   }
@@ -221,7 +222,7 @@ export const RoomInfoCardStyle = css`
   display: flow-root;
   h1, h2 { margin-top: 0; }
 
-  @media (max-width: 768px) {
+  ${media.md} {
     padding: 0.9rem 0.4rem;
     h1, h2 {
       font-size: 0.9rem;
@@ -239,7 +240,7 @@ export const ReservationsCardStyle = css<{ $theme: ThemeType }>`
   }
   width: 100%;
 
-  @media (max-width: 768px) {
+  ${media.md} {
     padding: 0.7rem 0.4rem;
     h1 {
       font-size: 0rem;
@@ -267,7 +268,7 @@ export const CurrentStatusCardStyle = css`
     font-weight: 700;
   }
 
-  @media (max-width: 768px) {
+  ${media.md} {
     padding: 0.8rem 0.4rem;
 
     h3 {
@@ -291,7 +292,7 @@ export const QRCardStyle = css`
     font-size: 14px;
   }
 
-  @media (max-width: 768px) {
+  ${media.md} {
     padding: 0.8rem 0.4rem;
 
     h3 {
@@ -314,7 +315,7 @@ export const TitleStyle = styled.h2<{ $theme: ThemeType }>`
   font-weight: 700;
   line-height: 1.2;
 
-  @media (max-width: 768px) {
+  ${media.md} {
     font-size: 0.7rem;
     margin-bottom: 4px;
   }
@@ -329,7 +330,7 @@ export const CheckInTitleStyle = styled.h2<{ $theme: ThemeType }>`
   font-weight: 700;
   line-height: 1.2;
 
-  @media (max-width: 768px) {
+  ${media.md} {
     font-size: 1rem;
     margin-bottom: 4px;
   }
@@ -502,7 +503,7 @@ export const ReservationsSectionSeparator = styled.div<{ $theme: ThemeType }>`
     color: ${COLOR_BLUE_LIGHT};
   }
 
-  @media (max-width: 768px) {
+  ${media.md} {
     font-size: 1rem;
     margin-bottom: 4px;
   }
@@ -525,7 +526,7 @@ export const ReservationSectionTitle = styled.div<{ $theme: ThemeType }>`
     color: ${COLOR_BLUE_LIGHT};
   }
 
-  @media (max-width: 768px) {
+  ${media.md} {
     font-size: 1rem;
     margin-bottom: 4px;
   }
@@ -657,7 +658,7 @@ export const getCheckInButtonStyle = (isDisabled: boolean, theme: ThemeType) =>
     pointer-events: ${isDisabled ? "none" : "auto"};
     margin-bottom: 12px;
 
-    @media (max-width: 768px) {
+    ${media.md} {
       width: 65%;
       font-size: 0.75rem;
       padding: 5px 8px;
@@ -671,7 +672,7 @@ export const CheckInSectionStyle = (theme: ThemeType) => css`
     : COLOR_WHITE} !important;
   transition: border-color 0.3s ease, background 0.3s ease;
 
-  @media (max-width: 768px) {
+  ${media.md} {
     padding: 0.8rem 0.4rem;
     h2 {
     text-align: left;

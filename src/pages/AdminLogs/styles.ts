@@ -5,6 +5,7 @@ import {
 } from "../../shared/components/SideBar/styles";
 import type { ThemeType } from "../../theme/Types";
 import { themes } from "../../theme/Theme";
+import { media } from "../../shared/styles/media";
 
 // Color Constants
 const COLOR_GRAY_MEDIUM = "#9ca3af";
@@ -36,7 +37,7 @@ export const AdminHeaderWrapper = styled.div<{ $collapsed: boolean }>`
   z-index: 100;
   transition: left 0.25s ease, width 0.25s ease;
 
-  @media (max-width: 768px) {
+  ${media.md} {
     left: ${({ $collapsed }) =>
       $collapsed ? `${SIDEBAR_COLLAPSED_WIDTH}px` : "0"};
     width: ${({ $collapsed }) =>
@@ -61,11 +62,11 @@ export const AdminLogsContainer = styled.div<{ $collapsed: boolean }>`
   transition: margin-left 0.25s ease, width 0.25s ease;
   overflow-x: hidden;
 
-  @media (max-width: 1200px) {
+  ${media.xl} {
     padding: 10px 32px 32px 32px;
   }
 
-  @media (max-width: 768px) {
+  ${media.md} {
     margin-left: ${({ $collapsed }) =>
       $collapsed ? `${SIDEBAR_COLLAPSED_WIDTH}px` : "0"};
     width: ${({ $collapsed }) =>
@@ -129,15 +130,15 @@ export const LogHeader = styled.div`
   gap: 16px;
   max-width: calc(100vw - 400px);
 
-  @media (max-width: 1200px) {
+  ${media.xl} {
     max-width: calc(100vw - 200px);
   }
 
-  @media (max-width: 768px) {
+  ${media.md} {
     max-width: calc(100vw - 80px);
   }
 
-  @media (max-width: 480px) {
+  ${media.sm} {
     flex-direction: column;
     align-items: flex-start;
     max-width: 100%;
@@ -179,7 +180,7 @@ export const LogTitle = styled.h3<{ $theme: ThemeType }>`
   text-overflow: ellipsis;
   white-space: nowrap;
 
-  @media (max-width: 768px) {
+  ${media.md} {
     font-size: 14px;
     white-space: normal;
     text-overflow: clip;
@@ -196,7 +197,7 @@ export const LogUser = styled.p<{ $theme: ThemeType }>`
   text-overflow: ellipsis;
   white-space: nowrap;
 
-  @media (max-width: 768px) {
+  ${media.md} {
     white-space: normal;
     text-overflow: clip;
   }
@@ -209,7 +210,7 @@ export const LogTimestamp = styled.span`
   white-space: nowrap;
   min-width: fit-content;
 
-  @media (max-width: 768px) {
+  ${media.md} {
     white-space: normal;
     text-align: right;
   }
@@ -251,7 +252,7 @@ export const ButtonsLogsContainer = styled.div`
   justify-content: space-between;
   flex-wrap: wrap;
 
-  @media (max-width: 768px) {
+  ${media.md} {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.75rem;

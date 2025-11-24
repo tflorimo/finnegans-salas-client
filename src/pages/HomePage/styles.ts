@@ -6,6 +6,7 @@ import {
 } from "../../shared/components/EventStatusIcon";
 import { themes } from "../../theme/Theme";
 import type { ThemeType } from "../../theme/Types";
+import { media } from "../../shared/styles/media";
 
 // Color Constants
 const COLOR_GREEN_FREE = "#16a249";
@@ -28,7 +29,7 @@ export const HomePageStyled = styled.section<{ $theme: ThemeType }>`
   background: ${({ $theme }) => themes[$theme].BACKGROUND_COLOR};
   transition: background 0.3s ease;
 
-  @media (max-width: 768px) {
+  ${media.md} {
     height: auto;
     overflow-x: hidden;
   }
@@ -43,7 +44,7 @@ export const RoomStatusContainer = styled.section`
   div:has(> select) {
     width: 400px;
   }
-  @media (max-width: 425px) {
+  ${media.xs} {
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -63,17 +64,16 @@ export const SelectFilterContainer = styled(RoomStatusContainer)`
   justify-content: flex-start;
   align-items: center;
 
-  @media (max-width: 768px) {
+  ${media.md} {
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 90%;
-  justify-content: center;
   svg {
     display: none;
   }
-  width: 90%;
   padding: 0.5rem 0;
-  gap: 0.5rem;
+  gap: 0.75rem;
   }
 `;
 
@@ -90,7 +90,7 @@ export const AllRoomsCardContainerStyles = ($theme: ThemeType) => css`
   p {
     margin: 0;
   }
-    @media (max-width: 768px) {
+    ${media.md} {
     padding: 0.45rem 0.56rem;
     min-height: 64px;
     h2 {
@@ -116,7 +116,7 @@ export const FreeRoomsCardContainerStyles = ($theme: ThemeType) => css`
   p {
     margin: 0;
   }
-  @media (max-width: 768px) {
+  ${media.md} {
     padding: 0.45rem 0.56rem;
     min-height: 64px;
     h2 {
@@ -142,7 +142,7 @@ export const OccupiedRoomsCardContainerStyles = ($theme: ThemeType) => css`
   p {
     margin: 0;
   }
-    @media (max-width: 768px) {
+    ${media.md} {
     padding: 0.45rem 0.56rem;
     min-height: 64px;
     h2 {
@@ -175,11 +175,11 @@ export const RoomListContainerStyles = ($theme: ThemeType) => css`
     margin: 0;
   }
 
-  @media (max-width: 1024px) {
+  ${media.lg} {
     width: 32%;
   }
 
-  @media (max-width: 768px) {
+  ${media.md} {
     width: 90%;
      h3, h4 {
        white-space: normal;

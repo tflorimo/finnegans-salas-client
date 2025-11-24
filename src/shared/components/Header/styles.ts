@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import type { ThemeType } from "../../../theme/Types";
 import { themes } from "../../../theme/Theme";
+import { media } from "../../styles/media";
 
 const TOPBAR_BG_LIGHT = "#f0f4f8";
 const TOPBAR_BG_DARK = "#000000";
@@ -56,7 +57,7 @@ export const TopBarLeft = styled.div<{ $theme: ThemeType }>`
   }
     margin-left: -60px;
 
-    @media (max-width: 768px) {
+    ${media.md} {
     h1,
     h2 {
       display: none;
@@ -73,7 +74,7 @@ export const TopBarRight = styled.div<{ $theme: ThemeType }>`
   gap: 16px;
 
   /* Mobile */
-  @media (max-width: 768px) {
+  ${media.md} {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
