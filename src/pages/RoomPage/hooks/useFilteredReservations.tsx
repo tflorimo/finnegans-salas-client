@@ -25,7 +25,7 @@ export const useFilteredReservations = (
       .filter((event) => {
         const eventStartTime = new Date(event.startTime);
         const eventEndTime = new Date(event.endTime);
-        return eventEndTime > now && (eventStartTime >= today || eventEndTime >= today);
+        return eventEndTime > now && (eventStartTime >= today && eventStartTime < tomorrow);
       })
       .sort((a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime());
 

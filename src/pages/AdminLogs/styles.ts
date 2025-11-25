@@ -1,7 +1,10 @@
-import styled, { css } from 'styled-components';
-import { SIDEBAR_WIDTH, SIDEBAR_COLLAPSED_WIDTH } from '../../shared/components/SideBar/styles';
-import type { ThemeType } from '../../theme/Types';
-import { themes } from '../../theme/Theme';
+import styled, { css } from "styled-components";
+import {
+  SIDEBAR_WIDTH,
+  SIDEBAR_COLLAPSED_WIDTH,
+} from "../../shared/components/SideBar/styles";
+import type { ThemeType } from "../../theme/Types";
+import { themes } from "../../theme/Theme";
 
 export const AdminLogsPageWrapper = styled.div`
   display: flex;
@@ -17,14 +20,15 @@ export const AdminHeaderWrapper = styled.div<{ $collapsed: boolean }>`
     `${$collapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_WIDTH}px`};
   right: 0;
   width: ${({ $collapsed }) =>
-    `calc(100% - ${$collapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_WIDTH
-    }px)`};
+    `calc(100% - ${$collapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_WIDTH}px)`};
   z-index: 100;
   transition: left 0.25s ease, width 0.25s ease;
 
   @media (max-width: 768px) {
-    left: 0;
-    width: 100%;
+    left: ${({ $collapsed }) =>
+      $collapsed ? `${SIDEBAR_COLLAPSED_WIDTH}px` : "0"};
+    width: ${({ $collapsed }) =>
+      $collapsed ? `calc(100vw - ${SIDEBAR_COLLAPSED_WIDTH}px)` : "100vw"};
   }
 `;
 
@@ -44,13 +48,12 @@ export const AdminLogsContainer = styled.div<{ $collapsed: boolean }>`
   transition: margin-left 0.25s ease, width 0.25s ease;
   overflow-x: hidden;
 
-  @media (max-width: 1200px) {
-    padding: 10px 32px 32px 32px;
-  }
-
   @media (max-width: 768px) {
-    margin-left: 0;
-    max-width: 100vw;
+    margin-left: ${({ $collapsed }) =>
+      $collapsed ? `${SIDEBAR_COLLAPSED_WIDTH}px` : "0"};
+    width: ${({ $collapsed }) =>
+      $collapsed ? `calc(100% - ${SIDEBAR_COLLAPSED_WIDTH}px)` : "100%"};
+    max-width: 100%;
     padding: 5px 16px 10px 16px;
   }
 `;
@@ -63,10 +66,18 @@ export const PageInner = styled.div`
 `;
 
 export const PageHeader = styled.header`
-  width: 100%;
   display: flex;
-  flex-direction: column;
-  gap: 0px;
+  align-items: center;
+  gap: 16px;
+  max-width: calc(100vw - 400px);
+
+  @media (max-width: 1200px) {
+    max-width: calc(100vw - 200px);
+  }
+
+  @media (max-width: 768px) {
+    max-width: calc(100vw - 80px);
+  }
 `;
 
 export const HeaderContent = styled.div`
@@ -107,13 +118,19 @@ export const LogHeader = styled.div`
   align-items: center;
   gap: 16px;
   max-width: calc(100vw - 400px);
-  
+
   @media (max-width: 1200px) {
     max-width: calc(100vw - 200px);
   }
-  
+
   @media (max-width: 768px) {
     max-width: calc(100vw - 80px);
+  }
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: 100%;
   }
 `;
 
@@ -123,7 +140,7 @@ export const TagContainer = styled.div`
   justify-content: center;
   width: 80px;
   min-width: 80px;
-  
+
   button {
     padding: 4px 8px;
     font-size: 12px;
@@ -151,6 +168,12 @@ export const LogTitle = styled.h3<{ $theme: ThemeType }>`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+    white-space: normal;
+    text-overflow: clip;
+  }
 `;
 
 export const LogUser = styled.p<{ $theme: ThemeType }>`
@@ -162,6 +185,11 @@ export const LogUser = styled.p<{ $theme: ThemeType }>`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+
+  @media (max-width: 768px) {
+    white-space: normal;
+    text-overflow: clip;
+  }
 `;
 
 export const LogTimestamp = styled.span`
@@ -170,7 +198,7 @@ export const LogTimestamp = styled.span`
   font-weight: 500;
   white-space: nowrap;
   min-width: fit-content;
-  
+
   @media (max-width: 768px) {
     white-space: normal;
     text-align: right;
@@ -194,14 +222,14 @@ export const EmptyState = styled.div`
   padding: 80px 20px;
   text-align: center;
   color: #64748b;
-  
+
   h3 {
     font-size: 18px;
     font-weight: 600;
     margin: 0 0 8px 0;
     color: #475569;
   }
-  
+
   p {
     font-size: 14px;
     margin: 0;
@@ -210,21 +238,58 @@ export const EmptyState = styled.div`
 
 export const ButtonsLogsContainer = styled.div`
   display: flex;
-  gap: 12px;
-  align-items: center;
-  justify-content: space-between;
   flex-wrap: wrap;
+  gap: 12px;
+  width: 100%;
+
+  /* DESKTOP */
+  @media (min-width: 769px) {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 0.5rem;
+
+    /* bloque Filtrar + input */
+    & > :first-child {
+      flex: 1 1 auto;
+      margin-right: 1rem;
+    }
+
+    /* botón Exportar */
+    & > :last-child {
+      flex: 0 0 auto;
+    }
+  }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+
+    & > * {
+      width: 100%;
+      max-width: 360px;
+    }
+
+    & > :last-child {
+      margin-top: 0.25rem;
+    }
+  }
 `;
 
 export const filterButtonStyle = css<{ $theme: ThemeType }>`
   height: 40px;
   padding: 0 14px;
-  border: 1px solid ${({ $theme }) => ($theme === "dark" ? "#9ca3af" : "#e2e8f0")};
+  border: 1px solid
+    ${({ $theme }) => ($theme === "dark" ? "#9ca3af" : "#e2e8f0")};
   border-radius: 10px;
   background: ${({ $theme }) => ($theme === "dark" ? "#374151" : "#fff")};
   color: ${({ $theme }) => ($theme === "dark" ? "#ffffff" : "#0f172a")};
   transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
-  &:hover { background: ${({ $theme }) => ($theme === "dark" ? "#4b5563" : "#f8fafc")}; }
+  &:hover {
+    background: ${({ $theme }) => ($theme === "dark" ? "#4b5563" : "#f8fafc")};
+  }
 `;
 
 export const LogItemCardStyle = css`
