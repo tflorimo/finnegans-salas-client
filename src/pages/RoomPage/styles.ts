@@ -11,14 +11,36 @@ import {
   PRIMARY_COLOR,
   WHITE_COLOR,
 } from "../../assets/colors/global-colors";
+import { media, mediaMin } from "../../shared/styles/media";
 
 export const FinishedEventIcon = FinishedEventIconWrapper;
 export const InProgressEventIcon = InProgressEventIconWrapper;
 
+// Color Constants
+const COLOR_WHITE = "#ffffff";
+const COLOR_BLACK = "#000000";
+const COLOR_BLUE_PRIMARY = "#0b5be7";
+const COLOR_BLUE_LIGHT = "#2563eb";
+const COLOR_BLUE_HOVER = "#1d4ed8";
+const COLOR_BLUE_DARK = "#0f49b4ff";
+const COLOR_BLUE_DARKER = "#041755ff";
+const COLOR_RED_DARK = "#470c0cff";
+const COLOR_CYAN = "#06b6d4";
+const COLOR_GRAY_BORDER = "#eef2f7";
+const COLOR_GRAY_LIGHT_BORDER = "#e5e7eb";
+const COLOR_GRAY_DARK_1 = "#1f2937";
+const COLOR_GRAY_DARK_2 = "#6b7280";
+const COLOR_GRAY_LIGHT_1 = "#f9fafb";
+const COLOR_GRAY_LIGHT_2 = "#f3f4f6";
+const COLOR_GRAY_MEDIUM = "#9ca3af";
+const COLOR_GREEN = "#10b981";
+const COLOR_DARK_TEXT = "#111827";
+const COLOR_MODAL_OVERLAY = "rgba(0, 0, 0, 0.5)";
+
 export const RoomPageContainer = styled.div<{ $theme: ThemeType }>`
   width: 100%;
   max-width: 100%;
-  padding: 5px 30px 10px 18px;
+  padding: 5px 20px 10px 20px;
   box-sizing: border-box;
   overflow-x: hidden;
 
@@ -27,54 +49,59 @@ export const RoomPageContainer = styled.div<{ $theme: ThemeType }>`
   padding-bottom: 80px;
   transition: background 0.3s ease;
 
-  & > :first-child {
-    margin-top: 10px;
+  ${mediaMin.md} {
+    padding: 10px 40px 20px 40px;
   }
-
-  @media (min-width: 768px) {
-    padding: 10px 40px 20px;
-
-    & > :first-child {
-      margin-top: 12px;
-    }
+  ${mediaMin.lg} {
+    padding: 10px 80px 20px 80px;
   }
-  @media (min-width: 1024px) {
-    padding: 10px 80px 20px;
-  }
-  @media (min-width: 1440px) {
-    padding: 10px 160px 20px;
+  ${mediaMin.xxxl} {
+    padding: 10px 160px 20px 160px;
   }
 `;
 
 export const PageInner = styled.div`
   width: 100%;
   max-width: 1200px;
-  margin: 0 auto;
-  padding: 0rem 0.3rem 1.75rem;
+  margin: +2.5px auto 0;
+  padding: 0 0 0 0;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
   box-sizing: border-box;
+  
+  ${media.md} {
+    gap: 12px;
+  }
 `;
 
 export const ContentGrid = styled.div`
   display: grid;
   grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
   gap: 75px;
-  @media (max-width: 1024px) {
+  ${media.lg} {
     grid-template-columns: 1fr;
+    gap: 12px;
   }
 `;
 
 export const ColumnaPrincipal = styled.main`
   display: grid;
   gap: 25px;
+  
+  ${media.md} {
+    gap: 12px;
+  }
 `;
 
 export const ColumnaLateral = styled.aside`
   display: grid;
   gap: 25px;
   align-content: start;
+
+  ${media.md} {
+    gap: 12px;
+  }
 `;
 
 export const FilaEstado = styled.div<{ $theme: ThemeType }>`
@@ -83,7 +110,7 @@ export const FilaEstado = styled.div<{ $theme: ThemeType }>`
   justify-content: space-between;
   padding: 8px 0;
   gap: 8px;
-  border-top: 1px solid #eef2f7;
+  border-top: 1px solid ${COLOR_GRAY_BORDER};
   &:first-of-type {
     border-top: none;
   }
@@ -105,7 +132,7 @@ export const ReservationList = styled.div`
   width: 75%;
   margin: 0 auto;
 
-  @media (max-width: 768px) {
+  ${media.md} {
     width: 100%;
     gap: 10px;
   }
@@ -113,37 +140,36 @@ export const ReservationList = styled.div`
 
 export const ReservationItem = styled.div<{ $theme: ThemeType }>`
   display: grid;
-  grid-template-columns: 32px 1fr auto;
+  grid-template-columns: 40px 1fr auto;
   align-items: center;
-  gap: 10px;
-  padding: 6px 10px;
-  background: ${({ $theme }) => ($theme === "dark" ? "#1f2937" : "#f9fafb")};
-  border-radius: 6px;
-  border: 1px solid
-    ${({ $theme }) => ($theme === "dark" ? "#9ca3af" : "#f3f4f6")};
+  gap: 16px;
+  padding: 12px 16px;
+  background: ${({ $theme }) => ($theme === "dark" ? COLOR_GRAY_DARK_1 : COLOR_GRAY_LIGHT_1)};
+  border-radius: 8px;
+  border: 1px solid ${({ $theme }) => ($theme === "dark" ? COLOR_GRAY_MEDIUM : COLOR_GRAY_LIGHT_2)};
   width: 100%;
   box-sizing: border-box;
   transition: background 0.3s ease, border-color 0.3s ease;
 
-  @media (max-width: 768px) {
+  ${media.md} {
     padding: 6px 8px;
     gap: 8px;
   }
 `;
 
 export const Avatar = styled.div`
-  width: 32px;
-  height: 32px;
-  min-width: 32px;
-  min-height: 32px;
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  min-height: 40px;
   border-radius: 50%;
-  background: #0b5be7;
-  color: #fff;
+  background: ${COLOR_BLUE_PRIMARY};
+  color: ${COLOR_WHITE};
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 800;
-  font-size: 12px;
+  font-size: 14px;
   flex-shrink: 0;
 `;
 
@@ -152,18 +178,17 @@ export const ResInfo = styled.div<{ $theme: ThemeType }>`
   flex-direction: column;
   span {
     color: ${({ $theme }) =>
-      $theme === "dark" ? "#ffffff" : themes[$theme].TEXT_COLOR};
+      $theme === "dark" ? COLOR_WHITE : themes[$theme].TEXT_COLOR};
     font-weight: 700;
     font-size: 14px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     transition: color 0.3s ease;
-    flex-wrap: wrap;
   }
   small {
     color: ${({ $theme }) =>
-      $theme === "dark" ? "#ffffff" : themes[$theme].TEXT_COLOR};
+      $theme === "dark" ? COLOR_WHITE : themes[$theme].TEXT_COLOR};
     font-size: 12px;
     transition: color 0.3s ease;
   }
@@ -171,18 +196,13 @@ export const ResInfo = styled.div<{ $theme: ThemeType }>`
   line-height: 1.5;
   min-width: 0;
   flex: 1;
-
-  @media (max-width: 768px) {
-    padding: 3px;
-    gap: 8.5px;
-  }
 `;
 
 export const ResRight = styled.div<{ $theme: ThemeType }>`
   display: inline-flex;
   align-items: center;
   color: ${({ $theme }) =>
-    $theme === "dark" ? "#ffffff" : themes[$theme].TEXT_COLOR};
+    $theme === "dark" ? COLOR_WHITE : themes[$theme].TEXT_COLOR};
   gap: 6px;
   font-weight: 500;
   font-size: 14px;
@@ -191,7 +211,7 @@ export const ResRight = styled.div<{ $theme: ThemeType }>`
   flex-shrink: 0;
   transition: color 0.3s ease;
   svg {
-    color: #9ca3af;
+    color: ${COLOR_GRAY_MEDIUM};
     flex-shrink: 0;
   }
 `;
@@ -200,10 +220,9 @@ export const RoomInfoCardStyle = css`
   width: 100%;
   text-align: left;
   display: flow-root;
-  margin-top: 0.75rem;
   h1, h2 { margin-top: 0; }
 
-  @media (max-width: 768px) {
+  ${media.md} {
     padding: 0.9rem 0.4rem;
     h1, h2 {
       font-size: 0.9rem;
@@ -221,7 +240,7 @@ export const ReservationsCardStyle = css<{ $theme: ThemeType }>`
   }
   width: 100%;
 
-  @media (max-width: 768px) {
+  ${media.md} {
     padding: 0.7rem 0.4rem;
     h1 {
       font-size: 0rem;
@@ -249,7 +268,7 @@ export const CurrentStatusCardStyle = css`
     font-weight: 700;
   }
 
-  @media (max-width: 768px) {
+  ${media.md} {
     padding: 0.8rem 0.4rem;
 
     h3 {
@@ -269,11 +288,11 @@ export const QRCardStyle = css`
   }
   p {
     margin: 0 0 16px;
-    color: #ffffffff;
+    color: ${COLOR_WHITE};
     font-size: 14px;
   }
 
-  @media (max-width: 768px) {
+  ${media.md} {
     padding: 0.8rem 0.4rem;
 
     h3 {
@@ -296,7 +315,7 @@ export const TitleStyle = styled.h2<{ $theme: ThemeType }>`
   font-weight: 700;
   line-height: 1.2;
 
-  @media (max-width: 768px) {
+  ${media.md} {
     font-size: 0.7rem;
     margin-bottom: 4px;
   }
@@ -304,14 +323,14 @@ export const TitleStyle = styled.h2<{ $theme: ThemeType }>`
 
 export const CheckInTitleStyle = styled.h2<{ $theme: ThemeType }>`
   color: ${({ $theme }) =>
-    $theme === "dark" ? "#06b6d4" : themes[$theme].TEXT_COLOR};
+    $theme === "dark" ? COLOR_CYAN : themes[$theme].TEXT_COLOR};
   margin-bottom: 8px;
   margin-top: -8px;
   font-size: 1.25rem;
   font-weight: 700;
   line-height: 1.2;
 
-  @media (max-width: 768px) {
+  ${media.md} {
     font-size: 1rem;
     margin-bottom: 4px;
   }
@@ -367,23 +386,21 @@ export const RoomCapacityInfo = styled.div<{ $theme: ThemeType }>`
 `;
 
 export const EQUIPMENT_ICON_SIZE = 18;
-export const EQUIPMENT_ICON_COLOR = "#2563eb";
+export const EQUIPMENT_ICON_COLOR = '#2563eb';
 
 export const EquipmentTagStyle = css<{ $theme: ThemeType }>`
   background: ${({ $theme }) =>
-    $theme === "dark" ? "#1f2937" : "#f3f4f6"} !important;
+    $theme === "dark" ? COLOR_GRAY_DARK_1 : COLOR_GRAY_LIGHT_2} !important;
   color: ${({ $theme }) => themes[$theme].TEXT_COLOR} !important;
   border: 1px solid ${({ $theme }) => themes[$theme].BORDER_COLOR} !important;
-  font-size: 0.75rem;
   font-weight: 500;
-  border-radius: 6px;
-  padding: 4px 8px;
-  gap: 4px;
+  padding: 8px 12px;
+  gap: 6px;
 `;
 
 export const CheckInSubtitle = styled.p<{ $theme: ThemeType }>`
   font-size: 0.875rem;
-  color: ${({ $theme }) => ($theme === "dark" ? "#ffffff" : "#000000")};
+  color: ${({ $theme }) => ($theme === "dark" ? COLOR_WHITE : COLOR_BLACK)};
   margin-bottom: 1rem;
   text-align: center;
 `;
@@ -427,7 +444,7 @@ export const CheckInMessageText = styled.p<{ $theme: ThemeType }>`
   margin: 0 0 1.5rem 0;
   font-size: 1rem;
   text-align: center;
-  color: ${({ $theme }) => ($theme === "dark" ? "#ffffff" : "#000000")};
+  color: ${({ $theme }) => ($theme === "dark" ? COLOR_WHITE : COLOR_BLACK)};
   transition: color 0.3s ease;
 `;
 
@@ -456,7 +473,7 @@ export const CheckInCloseButton = styled.button`
 
 export const ErrorMessage = styled.p`
   text-align: center;
-  color: #000000;
+  color: ${COLOR_BLACK};
   padding: 2rem;
   margin: 0;
 `;
@@ -483,10 +500,10 @@ export const ReservationsSectionSeparator = styled.div<{ $theme: ThemeType }>`
   svg {
     width: 20px;
     height: 20px;
-    color: #2563eb;
+    color: ${COLOR_BLUE_LIGHT};
   }
 
-  @media (max-width: 768px) {
+  ${media.md} {
     font-size: 1rem;
     margin-bottom: 4px;
   }
@@ -506,10 +523,10 @@ export const ReservationSectionTitle = styled.div<{ $theme: ThemeType }>`
   svg {
     width: 20px;
     height: 20px;
-    color: #2563eb;
+    color: ${COLOR_BLUE_LIGHT};
   }
 
-  @media (max-width: 768px) {
+  ${media.md} {
     font-size: 1rem;
     margin-bottom: 4px;
   }
@@ -524,7 +541,7 @@ export const QRContainer = styled.div`
   height: 160px;
   margin: 8px auto 0;
   padding: 12px;
-  background: #ffffff;
+  background: ${COLOR_WHITE};
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 `;
@@ -535,7 +552,7 @@ export const QRModalOverlay = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: ${COLOR_MODAL_OVERLAY};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -543,7 +560,7 @@ export const QRModalOverlay = styled.div`
 `;
 
 export const QRModalCard = styled.div`
-  background: white;
+  background: ${COLOR_WHITE};
   border-radius: 16px;
   padding: 3rem;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
@@ -560,8 +577,8 @@ export const QRModalIcon = styled.div<{ $isSuccess?: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: ${({ $isSuccess }) => ($isSuccess ? "#10b981" : "#6b7280")};
-  color: white;
+  background: ${({ $isSuccess }) => ($isSuccess ? COLOR_GREEN : COLOR_GRAY_DARK_2)};
+  color: ${COLOR_WHITE};
 
   svg {
     width: 40px;
@@ -572,20 +589,20 @@ export const QRModalIcon = styled.div<{ $isSuccess?: boolean }>`
 export const QRModalTitle = styled.h2`
   font-size: 1.5rem;
   font-weight: 700;
-  color: #111827;
+  color: ${COLOR_DARK_TEXT};
   margin: 0 0 1rem;
 `;
 
 export const QRModalMessage = styled.p`
   font-size: 1rem;
-  color: #6b7280;
+  color: ${COLOR_GRAY_DARK_2};
   margin: 0 0 2rem;
   line-height: 1.5;
 `;
 
 export const QRModalButton = styled.button`
-  background: #2563eb;
-  color: white;
+  background: ${COLOR_BLUE_LIGHT};
+  color: ${COLOR_WHITE};
   border: none;
   border-radius: 8px;
   padding: 0.75rem 2rem;
@@ -595,11 +612,11 @@ export const QRModalButton = styled.button`
   transition: background 0.2s;
 
   &:hover {
-    background: #1d4ed8;
+    background: ${COLOR_BLUE_HOVER};
   }
 
   &:disabled {
-    background: #9ca3af;
+    background: ${COLOR_GRAY_MEDIUM};
     cursor: not-allowed;
   }
 `;
@@ -607,8 +624,8 @@ export const QRModalButton = styled.button`
 export const QRModalLoader = styled.div`
   width: 40px;
   height: 40px;
-  border: 4px solid #f3f4f6;
-  border-top: 4px solid #2563eb;
+  border: 4px solid ${COLOR_GRAY_LIGHT_2};
+  border-top: 4px solid ${COLOR_BLUE_LIGHT};
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin: 0 auto;
@@ -625,25 +642,23 @@ export const QRModalLoader = styled.div`
 
 export const getCheckInButtonStyle = (isDisabled: boolean, theme: ThemeType) =>
   css`
-    width: 55%;
+    width: 75%;
     justify-content: center;
-    gap: 6px;
-    padding: 6px 10px;
-    font-size: 0.8rem;
-    background: ${theme === "dark" ? "#0f49b4ff" : "#0f49b4ff"};
-    color: #ffffff;
+    gap: 10px;
+    background: ${COLOR_BLUE_DARK};
+    color: ${COLOR_WHITE};
     border: 1px solid ${themes[theme].BORDER_COLOR};
     box-shadow: 0 2px 8px rgba(2, 8, 23, 0.05);
-    border-radius: 6px;
+    border-radius: 8px;
     transition: background 0.3s ease, border-color 0.3s ease;
     &:hover {
-      background: ${theme === "dark" ? "#041755ff" : "#470c0cff"};
+      background: ${theme === "dark" ? COLOR_BLUE_DARKER : COLOR_RED_DARK};
     }
     opacity: ${isDisabled ? 0.5 : 1};
     pointer-events: ${isDisabled ? "none" : "auto"};
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 
-    @media (max-width: 768px) {
+    ${media.md} {
       width: 65%;
       font-size: 0.75rem;
       padding: 5px 8px;
@@ -651,13 +666,13 @@ export const getCheckInButtonStyle = (isDisabled: boolean, theme: ThemeType) =>
   `;
 
 export const CheckInSectionStyle = (theme: ThemeType) => css`
-  border: 1px solid ${theme === "dark" ? themes[theme].BORDER_COLOR : "#e5e7eb"} !important;
+  border: 1px solid ${theme === "dark" ? themes[theme].BORDER_COLOR : COLOR_GRAY_LIGHT_BORDER} !important;
   background: ${theme === "dark"
     ? themes[theme].CONTAINER_COLOR
-    : "#ffffff"} !important;
+    : COLOR_WHITE} !important;
   transition: border-color 0.3s ease, background 0.3s ease;
 
-  @media (max-width: 768px) {
+  ${media.md} {
     padding: 0.8rem 0.4rem;
     h2 {
     text-align: left;
@@ -676,7 +691,7 @@ export const CheckInSectionStyle = (theme: ThemeType) => css`
 
 export const QRDescriptionText = styled.p<{ $theme: ThemeType }>`
   color: ${({ $theme }) =>
-    $theme === "dark" ? "#ffffff" : "#000000"} !important;
+    $theme === "dark" ? COLOR_WHITE : COLOR_BLACK} !important;
   text-align: center;
   margin: 0 0 1rem 0;
   font-size: 0.875rem;

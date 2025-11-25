@@ -5,6 +5,19 @@ import {
 } from "../../shared/components/SideBar/styles";
 import type { ThemeType } from "../../theme/Types";
 import { themes } from "../../theme/Theme";
+import { media } from "../../shared/styles/media";
+
+// Color Constants
+const COLOR_GRAY_MEDIUM = "#9ca3af";
+const COLOR_GRAY_TEXT = "#64748b";
+const COLOR_GRAY_DARK_TEXT = "#475569";
+const COLOR_BORDER_LIGHT = "#e2e8f0";
+const COLOR_BG_DARK = "#374151";
+const COLOR_BG_LIGHT = "#fff";
+const COLOR_WHITE = "#ffffff";
+const COLOR_TEXT_DARK = "#0f172a";
+const COLOR_HOVER_DARK = "#4b5563";
+const COLOR_HOVER_LIGHT = "#f8fafc";
 
 export const AdminLogsPageWrapper = styled.div`
   display: flex;
@@ -24,19 +37,20 @@ export const AdminHeaderWrapper = styled.div<{ $collapsed: boolean }>`
   z-index: 100;
   transition: left 0.25s ease, width 0.25s ease;
 
-  @media (max-width: 768px) {
+  ${media.md} {
     left: ${({ $collapsed }) =>
       $collapsed ? `${SIDEBAR_COLLAPSED_WIDTH}px` : "0"};
     width: ${({ $collapsed }) =>
-      $collapsed ? `calc(100vw - ${SIDEBAR_COLLAPSED_WIDTH}px)` : "100vw"};
+      $collapsed
+        ? `calc(100vw - ${SIDEBAR_COLLAPSED_WIDTH}px)`
+        : "100vw"};
   }
 `;
 
 export const AdminLogsContainer = styled.div<{ $collapsed: boolean }>`
   flex: none;
-  max-width: ${({ $collapsed }) =>
+  width: ${({ $collapsed }) =>
     `calc(100vw - ${$collapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_WIDTH}px)`};
-  width: 100%;
   margin-left: ${({ $collapsed }) =>
     `${$collapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_WIDTH}px`};
   margin-top: 0;
@@ -48,12 +62,17 @@ export const AdminLogsContainer = styled.div<{ $collapsed: boolean }>`
   transition: margin-left 0.25s ease, width 0.25s ease;
   overflow-x: hidden;
 
-  @media (max-width: 768px) {
+  ${media.xl} {
+    padding: 10px 32px 32px 32px;
+  }
+
+  ${media.md} {
     margin-left: ${({ $collapsed }) =>
       $collapsed ? `${SIDEBAR_COLLAPSED_WIDTH}px` : "0"};
     width: ${({ $collapsed }) =>
-      $collapsed ? `calc(100% - ${SIDEBAR_COLLAPSED_WIDTH}px)` : "100%"};
-    max-width: 100%;
+      $collapsed
+        ? `calc(100% - ${SIDEBAR_COLLAPSED_WIDTH}px)`
+        : "100%"};
     padding: 5px 16px 10px 16px;
   }
 `;
@@ -66,18 +85,10 @@ export const PageInner = styled.div`
 `;
 
 export const PageHeader = styled.header`
+  width: 100%;
   display: flex;
-  align-items: center;
-  gap: 16px;
-  max-width: calc(100vw - 400px);
-
-  @media (max-width: 1200px) {
-    max-width: calc(100vw - 200px);
-  }
-
-  @media (max-width: 768px) {
-    max-width: calc(100vw - 80px);
-  }
+  flex-direction: column;
+  gap: 0px;
 `;
 
 export const HeaderContent = styled.div`
@@ -119,15 +130,15 @@ export const LogHeader = styled.div`
   gap: 16px;
   max-width: calc(100vw - 400px);
 
-  @media (max-width: 1200px) {
+  ${media.xl} {
     max-width: calc(100vw - 200px);
   }
 
-  @media (max-width: 768px) {
+  ${media.md} {
     max-width: calc(100vw - 80px);
   }
 
-  @media (max-width: 480px) {
+  ${media.sm} {
     flex-direction: column;
     align-items: flex-start;
     max-width: 100%;
@@ -169,7 +180,7 @@ export const LogTitle = styled.h3<{ $theme: ThemeType }>`
   text-overflow: ellipsis;
   white-space: nowrap;
 
-  @media (max-width: 768px) {
+  ${media.md} {
     font-size: 14px;
     white-space: normal;
     text-overflow: clip;
@@ -186,7 +197,7 @@ export const LogUser = styled.p<{ $theme: ThemeType }>`
   text-overflow: ellipsis;
   white-space: nowrap;
 
-  @media (max-width: 768px) {
+  ${media.md} {
     white-space: normal;
     text-overflow: clip;
   }
@@ -194,12 +205,12 @@ export const LogUser = styled.p<{ $theme: ThemeType }>`
 
 export const LogTimestamp = styled.span`
   font-size: 12px;
-  color: #9ca3af;
+  color: ${COLOR_GRAY_MEDIUM};
   font-weight: 500;
   white-space: nowrap;
   min-width: fit-content;
 
-  @media (max-width: 768px) {
+  ${media.md} {
     white-space: normal;
     text-align: right;
   }
@@ -210,7 +221,7 @@ export const LoadingContainer = styled.div`
   justify-content: center;
   align-items: center;
   padding: 60px 20px;
-  color: #64748b;
+  color: ${COLOR_GRAY_TEXT};
   font-size: 16px;
 `;
 
@@ -221,16 +232,14 @@ export const EmptyState = styled.div`
   align-items: center;
   padding: 80px 20px;
   text-align: center;
-  color: #64748b;
-
+  color: ${COLOR_GRAY_TEXT};
+  
   h3 {
     font-size: 18px;
     font-weight: 600;
     margin: 0 0 8px 0;
-    color: #475569;
-  }
-
-  p {
+    color: ${COLOR_GRAY_DARK_TEXT};
+  }  p {
     font-size: 14px;
     margin: 0;
   }
@@ -238,31 +247,12 @@ export const EmptyState = styled.div`
 
 export const ButtonsLogsContainer = styled.div`
   display: flex;
-  flex-wrap: wrap;
   gap: 12px;
-  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
 
-  /* DESKTOP */
-  @media (min-width: 769px) {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-top: 0.5rem;
-
-    /* bloque Filtrar + input */
-    & > :first-child {
-      flex: 1 1 auto;
-      margin-right: 1rem;
-    }
-
-    /* botón Exportar */
-    & > :last-child {
-      flex: 0 0 auto;
-    }
-  }
-
-  /* MOBILE */
-  @media (max-width: 768px) {
+  ${media.md} {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.75rem;
@@ -282,13 +272,13 @@ export const filterButtonStyle = css<{ $theme: ThemeType }>`
   height: 40px;
   padding: 0 14px;
   border: 1px solid
-    ${({ $theme }) => ($theme === "dark" ? "#9ca3af" : "#e2e8f0")};
+    ${({ $theme }) => ($theme === "dark" ? COLOR_GRAY_MEDIUM : COLOR_BORDER_LIGHT)};
   border-radius: 10px;
-  background: ${({ $theme }) => ($theme === "dark" ? "#374151" : "#fff")};
-  color: ${({ $theme }) => ($theme === "dark" ? "#ffffff" : "#0f172a")};
+  background: ${({ $theme }) => ($theme === "dark" ? COLOR_BG_DARK : COLOR_BG_LIGHT)};
+  color: ${({ $theme }) => ($theme === "dark" ? COLOR_WHITE : COLOR_TEXT_DARK)};
   transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
   &:hover {
-    background: ${({ $theme }) => ($theme === "dark" ? "#4b5563" : "#f8fafc")};
+    background: ${({ $theme }) => ($theme === "dark" ? COLOR_HOVER_DARK : COLOR_HOVER_LIGHT)};
   }
 `;
 

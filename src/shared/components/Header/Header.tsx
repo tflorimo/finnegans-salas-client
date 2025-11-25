@@ -1,7 +1,7 @@
 import { LogOut, Settings, Sun } from "lucide-react";
 import { useContext } from "react";
 import { NavLink } from "react-router-dom";
-import LogoFinnegans from "../../../assets/images/Isotipo Celeste.svg";
+import logoFinnegas from "../../../assets/images/isotipo-celeste.svg";
 import { AuthContext } from "../../../context/auth/authContext";
 import { decodeJwt } from "../../utils/decodeJwt.utils";
 import {
@@ -28,7 +28,7 @@ export const Header = () => {
     <TopBar theme={theme}>
       <TopBarInner>
         <TopBarLeft $theme={theme}>
-          <img src={LogoFinnegans} alt="Finnegans" width={32} height={32} />
+          <img src={logoFinnegas} alt="Finnegans" width={32} height={32} />
           <div>
             <h1>Finnegans</h1>
             <h2>Reservas de Sala In-Situ</h2>
