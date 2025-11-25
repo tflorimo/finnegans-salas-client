@@ -34,7 +34,7 @@ export const hourlyForecastAdapter = {
 
                 const yIndex = HOURS_RANGE.indexOf(hour);
 
-                const percentage = Math.round(forecast.occupancyPredicted * 100);
+                const percentage = Math.round((1 - forecast.occupancyPredicted) * 100);
 
                 if (
                     xIndex === -1 ||
@@ -47,12 +47,13 @@ export const hourlyForecastAdapter = {
                 data.push({
                     value: [xIndex, yIndex, percentage],
                     info: {
+                        roomName: room.roomName,
                         roomEmail: room.roomEmail,
                         date: parsed.dateISO,
                         hour,
                         percentage,
-                        upper: Math.round(forecast.upper * 100),
-                        lower: Math.round(forecast.lower * 100),
+                        upper: Math.round((1 - forecast.upper) * 100),
+                        lower: Math.round((1 - forecast.lower) * 100),
                     },
                 });
             });

@@ -7,12 +7,19 @@ export interface ForecastPointDTO {
 
 export interface RoomHourlyForecastDTO {
   roomEmail: string;
+  roomName: string;
   forecasts: ForecastPointDTO[];
+}
+
+export interface ForecastResponseDTO {
+  data: RoomHourlyForecastDTO[];
+  success: boolean;
 }
 
 export interface HeatmapPoint {
   value: [number, number, number];
   info: {
+    roomName: string;
     roomEmail: string;
     percentage: number;
     upper: number;

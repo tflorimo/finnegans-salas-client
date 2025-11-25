@@ -1,4 +1,3 @@
-// hooks/useHourlyForecastHeatmap.ts
 import { useEffect, useState } from "react";
 import { heatmapService } from "../../../services/heatmap/heatmap.service";
 import type { HeatmapStructure, RoomHourlyForecastDTO } from "../types/HeatmapPage.types";
@@ -39,7 +38,7 @@ export const useHourlyForecastHeatmap = (selectedRoom?: string) => {
         setHeatmapData(adapted);
     }, [rawForecasts, selectedRoom, loading]);
 
-    const allRooms = rawForecasts.map((room) => ({ id: room.roomEmail, roomEmail: room.roomEmail }));
+    const allRooms = rawForecasts?.map((room) => ({ id: room.roomEmail, roomEmail: room.roomEmail, roomName: room.roomName })) || [];
 
     return {
         allRooms,

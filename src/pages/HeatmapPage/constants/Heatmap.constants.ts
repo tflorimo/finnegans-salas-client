@@ -1,13 +1,13 @@
 export const HEATMAP_ENDPOINTS = {
-    getRoomsForecast: () => `/forecast/rooms`,
+    getRoomsForecast: () => `/forecast/fetch`,
 } as const;
 
-const CANT_DAYS_WEEK = 5;
-const CANT_HOURS_DAY = 10;
+const INITIAL_HOUR = 9;
+const CANT_HOURS_DAY = 9;
 
 export const WEEK_DAYS_ORDER = ["lun", "mar", "mié", "jue", "vie"];
 
-export const HOURS_RANGE = Array.from({ length: CANT_HOURS_DAY }, (_, i) => CANT_DAYS_WEEK + i);
+export const HOURS_RANGE = Array.from({ length: CANT_HOURS_DAY }, (_, i) => INITIAL_HOUR + i);
 
 export const HEATMAP_ERROR_MESSAGES = {
     roomsForecastError: "No se pudo obtener el forecast de las salas.",
