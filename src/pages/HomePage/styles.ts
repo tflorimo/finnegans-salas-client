@@ -180,13 +180,13 @@ export const InProgressEventIconWrapper = styled(
   margin-right: 0.25rem;
 `;
 
-export const HeatmapButtonStyle = css`
+export const HeatmapButtonStyle = ($theme: ThemeType) => css`
   width: 400px;
-  background: ${ROOM_PAGE_COLORS.heatmapButtonBg};
-  color: ${ROOM_PAGE_COLORS.heatmapButtonText};
+  background: ${themes[$theme].CONTAINER_COLOR};
+  color: ${themes[$theme].TEXT_COLOR};
   border: 1px solid ${ROOM_PAGE_COLORS.heatmapButtonBorder};
 
   &:hover {
-    background: ${ROOM_PAGE_COLORS.heatmapButtonHoverBorder};
+    background: ${themes[$theme].BACKGROUND_COLOR};
   }
 `;

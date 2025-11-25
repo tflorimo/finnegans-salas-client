@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { themes } from "../../../../theme/Theme";
+import type { ThemeType } from "../../../../theme/Types";
 
 export const HEAT_MAP_COLORS = {
     legendColor: '#444444',
@@ -9,10 +11,6 @@ export const HEAT_MAP_COLORS = {
     highAvailability: "#04ff6d",
     tooltipBackground: "rgba(255,255,255,0.95)",
     tooltipBorder: "#dddddd",
-    heatmapTextColor: '#333333',
-    heatmapSeriesBorderColor: "rgba(255,255,255,0.5)",
-    heatmapItemsBorderColor: "#a3a3a3ff",
-    heatmapGridLineStyleColor: "#eee",
 };
 
 export const HeatmapContainer = styled.div`
@@ -32,9 +30,10 @@ export const ChartWrapper = styled.div`
     overflow: hidden;
 `;
 
-export const LegendContainer = styled.div`
+export const LegendContainer = styled.div<{ $theme: ThemeType }>`
     display: flex;
     align-items: center;
+    color: ${({ $theme }) => themes[$theme].TEXT_COLOR};
     gap: 24px;
 `;
 
@@ -43,7 +42,6 @@ export const LegendItem = styled.div`
     align-items: center;
     gap: 6px;
     font-size: 0.9rem;
-    color: ${HEAT_MAP_COLORS.legendColor};
 `;
 
 export const LegendColor = styled.div<{ color: string }>`

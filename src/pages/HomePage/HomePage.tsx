@@ -41,8 +41,7 @@ export const HomePage = () => {
   });
 
   const handleGoToHeatmap = () => {
-    const roomEmails = roomsData.map((room) => room.email);
-    navigate("/heatmap", { state: { roomEmails } });
+    navigate("/heatmap");
   }
 
   const filteredRooms = useMemo(() => filterRooms(), [filterRooms]);
@@ -94,7 +93,7 @@ export const HomePage = () => {
             text="Ver Mapa de Disponibilidad"
             variant={ButtonVariant.white}
             onClick={handleGoToHeatmap}
-            customStyle={HeatmapButtonStyle}
+            customStyle={HeatmapButtonStyle(theme)}
           />
 
         </SelectActionsContainer>

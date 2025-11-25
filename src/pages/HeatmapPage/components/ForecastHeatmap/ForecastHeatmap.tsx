@@ -1,5 +1,7 @@
 import ReactECharts from "echarts-for-react";
-import { useMemo } from "react";
+import { useContext, useMemo } from "react";
+import { ThemeContext } from "../../../../context/theme/themeContext";
+import { themes } from "../../../../theme/Theme";
 import { LoadingContainer } from "../../../AdminLogs/styles";
 import { HEATMAP_TEXTS } from "../../constants/Heatmap.constants";
 import { useHourlyForecastHeatmap } from "../../hooks/useHourlyForecastHeatmap";
@@ -18,22 +20,25 @@ export const ForecastHeatmap = ({
 }: {
     roomSelected?: string;
 }) => {
+
+    const { theme } = useContext(ThemeContext);
+
     const { rooms, yAxisLabels, data, loading } =
         useHourlyForecastHeatmap(roomSelected);
 
     const option = useMemo(
         () => ({
             tooltip: {
-                backgroundColor: HEAT_MAP_COLORS.tooltipBackground,
-                borderColor: HEAT_MAP_COLORS.tooltipBorder,
+                backgroundColor: themes[theme].BACKGROUND_COLOR,
+                borderColor: themes[theme].BORDER_COLOR,
                 borderWidth: 1,
-                textStyle: { color: HEAT_MAP_COLORS.heatmapTextColor },
+                textStyle: { color: themes[theme].TEXT_COLOR },
                 formatter: ({ data }: { data: HeatmapPoint }) => {
 
                     if (!data?.info) return "";
-                    const { roomEmail, date, hour, percentage } = data.info;
+                    const { roomName, date, hour, percentage, } = data.info;
                     return `
-            <b>${roomEmail}</b><br/>
+            <b>${roomName}</b><br/>
             ${date} - ${hour}:00<br/>
             Disponibilidad: ${percentage}%
         `;
@@ -44,19 +49,19 @@ export const ForecastHeatmap = ({
                 type: "category",
                 data: rooms,
                 axisLabel: {
-                    color: HEAT_MAP_COLORS.heatmapTextColor,
+                    color: themes[theme].TEXT_COLOR,
                     fontSize: 13,
                 },
-                axisLine: { lineStyle: { color: HEAT_MAP_COLORS.heatmapGridLineStyleColor } },
+                axisLine: { lineStyle: { color: themes[theme].TEXT_COLOR } },
             },
             yAxis: {
                 type: "category",
                 data: yAxisLabels,
                 axisLabel: {
-                    color: HEAT_MAP_COLORS.heatmapTextColor,
+                    color: themes[theme].TEXT_COLOR,
                     fontSize: 13,
                 },
-                axisLine: { lineStyle: { color: HEAT_MAP_COLORS.heatmapGridLineStyleColor } },
+                axisLine: { lineStyle: { color: themes[theme].TEXT_COLOR } },
             },
             visualMap: {
                 show: false,
@@ -75,17 +80,17 @@ export const ForecastHeatmap = ({
                 {
                     type: "heatmap",
                     data,
-                    borderColor: HEAT_MAP_COLORS.heatmapSeriesBorderColor,
+                    borderColor: themes[theme].LIGHT_COLOR,
                     borderWidth: 2,
                     itemStyle: {
                         borderWidth: 2,
                         borderRadius: 6,
-                        borderColor: HEAT_MAP_COLORS.heatmapItemsBorderColor,
+                        borderColor: themes[theme].SECONDARY_COLOR,
                     },
                 },
             ],
         }),
-        [rooms, yAxisLabels, data]
+        [rooms, yAxisLabels, data, theme]
     );
 
     if (loading || rooms.length === 0 || yAxisLabels.length === 0) {
@@ -96,7 +101,7 @@ export const ForecastHeatmap = ({
 
     return (
         <HeatmapContainer>
-            <LegendContainer>
+            <LegendContainer $theme={theme}>
                 <LegendItem>
                     <LegendColor color={HEAT_MAP_COLORS.highAvailability} />
                     {HEATMAP_TEXTS.leyendHighAvailability}
