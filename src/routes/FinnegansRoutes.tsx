@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom"
 import { AdminEventsPage } from "../pages/AdminEvents/AdminEventsPage"
 import { AdminLogsPage } from "../pages/AdminLogs/AdminLogsPage"
+import { HeatmapPage } from "../pages/HeatmapPage/HeatmapPage"
 import { HomePage } from "../pages/HomePage"
 import { RoomPage } from "../pages/RoomPage/RoomPage"
 import { QRCheckInHandler } from "../pages/RoomPage/components/QRCheckInHandler"
@@ -13,6 +14,7 @@ export const FinnegansRoutes = () => {
       <Header />
       <Routes>
         <Route path="/home" element={<HomePage />} />
+        <Route path="/heatmap" element={<HeatmapPage />} />
         <Route path="/room/:id" element={<RoomPage />} />
         <Route path="/:roomEmail" element={<QRCheckInHandler />} />
         <Route path="/admin/logs" element={

@@ -2,11 +2,11 @@ import styled, { css } from "styled-components";
 import {
   EventIconWrapper as SharedEventIconWrapper,
   FinishedEventIconWrapper as SharedFinishedEventIconWrapper,
-  InProgressEventIconWrapper as SharedInProgressEventIconWrapper
+  InProgressEventIconWrapper as SharedInProgressEventIconWrapper,
 } from "../../shared/components/EventStatusIcon";
+import { media } from "../../shared/styles/media";
 import { themes } from "../../theme/Theme";
 import type { ThemeType } from "../../theme/Types";
-import { media } from "../../shared/styles/media";
 
 // Color Constants
 const COLOR_GREEN_FREE = "#16a249";
@@ -18,6 +18,10 @@ export const ROOM_PAGE_COLORS = {
   roomTitleOccupied: COLOR_RED_OCCUPIED,
   roomBorder: "#B6CBD5",
   roomBoxShadow: "#0000001a",
+  heatmapButtonBg: "#ffffff",
+  heatmapButtonText: "#333333",
+  heatmapButtonBorder: "#d9d9d9",
+  heatmapButtonHoverBorder: "#f5f5f5",
   roomText: "#64748b",
 };
 
@@ -57,6 +61,12 @@ export const RoomStatusContainer = styled.section`
 
 export const RoomListContainer = styled(RoomStatusContainer)`
  flex-wrap: wrap;
+`;
+
+export const SelectActionsContainer = styled(RoomStatusContainer)`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 export const SelectFilterContainer = styled(RoomStatusContainer)`
@@ -170,7 +180,6 @@ export const RoomListContainerStyles = ($theme: ThemeType) => css`
   &:hover {
     box-shadow: 0 4px 8px ${COLOR_HOVER_SHADOW};
   }
-
   p {
     margin: 0;
   }
@@ -239,6 +248,19 @@ export const FinishedEventIconWrapper = styled(SharedFinishedEventIconWrapper)`
   margin-right: 0.25rem;
 `;
 
-export const InProgressEventIconWrapper = styled(SharedInProgressEventIconWrapper)`
+export const InProgressEventIconWrapper = styled(
+  SharedInProgressEventIconWrapper
+)`
   margin-right: 0.25rem;
+`;
+
+export const HeatmapButtonStyle = ($theme: ThemeType) => css`
+  width: 400px;
+  background: ${themes[$theme].CONTAINER_COLOR};
+  color: ${themes[$theme].TEXT_COLOR};
+  border: 1px solid ${ROOM_PAGE_COLORS.heatmapButtonBorder};
+
+  &:hover {
+    background: ${themes[$theme].BACKGROUND_COLOR};
+  }
 `;
