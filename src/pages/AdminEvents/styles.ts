@@ -2,6 +2,7 @@ import styled, { css } from "styled-components";
 import { SIDEBAR_WIDTH, SIDEBAR_COLLAPSED_WIDTH } from "../../shared/components/SideBar/styles";
 import type { ThemeType } from '../../theme/Types';
 import { themes } from '../../theme/Theme';
+import { media } from "../../shared/styles/media";
 
 export const AdminEventsPageWrapper = styled.div`
   display: flex;
@@ -21,7 +22,7 @@ export const AdminHeaderWrapper = styled.div<{ $collapsed: boolean }>`
   z-index: 100;
   transition: left 0.25s ease, width 0.25s ease;
 
-  @media (max-width: 768px) {
+  ${media.md} {
     left: ${({ $collapsed }) =>
       $collapsed ? `${SIDEBAR_COLLAPSED_WIDTH}px` : "0"};
     width: ${({ $collapsed }) =>
@@ -46,7 +47,7 @@ export const AdminEventsContainer = styled.div<{ $collapsed: boolean }>`
   transition: margin-left 0.25s ease, width 0.25s ease;
   overflow-x: hidden;
 
-  @media (max-width: 768px) {
+  ${media.md} {
     margin-left: ${({ $collapsed }) =>
       $collapsed ? `${SIDEBAR_COLLAPSED_WIDTH}px` : "0"};
     width: ${({ $collapsed }) =>
@@ -87,7 +88,7 @@ export const ButtonsEventsContainer = styled.div`
   flex-wrap: wrap;
 
   /* MOBILE */
-  @media (max-width: 768px) {
+  ${media.md} {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.75rem;
@@ -140,7 +141,7 @@ export const Table = styled.table<{ $theme: ThemeType }>`
     border-bottom: 1px solid ${({ $theme }) => themes[$theme].BACKGROUND_COLOR};
   }
 
-  @media (max-width: 768px) {
+  ${media.md} {
     font-size: 12px;
 
     thead th,
@@ -158,7 +159,7 @@ export const Table = styled.table<{ $theme: ThemeType }>`
 export const TableWrapper = styled.div`
   width: 100%;
 
-  @media (max-width: 768px) {
+  ${media.md} {
     margin-top: 4px;
     overflow-x: scroll;
     -webkit-overflow-scrolling: touch;
@@ -240,7 +241,7 @@ export const Overlay = styled.div`
   z-index: 999;
   box-sizing: border-box;
 
-  @media (max-width: 768px) {
+  ${media.md} {
     padding: 16px;
   }
 `;
@@ -276,7 +277,7 @@ export const ModalCardStyle = css`
   align-items: stretch;
   gap: 24px;
 
-  @media (max-width: 768px) {
+  ${media.md} {
     padding: 24px 20px 28px;
   }
 `;

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import LogoFinnegans from "../../assets/images/FinnegansLogoMainLightblue.svg";
+import logoFinnegans from "../../assets/images/finnegans-logo-main-lightblue.svg";
+import logoGoogle from "../../assets/images/logo-google.svg";
 import { Button } from "../../components/Button/Button";
 import { CardContainer } from "../../components/CardContainer/CardContainer";
 import {
@@ -79,7 +80,7 @@ export const LoginPage = () => {
         <LoginHeader>
           <div className="logo-container">
             <ImageFinnegans
-              src={LogoFinnegans}
+              src={logoFinnegans}
               alt="Logo Finnegans"
               width={60}
               height={60}
@@ -99,7 +100,7 @@ export const LoginPage = () => {
             text="Ingresar con Google"
             icon={
               <img
-                src="/src/assets/Images/logoGoogle.svg"
+                src={logoGoogle}
                 alt="Google"
                 width={20}
                 height={20}

@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import type { ThemeType } from "../../../theme/Types";
 import { themes } from "../../../theme/Theme";
-import { media } from "../../Styles/media";
+import { media, mediaMin } from "../../styles/media";
 
 export const SIDEBAR_WIDTH = 240;
 export const SIDEBAR_COLLAPSED_WIDTH = 80;
@@ -65,14 +65,14 @@ export const SideBarContainer = styled.aside<{ $theme: ThemeType, $collapsed: bo
   overflow: hidden;
 
   /* DESKTOP / TABLET */
-  @media (min-width: 769px) {
+  ${mediaMin.mdPlus} {
     width: ${({ $collapsed }) =>
       $collapsed ? `${SIDEBAR_COLLAPSED_WIDTH}px` : `${SIDEBAR_WIDTH}px`};
     transform: translateX(0);
   }
 
   /* MOBILE */
-  @media (max-width: 768px) {
+  ${media.md} {
     width: ${({ $collapsed }) =>
       $collapsed ? `${SIDEBAR_COLLAPSED_WIDTH}px` : `${SIDEBAR_WIDTH}px`};
     height: 100vh;
@@ -94,7 +94,7 @@ export const SidebarBackdrop = styled.div<{ $isOpen: boolean }>`
     display: block;
   }
 
-  @media (min-width: 769px) {
+  ${mediaMin.mdPlus} {
     display: none;
   }
 `;
