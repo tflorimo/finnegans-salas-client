@@ -22,3 +22,5 @@ export const HEATMAP_TEXTS = {
     leyendMidAvailability: "Media",
     leyendLowAvailability: "Baja",
 } as const;
+
+export const HEATMAP_OPTION_GRID_STYLES = { top: 10, left: 80, right: 20, bottom: 20 }

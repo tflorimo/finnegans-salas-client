@@ -3,7 +3,7 @@ import { useContext, useMemo } from "react";
 import { ThemeContext } from "../../../../context/theme/themeContext";
 import { themes } from "../../../../theme/Theme";
 import { LoadingContainer } from "../../../AdminLogs/styles";
-import { HEATMAP_TEXTS } from "../../constants/Heatmap.constants";
+import { HEATMAP_OPTION_GRID_STYLES, HEATMAP_TEXTS } from "../../constants/Heatmap.constants";
 import { useHourlyForecastHeatmap } from "../../hooks/useHourlyForecastHeatmap";
 import type { HeatmapPoint } from "../../types/HeatmapPage.types";
 import {
@@ -44,7 +44,7 @@ export const ForecastHeatmap = ({
         `;
                 },
             },
-            grid: { top: 10, left: 80, right: 20, bottom: 20 },
+            grid: HEATMAP_OPTION_GRID_STYLES,
             xAxis: {
                 type: "category",
                 data: rooms,
