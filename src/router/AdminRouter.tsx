@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import { Navigate } from "react-router-dom";
 import { AuthContext } from "../context/auth/authContext";
-import { decodeJwt } from "../shared/utils/decodeJwt.utils";
 import type { AdminRouteProps } from "./types";
 
 /*
@@ -11,14 +10,9 @@ import type { AdminRouteProps } from "./types";
  * Si el usuario es administrador, renderiza los hijos del componente.
  */
 export const AdminRoute = ({ children }: AdminRouteProps) => {
-    const { authToken } = useContext(AuthContext);
-    const decoded = authToken && decodeJwt(authToken);
+    const { authToken, userRole } = useContext(AuthContext);
 
-    if (!decoded) return;
-
-    const role = decoded.role;
-
-    const isAdmin = role === "admin";
+    const isAdmin = userRole === "admin";
 
     if (!authToken) return <Navigate to="/login" replace />;
     if (!isAdmin) return <Navigate to="/home" replace />;
