@@ -1,4 +1,15 @@
 import { isAxiosError } from "axios";
+import axiosInstance from "./axios.instance";
+
+const AUTH_HEADER = (token: string) => `Bearer ${token}`;
+
+export const setAuthHeader = (token: string) => {
+  axiosInstance.defaults.headers.common.Authorization = AUTH_HEADER(token);
+};
+
+export const clearAuthHeader = () => {
+  axiosInstance.defaults.headers.common.Authorization = null;
+};
 
 export const getErrorMessage = (error: unknown, fallbackMessage: string) => {
   if (isAxiosError<{ message?: string }>(error)) {
