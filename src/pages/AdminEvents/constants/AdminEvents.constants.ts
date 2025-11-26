@@ -2,8 +2,9 @@ import { Tags } from "../../../components/Tag/types";
 import type { CheckInStatus, ResponseStatus } from "../../../shared/types/event.types";
 
 export const ADMIN_EVENTS_MESSAGES = {
-  PAGE_TITLE: "Eventos Programados",
+  PAGE_TITLE: "Eventos Agendados",
   FILTER_BUTTON: "Filtrar",
+  LOADING: "Cargando eventos...",
   EMPTY_TITLE: "Sin resultados",
   EMPTY_DESCRIPTION: "Probá con otro término de búsqueda.",
 };
@@ -41,9 +42,9 @@ export const ATTENDEE_STATUS_TAG_MAP: Record<ResponseStatus, Tags> = {
 };
 
 export const CHECK_IN_STATUS_TAG_MAP: Record<CheckInStatus, { text: string; type: Tags }> = {
-  checked_in: { text: EVENT_MODAL.CHECK_IN_DONE, type: Tags.success },
-  pending: { text: EVENT_MODAL.CHECK_IN_PENDING, type: Tags.warning },
-  expired: { text: EVENT_MODAL.CHECK_IN_EXPIRED, type: Tags.danger },
+  CHECKED_IN: { text: EVENT_MODAL.CHECK_IN_DONE, type: Tags.success },
+  PENDING: { text: EVENT_MODAL.CHECK_IN_PENDING, type: Tags.warning },
+  EXPIRED: { text: EVENT_MODAL.CHECK_IN_EXPIRED, type: Tags.danger },
 };
 
 export const EVENT_FILTER_PLACEHOLDER = "Buscar por nombre de Evento...";

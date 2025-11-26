@@ -87,6 +87,10 @@ export const ButtonsEventsContainer = styled.div`
   justify-content: space-between;
   flex-wrap: wrap;
 
+  & > :last-child {
+    margin-top: 0.1rem;
+  }
+
   /* MOBILE */
   ${media.md} {
     flex-direction: column;
@@ -134,11 +138,19 @@ export const Table = styled.table<{ $theme: ThemeType }>`
     font-weight: 600;
     padding: 14px 16px;
     border-bottom: 1px solid ${({ $theme }) => themes[$theme].BACKGROUND_COLOR};
+
+    &:nth-child(5) {
+      text-align: center;
+    }
   }
 
   tbody td {
     padding: 12px 16px;
     border-bottom: 1px solid ${({ $theme }) => themes[$theme].BACKGROUND_COLOR};
+
+    &:nth-child(5) {
+      text-align: center;
+    }
   }
 
   ${media.md} {
@@ -186,6 +198,15 @@ export const IconBtn = styled.button<{ $theme: ThemeType }>`
   &:hover { background: ${({ $theme }) => ($theme === "dark" ? "#4b5563" : "#f8fafc")}; }
   &:last-child { margin-right: 0; }
   margin-left: 10px;
+`;
+
+export const LoadingContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 20px;
+  color: #64748b;
+  font-size: 16px;
 `;
 
 export const EmptyState = styled.div`
