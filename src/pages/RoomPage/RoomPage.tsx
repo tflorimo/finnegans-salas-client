@@ -80,7 +80,7 @@ export const RoomPage = () => {
         <BackButton />
         <PageInner>
           <CardContainer>
-            <ErrorMessage>{error}</ErrorMessage>
+            <ErrorMessage $theme={theme}>{error}</ErrorMessage>
           </CardContainer>
         </PageInner>
       </RoomPageContainer>

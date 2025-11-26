@@ -13,6 +13,8 @@ export const HEAT_MAP_COLORS = {
     tooltipBorder: "#dddddd",
 };
 
+const COLOR_GRAY_TEXT = "#64748b";
+
 export const HeatmapContainer = styled.div`
     width: auto;
     height: auto;
@@ -57,4 +59,18 @@ export const HeatmapWrapper = styled.div`
     height: 580px;
     border-radius: 12px;
     overflow: hidden;
+`;
+
+export const ChartStyle = {
+    width: "100%",
+    height: "100%"
+};
+
+export const LoadingBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 20px;
+  color: ${COLOR_GRAY_TEXT};
+  font-size: 16px;
 `;

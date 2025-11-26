@@ -33,7 +33,7 @@ const TYPE_STYLES = {
   `,
   succesOutput: css`
     background-color: ${"#40eb7f19"};
-    color: ${"#3be077ff"};
+    color: ${"rgba(36, 226, 106, 1)"};
     border: 1px solid ${"#91d38eff"};
   `,
   dangerOutput: css`
@@ -45,6 +45,11 @@ const TYPE_STYLES = {
     background-color: ${LIGHT_COLOR};
     color: ${DARK_COLOR};
     border: 1px solid ${"#97a0a5ff"};
+  `,
+  blueOutput: css`
+    background-color: ${"#dbeafe19"};
+    color: ${"#00aaffff"};
+    border: 1px solid ${"#7dd3fcff"};
   `,
   empty: css`
     background-color: transparent;

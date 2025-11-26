@@ -51,7 +51,7 @@ export const useQRCheckIn = (roomEmailProp?: string) => {
                 };
             }
 
-            await roomService.checkInEvent(roomEmail, eligibleEvent!.id, userEmail);
+            await roomService.checkInEvent(roomEmail, eligibleEvent!.id);
             const updatedRoomData = await roomService.getRoom(roomEmail);
 
             return {

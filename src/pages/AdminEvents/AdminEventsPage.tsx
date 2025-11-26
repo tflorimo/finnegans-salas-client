@@ -4,7 +4,7 @@ import Header from "../../shared/components/Header/Header";
 import { BackButton } from "../../shared/components/BackButton/BackButton";
 import { FilterToolbar } from "../../shared/components/FilterToolbar/FilterToolbar";
 import { ExportButton } from "../../shared/components/ExportButton";
-import type { EventResponseDTO } from "../../shared/types/event.types";
+import { Pagination } from "../../shared/components/Pagination/Pagination";
 import { EventDetailsModal } from "./components/EventDetailsModal";
 import { EventsTable } from "./components/EventsTable";
 import {
@@ -12,7 +12,9 @@ import {
   EVENT_FILTER_PLACEHOLDER,
   EXPORT_FILE_NAME,
 } from "./constants/AdminEvents.constants";
-import { useGetAdminEvents } from "./hooks/useGetAdminEvents";
+import { useEventsFetch } from "./hooks/useEventsFetch";
+import { useAllEventsFetch } from "./hooks/useAllEventsFetch";
+import { useFilteredEvents } from "./hooks/useFilteredEvents";
 import {
   AdminEventsContainer,
   AdminEventsPageWrapper,
@@ -23,22 +25,25 @@ import {
   PageInner,
   PageTitle,
   TableWrapper,
+  LoadingContainer,
+  EmptyState,
 } from "./styles";
 import { ThemeContext } from "../../context/theme/themeContext";
-import { useFilteredEvents } from "./hooks/useFilteredEvents";
 import { SidebarBackdrop } from "../../shared/components/SideBar/styles";
+import type { EventListItemDTO } from "../../services/admin/audits/types";
 
 export const AdminEventsPage = () => {
   const { theme } = useContext(ThemeContext);
 
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(false);
-  const [selectedEvent, setSelectedEvent] = useState<EventResponseDTO | null>(
-    null
-  );
+  const [selectedEvent, setSelectedEvent] = useState<EventListItemDTO | null>(null);
 
-  const { events = [] } = useGetAdminEvents();
-  const { filteredData, onKeywordSelected } =
-    useFilteredEvents<EventResponseDTO>(events);
+  const { loading, events, pagination, currentPage, handlePageChange } = useEventsFetch();
+  const { events: allEvents } = useAllEventsFetch();
+  const { filteredData, onKeywordSelected } = useFilteredEvents<any>(events as any);
+
+  const hasEvents = !loading && filteredData.length > 0;
+  const isEmpty = !loading && filteredData.length === 0;
 
   return (
     <AdminEventsPageWrapper>
@@ -70,24 +75,51 @@ export const AdminEventsPage = () => {
                   onKeywordSelected={onKeywordSelected}
                 />
                 <ExportButton
-                  data={events}
+                  data={allEvents}
                   fileName={EXPORT_FILE_NAME}
-                  disabled={events.length === 0}
+                  disabled={loading || allEvents.length === 0}
                 />
               </ButtonsEventsContainer>
             </HeaderContent>
           </PageHeader>
 
-          <TableWrapper>
-            <EventsTable
-              events={filteredData}
-              onView={(ev) => setSelectedEvent(ev)}
-            />
-          </TableWrapper>
-          
+          {loading && (
+            <LoadingContainer>
+              <p>{ADMIN_EVENTS_MESSAGES.LOADING}</p>
+            </LoadingContainer>
+          )}
+
+          {isEmpty && (
+            <EmptyState>
+              <h3>{ADMIN_EVENTS_MESSAGES.EMPTY_TITLE}</h3>
+              <p>{ADMIN_EVENTS_MESSAGES.EMPTY_DESCRIPTION}</p>
+            </EmptyState>
+          )}
+
+          {hasEvents && (
+            <>
+              <TableWrapper>
+                <EventsTable
+                  events={filteredData as any}
+                  onView={(ev) => setSelectedEvent(ev as unknown as EventListItemDTO)}
+                />
+              </TableWrapper>
+
+              {pagination.totalPages > 1 && (
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={pagination.totalPages}
+                  onPageChange={handlePageChange}
+                  theme={theme}
+                  isLoading={loading}
+                />
+              )}
+            </>
+          )}
+
           {selectedEvent && (
             <EventDetailsModal
-              event={selectedEvent}
+              event={selectedEvent as any}
               onClose={() => setSelectedEvent(null)}
             />
           )}

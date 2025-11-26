@@ -4,6 +4,7 @@ export interface ExportButtonProps<T> {
   data: T[];
   fileName: string;
   disabled?: boolean;
+  onClick?: () => Promise<T[]> | T[];
 }
 
 export type ExportFormat = "csv" | "pdf";

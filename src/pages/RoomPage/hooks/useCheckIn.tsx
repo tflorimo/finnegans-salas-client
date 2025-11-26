@@ -1,9 +1,7 @@
 import { useContext, useState, useCallback } from "react";
 import { AuthContext } from "../../../context/auth/authContext";
 import { roomService } from "../../../services/rooms/room.service";
-import { CheckInStatus } from "../../../shared/types/event.types";
 import { findAllCheckInEligibleEvents, isCheckInAlreadyDoneError } from "../utils/CheckIn.utils";
-import { isEventInProgress } from "../../../shared/utils/event.utils";
 import type { RoomResponseDTO } from "../../../shared/types/room.types";
 import type { EventResponseDTO } from "../../../shared/types/event.types";
 import type { CheckInState, CheckInValidation, UseCheckInParams } from "../types/RoomPage.types";
@@ -55,37 +53,6 @@ export const useCheckIn = ({ onSuccess }: UseCheckInParams = {}) => {
     [userEmail]
   );
 
-  const buildUpdatedRoom = useCallback(
-    (
-      room: RoomResponseDTO,
-      eventId: string,
-      eventToCheckIn: EventResponseDTO
-    ): RoomResponseDTO => {
-      const updatedEvents = room.events?.map((event) =>
-        event.id === eventId
-          ? { ...event, checkInStatus: CheckInStatus.CHECKED_IN }
-          : event
-      );
-
-      const eventIsInProgress = isEventInProgress(
-        eventToCheckIn.startTime,
-        eventToCheckIn.endTime
-      );
-
-      const updatedCurrentEvent = eventIsInProgress && room.current_event?.id === eventId
-        ? { ...room.current_event, checkInStatus: CheckInStatus.CHECKED_IN }
-        : room.current_event;
-
-      return {
-        ...room,
-        is_busy: eventIsInProgress && room.current_event?.id === eventId ? true : room.is_busy,
-        current_event: updatedCurrentEvent,
-        events: updatedEvents,
-      };
-    },
-    []
-  );
-
   const handleCheckIn = useCallback(
     async (room: RoomResponseDTO | undefined, eventId: string) => {
       const validation = validateCheckIn(room, eventId);
@@ -100,7 +67,7 @@ export const useCheckIn = ({ onSuccess }: UseCheckInParams = {}) => {
         return;
       }
 
-      const { event, room: validatedRoom, userEmail: validatedUserEmail } = validation;
+      const { room: validatedRoom } = validation;
 
       setState((prev) => ({
         ...prev,
@@ -111,17 +78,17 @@ export const useCheckIn = ({ onSuccess }: UseCheckInParams = {}) => {
       }));
 
       try {
-        await roomService.checkInEvent(validatedRoom.email, eventId, validatedUserEmail);
+        const response = await roomService.checkInEvent(validatedRoom.email, eventId);
 
-        if (onSuccess) {
-          const updatedRoom = buildUpdatedRoom(validatedRoom, eventId, event);
-          onSuccess(updatedRoom);
+
+        if (onSuccess && response.room) {
+          onSuccess(response.room);
         }
 
         setState((prev) => ({
           ...prev,
           isLoading: false,
-          message: "¡Check-in realizado con éxito!",
+          message: response.message || "¡Check-in realizado con éxito!",
           isSuccess: true,
           checkingInEventId: null,
         }));
@@ -147,7 +114,7 @@ export const useCheckIn = ({ onSuccess }: UseCheckInParams = {}) => {
         }));
       }
     },
-    [userEmail, onSuccess, validateCheckIn, buildUpdatedRoom]
+    [userEmail, onSuccess, validateCheckIn]
   );
 
 

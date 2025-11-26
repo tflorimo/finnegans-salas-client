@@ -16,6 +16,7 @@ export enum Tags {
   succesOutput = "succesOutput",
   dangerOutput = "dangerOutput",
   infoOutput = "infoOutput",
+  blueOutput = "blueOutput",
   empty = "empty",
 }
 

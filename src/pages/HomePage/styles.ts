@@ -12,17 +12,24 @@ import type { ThemeType } from "../../theme/Types";
 const COLOR_GREEN_FREE = "#16a249";
 const COLOR_RED_OCCUPIED = "#ef4343";
 const COLOR_HOVER_SHADOW = "rgba(0, 0, 0, 0.15)";
+const COLOR_ROOM_BORDER = "#B6CBD5";
+const COLOR_ROOM_BOX_SHADOW = "#0000001a";
+const COLOR_HEATMAP_BUTTON_BG = "#ffffff";
+const COLOR_HEATMAP_BUTTON_TEXT = "#333333";
+const COLOR_HEATMAP_BUTTON_BORDER = "#d9d9d9";
+const COLOR_HEATMAP_BUTTON_HOVER_BORDER = "#f5f5f5";
+const COLOR_ROOM_TEXT = "#64748b";
 
 export const ROOM_PAGE_COLORS = {
   roomTitleFree: COLOR_GREEN_FREE,
   roomTitleOccupied: COLOR_RED_OCCUPIED,
-  roomBorder: "#B6CBD5",
-  roomBoxShadow: "#0000001a",
-  heatmapButtonBg: "#ffffff",
-  heatmapButtonText: "#333333",
-  heatmapButtonBorder: "#d9d9d9",
-  heatmapButtonHoverBorder: "#f5f5f5",
-  roomText: "#64748b",
+  roomBorder: COLOR_ROOM_BORDER,
+  roomBoxShadow: COLOR_ROOM_BOX_SHADOW,
+  heatmapButtonBg: COLOR_HEATMAP_BUTTON_BG,
+  heatmapButtonText: COLOR_HEATMAP_BUTTON_TEXT,
+  heatmapButtonBorder: COLOR_HEATMAP_BUTTON_BORDER,
+  heatmapButtonHoverBorder: COLOR_HEATMAP_BUTTON_HOVER_BORDER,
+  roomText: COLOR_ROOM_TEXT,
 };
 
 export const HomePageStyled = styled.section<{ $theme: ThemeType }>`
@@ -36,6 +43,7 @@ export const HomePageStyled = styled.section<{ $theme: ThemeType }>`
   ${media.md} {
     height: auto;
     overflow-x: hidden;
+    padding: 0 1rem;
   }
 `;
 
@@ -52,7 +60,9 @@ export const RoomStatusContainer = styled.section`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin: 16px 0;
+    margin: 8px 0;
+    padding: 0.5rem;
+    gap: 0.5rem;
     div:has(> select) {
     width: 100%;
   }
@@ -66,24 +76,43 @@ export const RoomListContainer = styled(RoomStatusContainer)`
 export const SelectActionsContainer = styled(RoomStatusContainer)`
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
+  gap: 2rem;
+  width: 90%;
+
+  ${media.md} {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.0rem;
+    padding: 0.5rem;
+  }
 `;
 
-export const SelectFilterContainer = styled(RoomStatusContainer)`
+export const SelectFilterContainer = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  gap: 1rem;
 
   ${media.md} {
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 90%;
-  svg {
-    display: none;
-  }
-  padding: 0.5rem 0;
-  gap: 0.75rem;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    svg {
+      display: none;
+    }
+    padding: 0;
+    gap: 0;
+    
+    > * {
+      margin-bottom: 0.9rem;
+    }
+    
+    > *:last-child {
+      margin-bottom: 0;
+    }
   }
 `;
 
@@ -255,12 +284,22 @@ export const InProgressEventIconWrapper = styled(
 `;
 
 export const HeatmapButtonStyle = ($theme: ThemeType) => css`
-  width: 400px;
+  width: 280px;
+  margin-left: auto;
+  margin-right: 5%;
   background: ${themes[$theme].CONTAINER_COLOR};
   color: ${themes[$theme].TEXT_COLOR};
   border: 1px solid ${ROOM_PAGE_COLORS.heatmapButtonBorder};
 
   &:hover {
     background: ${themes[$theme].BACKGROUND_COLOR};
+  }
+
+  ${media.md} {
+    width: 90%;
+    max-width: 90%;
+    font-size: 0.875rem;
+    margin-left: 0;
+    margin-right: 0;
   }
 `;

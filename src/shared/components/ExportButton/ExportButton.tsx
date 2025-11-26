@@ -13,25 +13,44 @@ export const ExportButton = <T extends Record<string, any>>({
   data,
   fileName,
   disabled = false,
+  onClick,
 }: ExportButtonProps<T>) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [currentData, setCurrentData] = useState(data);
   const { theme } = useContext(ThemeContext);
 
   const handleExport = (format: ExportFormat) => {
-    if (data.length === 0) return;
+    if (currentData.length === 0) return;
 
     if (format === "csv") {
-      exportToCSV(data, fileName);
+      exportToCSV(currentData, fileName);
     } else {
-      exportToPDF(data, fileName);
+      exportToPDF(currentData, fileName);
     }
 
     setIsModalOpen(false);
   };
 
-  const handleButtonClick = () => {
+  const handleButtonClick = async () => {
     if (!disabled) {
-      setIsModalOpen(true);
+      if (onClick) {
+        setIsLoading(true);
+        try {
+          const result = await onClick();
+          if (Array.isArray(result) && result.length > 0) {
+            setCurrentData(result);
+            setIsModalOpen(true);
+          }
+        } catch (err) {
+          console.error('Error en onClick del ExportButton:', err);
+        } finally {
+          setIsLoading(false);
+        }
+      } else {
+        setCurrentData(data);
+        setIsModalOpen(true);
+      }
     }
   };
 
@@ -42,7 +61,7 @@ export const ExportButton = <T extends Record<string, any>>({
         text={EXPORT_BUTTON_TEXT}
         variant={ButtonVariant.light}
         onClick={handleButtonClick}
-        customStyle={EXPORT_BUTTON_STYLE(disabled, theme)}
+        customStyle={EXPORT_BUTTON_STYLE(disabled || isLoading, theme)}
       />
       <ExportModal
         isOpen={isModalOpen}

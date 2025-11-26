@@ -68,11 +68,11 @@ export const SideBar = ({
       </SideBarHeader>
 
       <SideBarNav $collapsed={isCollapsed}>
-        <NavLink to="/admin/logs">
+        <NavLink to="/admin/audits">
           {({ isActive }) => {
             return (
               <Button
-                text={isCollapsed ? undefined : "LOGS"}
+                text={isCollapsed ? undefined : "Auditorías"}
                 icon={<FileText size={18} />}
                 variant={ButtonVariant.primary}
                 onClick={onLogsClick || (() => { })}

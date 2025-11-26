@@ -44,7 +44,10 @@ export const AuthCallback = () => {
       return;
     }
 
-    login(authData.token, authData.email);
+    const urlParams = new URLSearchParams(window.location.search);
+    const roleFromUrl = urlParams.get("role") as 'admin' | 'user' || 'user';
+
+    login(authData.token, authData.email, roleFromUrl);
 
     const returnToFromStorage = getReturnTo();
     const returnToFromState = (location.state as { returnTo?: string })?.returnTo;

@@ -4,6 +4,7 @@ import { AuthContext } from "../context/auth/authContext";
 import { AuthCallback } from "../pages/LoginPage/AuthCallback";
 import { LoginPage } from "../pages/LoginPage/LoginPage";
 import { FinnegansRoutes } from "../routes/FinnegansRoutes";
+import { QRRoutes } from "../routes/QRRoutes";
 import { PrivateRoute } from "./PrivateRoute";
 import { PublicRoute } from "./PublicRoute";
 
@@ -35,7 +36,7 @@ export const AppRouter = () => {
         }
       />
 
-      <Route path="qr-checkin/*" element={<FinnegansRoutes />} />
+      <Route path="qr-checkin/*" element={<QRRoutes />} />
 
       <Route
         path="/*"

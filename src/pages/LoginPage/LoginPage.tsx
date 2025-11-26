@@ -4,6 +4,7 @@ import logoFinnegans from "../../assets/images/finnegans-logo-main-lightblue.svg
 import logoGoogle from "../../assets/images/logo-google.svg";
 import { Button } from "../../components/Button/Button";
 import { CardContainer } from "../../components/CardContainer/CardContainer";
+import { LOGIN_PAGE_TEXTS } from "./constants/LoginPage.constants";
 import {
   AuthErrorOverlay,
   AuthErrorModal,
@@ -15,6 +16,7 @@ import {
   LoginFooter,
   LoginHeader,
   LoginPageContainer,
+  LogoGoogle,
 } from "./styles";
 
 export const LoginPage = () => {
@@ -69,9 +71,11 @@ export const LoginPage = () => {
       {errorMessage && (
         <AuthErrorOverlay role="alertdialog" aria-modal="true">
           <AuthErrorModal>
-            <AuthErrorTitle>{isAuthError ? "Acceso denegado" : "Inicio de sesión requerido"}</AuthErrorTitle>
+            <AuthErrorTitle>
+              {isAuthError ? LOGIN_PAGE_TEXTS.ERROR_MODAL.TITLE_AUTH_ERROR : LOGIN_PAGE_TEXTS.ERROR_MODAL.TITLE_LOGIN_REQUIRED}
+            </AuthErrorTitle>
             <AuthErrorText>{errorMessage}</AuthErrorText>
-            <Button text="Entendido" onClick={() => setErrorMessage(null)} />
+            <Button text={LOGIN_PAGE_TEXTS.ERROR_MODAL.BUTTON_TEXT} onClick={() => setErrorMessage(null)} />
           </AuthErrorModal>
         </AuthErrorOverlay>
       )}
@@ -81,39 +85,30 @@ export const LoginPage = () => {
           <div className="logo-container">
             <ImageFinnegans
               src={logoFinnegans}
-              alt="Logo Finnegans"
-              width={60}
-              height={60}
+              alt={LOGIN_PAGE_TEXTS.ALT_TEXT.LOGO_FINNEGANS}
             />
           </div>
-          <p className="subtitle">Reservas de Sala In-Situ</p>
+          <p className="subtitle">{LOGIN_PAGE_TEXTS.HEADER.SUBTITLE}</p>
           <p className="description">
-            Gestiona y reserva salas de manera eficiente
+            {LOGIN_PAGE_TEXTS.HEADER.DESCRIPTION}
           </p>
         </LoginHeader>
 
         <CardContainer customStyle={LoginCardStyle}>
-          <h2 className="welcome">Bienvenido de vuelta</h2>
-          <p className="instruction">Inicia sesión para acceder al sistema</p>
+          <h2 className="welcome">{LOGIN_PAGE_TEXTS.CARD.WELCOME_TITLE}</h2>
+          <p className="instruction">{LOGIN_PAGE_TEXTS.CARD.INSTRUCTION}</p>
 
           <Button
-            text="Ingresar con Google"
-            icon={
-              <img
-                src={logoGoogle}
-                alt="Google"
-                width={20}
-                height={20}
-              />
-            }
+            text={LOGIN_PAGE_TEXTS.CARD.GOOGLE_BUTTON}
+            icon={<LogoGoogle src={logoGoogle} alt={LOGIN_PAGE_TEXTS.ALT_TEXT.LOGO_GOOGLE} />}
             onClick={handleGoogleLogin}
             customStyle={GoogleButtonStyle}
           />
 
           <LoginFooter>
             <p>
-              Al continuar, aceptas nuestros <a href="#">términos de servicio</a>{" "}
-              y <a href="#">política de privacidad</a>.
+              {LOGIN_PAGE_TEXTS.FOOTER.DISCLAIMER} <a href="#">{LOGIN_PAGE_TEXTS.FOOTER.TERMS_LINK}</a>{" "}
+              {LOGIN_PAGE_TEXTS.FOOTER.AND} <a href="#">{LOGIN_PAGE_TEXTS.FOOTER.PRIVACY_LINK}</a>.
             </p>
           </LoginFooter>
         </CardContainer>

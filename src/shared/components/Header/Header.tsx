@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import logoFinnegas from "../../../assets/images/isotipo-celeste.svg";
 import { AuthContext } from "../../../context/auth/authContext";
-import { decodeJwt } from "../../utils/decodeJwt.utils";
+import { HEADER_TEXTS } from "./constants";
 import {
   TopBar,
   TopBarInner,
@@ -18,26 +18,25 @@ import { ThemeContext } from "../../../context/theme/themeContext";
  */
 export const Header = () => {
 
-  const { authToken, logout } = useContext(AuthContext)
+  const { logout, userRole } = useContext(AuthContext)
   const {theme, toggleTheme } = useContext(ThemeContext);
 
-  const decodedToken = authToken ? decodeJwt(authToken) : null;
-  const isAdmin = decodedToken?.role === "admin";
+  const isAdmin = userRole === "admin";
 
   return (
     <TopBar theme={theme}>
       <TopBarInner>
         <TopBarLeft $theme={theme}>
-          <img src={logoFinnegas} alt="Finnegans" width={32} height={32} />
+          <img src={logoFinnegas} alt={HEADER_TEXTS.LOGO_ALT} width={32} height={32} />
           <div>
-            <h1>Finnegans</h1>
-            <h2>Reservas de Sala In-Situ</h2>
+            <h1>{HEADER_TEXTS.TITLE}</h1>
+            <h2>{HEADER_TEXTS.SUBTITLE}</h2>
           </div>
         </TopBarLeft>
         <TopBarRight $theme={theme}>
           <Sun onClick={toggleTheme}/>
           <NavLink
-            to="/admin/logs"
+            to="/admin/audits"
             style={({ isActive, isPending, isTransitioning }) => {
               return {
                 marginTop: "5px",

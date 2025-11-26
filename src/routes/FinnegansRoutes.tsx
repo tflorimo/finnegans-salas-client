@@ -1,12 +1,12 @@
 import { Route, Routes } from "react-router-dom"
 import { AdminEventsPage } from "../pages/AdminEvents/AdminEventsPage"
-import { AdminLogsPage } from "../pages/AdminLogs/AdminLogsPage"
+import { AdminAuditPage } from "../pages/AdminAudits/AdminAuditPage"
 import { HeatmapPage } from "../pages/HeatmapPage/HeatmapPage"
 import { HomePage } from "../pages/HomePage"
 import { RoomPage } from "../pages/RoomPage/RoomPage"
-import { QRCheckInHandler } from "../pages/RoomPage/components/QRCheckInHandler"
 import { AdminRoute } from "../router/AdminRouter"
 import Header from "../shared/components/Header/Header"
+import { NotFoundPage } from "../pages/NotFoundPage"
 
 export const FinnegansRoutes = () => {
   return (
@@ -16,10 +16,9 @@ export const FinnegansRoutes = () => {
         <Route path="/home" element={<HomePage />} />
         <Route path="/heatmap" element={<HeatmapPage />} />
         <Route path="/room/:id" element={<RoomPage />} />
-        <Route path="/:roomEmail" element={<QRCheckInHandler />} />
-        <Route path="/admin/logs" element={
+        <Route path="/admin/audits" element={
           <AdminRoute>
-            <AdminLogsPage />
+            <AdminAuditPage />
           </AdminRoute>
         }
         />
@@ -30,7 +29,7 @@ export const FinnegansRoutes = () => {
         }
         />
 
-        <Route path="/*" element={<div>Finnegans Routes</div>} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>
   )

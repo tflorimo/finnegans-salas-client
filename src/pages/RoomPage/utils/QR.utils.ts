@@ -30,7 +30,7 @@ export const findUserEligibleEvent = (
     if (!room?.events) return null;
 
     const userEvents = room.events.filter(
-        (event) => isUserAttendee(event, userEmail) && event.checkInStatus === "pending"
+        (event) => isUserAttendee(event, userEmail) && event.checkInStatus === "PENDING"
     );
 
     if (userEvents.length === 0) return null;

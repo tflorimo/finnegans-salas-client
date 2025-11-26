@@ -1,6 +1,7 @@
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import { formatTimestamp, formatTimeRange } from "../../utils/format.utils";
+import { actionLabels } from "./constants";
 
 export const exportToCSV = <T extends Record<string, any>>(
   data: T[],
@@ -51,7 +52,13 @@ export const exportToPDF = <T extends Record<string, any>>(
   data: T[],
   fileName: string
 ): void => {
-  if (data.length > 0 && 'action' in data[0]) {
+  if (data.length === 0) return;
+
+  const isAudits = data.length > 0 && ('action' in data[0]) && ('userEmail' in data[0] || 'roomEmail' in data[0]);
+  
+  if (isAudits) {
+    exportAuditsToPDF(data, fileName);
+  } else if (data.length > 0 && 'action' in data[0]) {
     exportLogsToPDF(data, fileName);
   } else {
     exportEventsToPDF(data, fileName);
@@ -66,6 +73,8 @@ const exportEventsToPDF = <T extends Record<string, any>>(
 
   const doc = new jsPDF();
   let currentY = 20;
+  const pageHeight = doc.internal.pageSize.height;
+  const bottomMargin = 20;
 
   doc.setFontSize(18);
   doc.setFont("helvetica", "bold");
@@ -73,15 +82,17 @@ const exportEventsToPDF = <T extends Record<string, any>>(
   currentY += 15;
 
   data.forEach((item, index) => {
-    if (currentY > 250) {
-      doc.addPage();
-      currentY = 20;
-    }
-
     doc.setFontSize(14);
     doc.setFont("helvetica", "bold");
     doc.setTextColor(15, 23, 42);
     const title = item.title || `Evento ${index + 1}`;
+    
+    // Verificar si cabe el título
+    if (currentY + 10 > pageHeight - bottomMargin) {
+      doc.addPage();
+      currentY = 20;
+    }
+    
     doc.text(`Título: ${title}`, 14, currentY);
     currentY += 10;
 
@@ -108,6 +119,11 @@ const exportEventsToPDF = <T extends Record<string, any>>(
 
     fields.forEach((field) => {
       if (field.value) {
+        if (currentY + 14 > pageHeight - bottomMargin) {
+          doc.addPage();
+          currentY = 20;
+        }
+        
         doc.setFont("helvetica", "bold");
         doc.text(`${field.label}: `, 14, currentY);
         currentY += 6;
@@ -118,6 +134,12 @@ const exportEventsToPDF = <T extends Record<string, any>>(
     });
 
     const attendees = item.attendees?.filter((a: any) => a.email !== item.roomEmail) || [];
+    
+    if (currentY + 7 > pageHeight - bottomMargin) {
+      doc.addPage();
+      currentY = 20;
+    }
+    
     doc.setFont("helvetica", "bold");
     doc.text("Asistentes:", 14, currentY);
     currentY += 7;
@@ -128,6 +150,11 @@ const exportEventsToPDF = <T extends Record<string, any>>(
       currentY += 7;
     } else {
       attendees.forEach((attendee: any) => {
+        if (currentY + 6 > pageHeight - bottomMargin) {
+          doc.addPage();
+          currentY = 20;
+        }
+        
         doc.setFont("helvetica", "normal");
         const attendeeText = `• ${attendee.email} - ${attendee.responseStatus}`;
         doc.text(attendeeText, 20, currentY);
@@ -136,11 +163,16 @@ const exportEventsToPDF = <T extends Record<string, any>>(
     }
 
     if (index < data.length - 1) {
-      currentY += 5;
-      doc.setDrawColor(226, 232, 240);
-      doc.setLineWidth(0.5);
-      doc.line(14, currentY, 196, currentY);
-      currentY += 10;
+      if (currentY + 5 > pageHeight - bottomMargin) {
+        doc.addPage();
+        currentY = 20;
+      } else {
+        currentY += 5;
+        doc.setDrawColor(226, 232, 240);
+        doc.setLineWidth(0.5);
+        doc.line(14, currentY, 196, currentY);
+        currentY += 5;
+      }
     }
   });
 
@@ -162,7 +194,7 @@ const exportLogsToPDF = <T extends Record<string, any>>(
   const tableColumn = ["Acción", "Estado", "Usuario", "Timestamp"];
   const tableRows = data.map((log) => [
     log.action || "N/A",
-    formatLogStatus(log.status),
+    log.status || "N/A",
     log.userName || log.userId || "Sistema",
     formatTimestamp(log.timestamp),
   ]);
@@ -189,20 +221,100 @@ const exportLogsToPDF = <T extends Record<string, any>>(
   doc.save(`${fileName}.pdf`);
 };
 
-const formatLogStatus = (status: string): string => {
-  const statusMap: Record<string, string> = {
-    success: "Éxito",
-    error: "Error",
-    info: "Info",
-  };
-  return statusMap[status] || status;
+const exportAuditsToPDF = <T extends Record<string, any>>(
+  data: T[],
+  fileName: string
+): void => {
+  if (data.length === 0) return;
+
+  const doc = new jsPDF();
+  let currentY = 20;
+  const pageHeight = doc.internal.pageSize.height;
+  const bottomMargin = 20;
+
+  doc.setFontSize(18);
+  doc.setFont("helvetica", "bold");
+  doc.text(formatTitle(fileName), 14, currentY);
+  currentY += 15;
+
+  data.forEach((audit, index) => {
+    if (currentY + 10 > pageHeight - bottomMargin) {
+      doc.addPage();
+      currentY = 20;
+    }
+
+    doc.setFontSize(14);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(15, 23, 42);
+    const action = actionLabels[audit.action] || audit.action;
+    doc.text(`${action}`, 14, currentY);
+    currentY += 10;
+
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(107, 114, 128);
+    
+    const subtitle = audit.info || (audit.userEmail || "Sistema");
+    if (currentY + 8 > pageHeight - bottomMargin) {
+      doc.addPage();
+      currentY = 20;
+    }
+    doc.text(subtitle, 14, currentY);
+    currentY += 8;
+
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(71, 85, 105);
+
+    const fields = [
+      { label: "ID", value: audit.id },
+      { label: "Usuario", value: audit.userEmail || "Sistema" },
+      { label: "Acción", value: audit.action },
+      { label: "Sala", value: audit.roomEmail },
+      { label: "ID del Evento", value: audit.eventId },
+      { label: "Fecha", value: formatTimestamp(audit.createdAt) },
+    ];
+
+    fields.forEach((field) => {
+      if (field.value) {
+        if (currentY + 14 > pageHeight - bottomMargin) {
+          doc.addPage();
+          currentY = 20;
+        }
+        
+        doc.setFont("helvetica", "bold");
+        doc.text(`${field.label}: `, 14, currentY);
+        currentY += 6;
+        doc.setFont("helvetica", "normal");
+        const textValue = String(field.value);
+        const splitText = doc.splitTextToSize(textValue, 180);
+        doc.text(splitText, 14, currentY);
+        currentY += splitText.length * 6 + 2;
+      }
+    });
+
+    if (index < data.length - 1) {
+      if (currentY + 5 > pageHeight - bottomMargin) {
+        doc.addPage();
+        currentY = 20;
+      } else {
+        currentY += 5;
+        doc.setDrawColor(226, 232, 240);
+        doc.setLineWidth(0.5);
+        doc.line(14, currentY, 196, currentY);
+        currentY += 5;
+      }
+    }
+  });
+
+  doc.save(`${fileName}.pdf`);
 };
 
 const formatCheckInStatus = (status: string): string => {
   const statusMap: Record<string, string> = {
-    checked_in: "Realizado",
-    pending: "Pendiente",
-    expired: "Expirado",
+    CHECKED_IN: "Realizado",
+    PENDING: "Pendiente",
+    EXPIRED: "Expirado",
   };
   return statusMap[status] || status;
 };

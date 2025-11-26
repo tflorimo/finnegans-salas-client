@@ -1,8 +1,7 @@
 import styled, { css } from "styled-components";
+import { media } from "../../shared/styles/media";
 
-// implemento colores constantes
 const COLOR_LOGIN_BACKGROUND = "#08132f";
-
 const COLOR_PRIMARY_BLUE = "#1d4ed8";
 const COLOR_TEXT_WHITE = "#ffffffff";
 const COLOR_TEXT_WHITE_SUBTLE = "#ffffffb4";
@@ -25,7 +24,6 @@ const COLOR_AUTH_MODAL_TITLE = COLOR_TEXT_WHITE;
 const COLOR_AUTH_MODAL_TEXT = COLOR_TEXT_WHITE_SUBTLE;
 const COLOR_AUTH_MODAL_SHADOW = "rgba(2, 8, 23, 0.25)";
 
-
 export const LoginPageContainer = styled.div`
   position: fixed;
   inset: 0;
@@ -37,13 +35,31 @@ export const LoginPageContainer = styled.div`
   background: ${COLOR_LOGIN_BACKGROUND};
   padding: 24px;
   text-align: center;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  @media ${media.md} {
+    padding: 16px;
+    gap: 24px;
+  }
 `;
 
 export const ImageFinnegans = styled.img`
   width: 800px;
   height: 80px;
   margin-bottom: 0px;
+  margin-left: -10px;
+
+  @media ${media.md} {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+  }
+`;
+
+export const LogoGoogle = styled.img`
+  width: 20px;
+  height: 20px;
 `;
 
 export const LoginHeader = styled.header`
@@ -86,10 +102,24 @@ export const LoginFooter = styled.footer`
 `;
 
 export const LoginCardStyle = css`
-  width: 450px;
+  width: 100%;
+  max-width: 450px;
+  margin: 0 auto;
   color: ${COLOR_CARD_TEXT};
-
   background-color: ${COLOR_CARD_BACKGROUND};
+  box-sizing: border-box;
+
+  @media ${media.md} {
+    max-width: 400px;
+  }
+
+  @media ${media.sm} {
+    max-width: 360px;
+  }
+
+  @media ${media.xs} {
+    max-width: 320px;
+  }
 
   h2 {
     color: ${COLOR_TEXT_WHITE};
