@@ -31,7 +31,7 @@ export const canCheckIn = (
     return false;
   }
 
-  if (event.checkInStatus !== 'pending') {
+  if (event.checkInStatus !== 'PENDING') {
     return false;
   }
 
