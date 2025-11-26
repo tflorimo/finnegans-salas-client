@@ -21,7 +21,6 @@ const COLOR_WHITE = "#ffffff";
 const COLOR_BLACK = "#000000";
 const COLOR_BLUE_PRIMARY = "#0b5be7";
 const COLOR_BLUE_LIGHT = "#2563eb";
-const COLOR_BLUE_HOVER = "#1d4ed8";
 const COLOR_BLUE_DARK = "#0f49b4ff";
 const COLOR_BLUE_DARKER = "#041755ff";
 const COLOR_RED_DARK = "#470c0cff";
@@ -35,7 +34,6 @@ const COLOR_GRAY_LIGHT_2 = "#f3f4f6";
 const COLOR_GRAY_MEDIUM = "#9ca3af";
 const COLOR_GREEN = "#10b981";
 const COLOR_DARK_TEXT = "#111827";
-const COLOR_MODAL_OVERLAY = "rgba(0, 0, 0, 0.5)";
 
 export const RoomPageContainer = styled.div<{ $theme: ThemeType }>`
   width: 100%;
@@ -48,6 +46,10 @@ export const RoomPageContainer = styled.div<{ $theme: ThemeType }>`
   background: ${({ $theme }) => themes[$theme].BACKGROUND_COLOR};
   padding-bottom: 80px;
   transition: background 0.3s ease;
+
+  ${media.md} {
+    padding: 5px 1.5rem 10px 1.5rem;
+  }
 
   ${mediaMin.md} {
     padding: 10px 40px 20px 40px;
@@ -471,9 +473,9 @@ export const CheckInCloseButton = styled.button`
   }
 `;
 
-export const ErrorMessage = styled.p`
+export const ErrorMessage = styled.p<{ $theme: ThemeType }>`
   text-align: center;
-  color: ${COLOR_BLACK};
+  color: ${({ $theme }) => themes[$theme].TEXT_COLOR};
   padding: 2rem;
   margin: 0;
 `;
@@ -546,30 +548,32 @@ export const QRContainer = styled.div`
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 `;
 
-export const QRModalOverlay = styled.div`
+export const QRModalOverlay = styled.div<{ $theme: ThemeType }>`
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: ${COLOR_MODAL_OVERLAY};
+  background: ${({ $theme }) => themes[$theme].BACKGROUND_COLOR};
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
 `;
 
-export const QRModalCard = styled.div`
-  background: ${COLOR_WHITE};
+export const QRModalCard = styled.div<{ $theme: ThemeType }>`
+  background: ${({ $theme }) =>
+    $theme === "dark" ? themes[$theme].CONTAINER_COLOR : WHITE_COLOR};
   border-radius: 16px;
   padding: 3rem;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
   max-width: 400px;
   width: 90%;
   text-align: center;
+  transition: background 0.3s ease;
 `;
 
-export const QRModalIcon = styled.div<{ $isSuccess?: boolean }>`
+export const QRModalIcon = styled.div<{ $isSuccess?: boolean; $theme?: ThemeType }>`
   width: 80px;
   height: 80px;
   margin: 0 auto 1.5rem;
@@ -586,33 +590,35 @@ export const QRModalIcon = styled.div<{ $isSuccess?: boolean }>`
   }
 `;
 
-export const QRModalTitle = styled.h2`
+export const QRModalTitle = styled.h2<{ $theme: ThemeType }>`
   font-size: 1.5rem;
   font-weight: 700;
-  color: ${COLOR_DARK_TEXT};
+  color: ${({ $theme }) => ($theme === "dark" ? COLOR_WHITE : COLOR_DARK_TEXT)};
   margin: 0 0 1rem;
+  transition: color 0.3s ease;
 `;
 
-export const QRModalMessage = styled.p`
+export const QRModalMessage = styled.p<{ $theme: ThemeType }>`
   font-size: 1rem;
-  color: ${COLOR_GRAY_DARK_2};
+  color: ${({ $theme }) => ($theme === "dark" ? COLOR_WHITE : COLOR_GRAY_DARK_2)};
   margin: 0 0 2rem;
   line-height: 1.5;
+  transition: color 0.3s ease;
 `;
 
-export const QRModalButton = styled.button`
-  background: ${COLOR_BLUE_LIGHT};
-  color: ${COLOR_WHITE};
+export const QRModalButton = styled.button<{ $theme: ThemeType }>`
+  background: ${PRIMARY_COLOR};
+  color: ${WHITE_COLOR};
   border: none;
   border-radius: 8px;
   padding: 0.75rem 2rem;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: opacity 0.2s;
 
   &:hover {
-    background: ${COLOR_BLUE_HOVER};
+    opacity: 0.9;
   }
 
   &:disabled {
@@ -621,11 +627,11 @@ export const QRModalButton = styled.button`
   }
 `;
 
-export const QRModalLoader = styled.div`
+export const QRModalLoader = styled.div<{ $theme: ThemeType }>`
   width: 40px;
   height: 40px;
-  border: 4px solid ${COLOR_GRAY_LIGHT_2};
-  border-top: 4px solid ${COLOR_BLUE_LIGHT};
+  border: 4px solid ${({ $theme }) => ($theme === "dark" ? COLOR_GRAY_DARK_2 : COLOR_GRAY_LIGHT_2)};
+  border-top: 4px solid ${PRIMARY_COLOR};
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin: 0 auto;

@@ -12,7 +12,7 @@ export const ROOM_PAGE_MESSAGES = {
   NO_EQUIPMENT: "Sin equipamiento registrado",
   QR_TITLE: "Confirmanos tu presencia escaneando el código QR",
   CHECK_IN_TITLE: "Check-in",
-  CHECK_IN_SUBTITLE: "Check-in disponible desde 10 minutos antes del inicio del evento hasta 15 minutos después de haber iniciado, si el check-in no es realizado, la sala continuará visualizándose como libre.",
+  CHECK_IN_SUBTITLE: "Check-in disponible 10 minutos anteshasta 15 minutos después del inicio del evento. Si el check-in no es realizado, la sala continuará visualizándose libre.",
   CHECK_IN_BUTTON: "Hacer Check-in",
   CHECK_IN_STATUS_LABEL: "Check-in:",
   NO_CHECK_IN_EVENTS_AVAILABLE: "No hay eventos disponibles para check-in en este momento",
@@ -42,9 +42,9 @@ export const ROOM_STATUS_TAG_TYPES = {
 };
 
 export const CHECK_IN_STATUS_DISPLAY: Record<CheckInStatus, { text: string; type: Tags }> = {
-  pending: { text: "Pendiente", type: Tags.warning },
-  checked_in: { text: "Confirmado", type: Tags.succesOutput },
-  expired: { text: "Expirado", type: Tags.dangerOutput },
+  PENDING: { text: "Pendiente", type: Tags.warning },
+  CHECKED_IN: { text: "Confirmado", type: Tags.succesOutput },
+  EXPIRED: { text: "Expirado", type: Tags.dangerOutput },
 };
 
 export const QR_MESSAGES = {
