@@ -4,7 +4,6 @@ import { getErrorMessage } from "../../api/axios/axios.utils";
 import type { AuthResponse } from "./auth.types";
 import axiosInstance from "../../api/axios/axios.instance";
 import type { AxiosRequestConfig } from "axios";
-import { clearStoredUserEmail } from "../../shared/utils/localStorage.utils";
 
 const AUTH_HEADER = (token: string) => `Bearer ${token}`;
 const REFRESH_REQUEST_CONFIG: AxiosRequestConfig = {
@@ -12,8 +11,12 @@ const REFRESH_REQUEST_CONFIG: AxiosRequestConfig = {
   headers: { "x-skip-auth-refresh": "true" },
 };
 
+let isLoggedOut = false;
+
 export const authService = {
   loginApp: async (): Promise<AuthResponse> => {
+    isLoggedOut = false;
+    
     try {
       const { data } = await axiosInstance.get(AUTH_ENDPOINTS.loginApp());
       return data;
@@ -26,17 +29,32 @@ export const authService = {
 
   logoutApp: async (): Promise<void> => {
     try {
-      await axiosInstance.post(AUTH_ENDPOINTS.logoutApp());
+      await axiosInstance.post(AUTH_ENDPOINTS.logoutApp(), {}, {
+        withCredentials: true, 
+      });
     } catch (error) {
       const message = getErrorMessage(error, ROOM_ERROR_MESSAGES.logoutError);
-      throw new Error(message);
+      console.error("Error en logout del servidor:", message);
     } finally {
-      clearStoredUserEmail();
+      isLoggedOut = true;
+      
       delete axiosInstance.defaults.headers.common.Authorization;
+      const storedTheme = localStorage.getItem("finnegans-theme");
+      
+      localStorage.clear();
+      sessionStorage.clear();
+      
+      if (storedTheme) {
+        localStorage.setItem("finnegans-theme", storedTheme);
+      }
     }
   },
 
   refreshAccessToken: async (): Promise<string | null> => {
+    if (isLoggedOut) {
+      return null;
+    }
+
     try {
       const { data } = await axiosInstance.post<{ accessToken: string | null }>(
         AUTH_ENDPOINTS.refresh(),
@@ -54,7 +72,10 @@ export const authService = {
 
       return newToken;
     } catch (error) {
-      console.error("Error al refrescar token:", error);
+      const isUnauthorized = error instanceof Error && 'response' in error && (error as any).response?.status === 401;
+      if (!isUnauthorized) {
+        console.error("Error al refrescar token:", error);
+      }
       delete axiosInstance.defaults.headers.common.Authorization;
       return null;
     }

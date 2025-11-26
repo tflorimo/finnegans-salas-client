@@ -1,40 +1,38 @@
 import { useCallback, useState, useEffect, type ReactNode } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { authService } from "../../services/auth/auth.service";
-import axiosInstance, { setUnauthenticatedHandler } from "../../api/axios/axios.instance";
+import { setUnauthenticatedHandler } from "../../api/axios/axios.instance";
+import { setAuthHeader, clearAuthHeader } from "../../api/axios/axios.utils";
 import {
-  clearStoredUserEmail,
-  getStoredUserEmail,
-  setStoredUserEmail,
   clearNavigationState,
-  getCurrentPath,
   setCurrentPath,
-  clearCurrentPath,
 } from "../../shared/utils/localStorage.utils";
+import { decodeJwt } from "../../shared/utils/decodeJwt.utils";
 import { AuthContext } from "./authContext";
-
-const AUTH_HEADER = (token: string) => `Bearer ${token}`;
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [authToken, setAuthTokenState] = useState<string | null>(null);
-  const [userEmail, setUserEmail] = useState<string | null>(getStoredUserEmail());
+  const [userEmail, setUserEmail] = useState<string | null>(null);
+  const [userRole, setUserRole] = useState<'admin' | 'user' | null>(null);
   const [isInitializing, setIsInitializing] = useState(true);
-  const [hasRedirected, setHasRedirected] = useState(false);
+  const [hasRedirected] = useState(false);
 
   useEffect(() => {
-    const storedEmail = getStoredUserEmail();
-    if (storedEmail && location.pathname !== "/login" && location.pathname !== "/" && location.pathname !== "/auth/callback") {
+    if (authToken && location.pathname !== "/login" && 
+      location.pathname !== "/" && 
+      location.pathname !== "/auth/callback") {
       setCurrentPath(location.pathname);
     }
-  }, [location.pathname]);
+  }, [location.pathname, authToken]);
 
   useEffect(() => {
     setUnauthenticatedHandler(() => {
       setAuthTokenState(null);
       setUserEmail(null);
-      clearStoredUserEmail();
+      setUserRole(null);
+      clearAuthHeader();
       clearNavigationState();
       navigate('/login', { replace: true });
     });
@@ -42,47 +40,42 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   useEffect(() => {
     const initializeAuth = async () => {
-      const storedEmail = getStoredUserEmail();
-      const savedPath = getCurrentPath();
-      
-      if (storedEmail) {
-        try {
-          const newToken = await authService.refreshAccessToken();
-          if (newToken) {
+      try {
+        const newToken = await authService.refreshAccessToken();
+        
+        if (newToken) {
+          const decoded = decodeJwt(newToken);
+          
+          if (decoded && decoded.email) {
             setAuthTokenState(newToken);
-            setUserEmail(storedEmail);
-            axiosInstance.defaults.headers.common.Authorization = AUTH_HEADER(newToken);
-            
-            if (savedPath && !hasRedirected) {
-              navigate(savedPath, { replace: true });
-              setHasRedirected(true);
-              clearCurrentPath();
-            }
+            const email = (decoded.email as string) || null;
+            const role = (decoded.role as 'admin' | 'user') || 'user';
+            setUserEmail(email);
+            setUserRole(role);
+            setAuthHeader(newToken);
           } else {
-            clearStoredUserEmail();
-            setUserEmail(null);
-            clearNavigationState();
+            clearAuthHeader();
+            console.warn('Token refreshed pero sin datos válidos, descartando');
           }
-        } catch (error) {
-          clearStoredUserEmail();
-          setUserEmail(null);
-          clearNavigationState();
-          console.error("Error al refrescar token:", error);
+        } else {
+          clearAuthHeader();
         }
+      } catch (error) {
+        clearAuthHeader();
+      } finally {
+        setIsInitializing(false);
       }
-
-      setIsInitializing(false);
     };
 
     initializeAuth();
   }, [navigate, hasRedirected]);
 
-  const login = (token: string, email: string) => {
+  const login = useCallback((token: string, email: string, role: 'admin' | 'user') => {
     setAuthTokenState(token);
-    axiosInstance.defaults.headers.common.Authorization = AUTH_HEADER(token);
-    setStoredUserEmail(email);
+    setUserRole(role);
     setUserEmail(email);
-  };
+    setAuthHeader(token);
+  }, []);
 
   const logout = useCallback(async () => {
     try {
@@ -92,7 +85,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     } finally {
       setAuthTokenState(null);
       setUserEmail(null);
-      clearStoredUserEmail();
+      setUserRole(null);
+      clearAuthHeader();
       clearNavigationState();
     }
   }, []);
@@ -106,7 +100,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   }
 
   return (
-    <AuthContext.Provider value={{ userEmail, authToken, login, logout }}>
+    <AuthContext.Provider value={{ userEmail, authToken, userRole, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
