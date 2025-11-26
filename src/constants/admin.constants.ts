@@ -1,6 +1,6 @@
 export const ADMIN_ENDPOINTS = {
   getAllEventsAdmin: () => `/events`, 
-  getLogs: () => `/logs`, // TODO: A definir con backend endpoint correcto
+  getAudits: () => `/audits`, 
 } as const;
 
 export const ADMIN_ERROR_MESSAGES = {

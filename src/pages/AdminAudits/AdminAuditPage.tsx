@@ -1,25 +1,26 @@
 import { useContext, useState } from "react";
-import type { LogDTO } from "../../services/admin/logs/types";
 import { BackButton } from "../../shared/components/BackButton/BackButton";
 import { FilterToolbar } from "../../shared/components/FilterToolbar/FilterToolbar";
 import { ExportButton } from "../../shared/components/ExportButton";
+import { Pagination } from "../../shared/components/Pagination/Pagination";
 import Header from "../../shared/components/Header/Header";
 import { SideBar } from "../../shared/components/SideBar/SideBar";
 import { useFilteredEvents } from "../AdminEvents/hooks/useFilteredEvents";
-import { LogItem } from "./components/LogItem";
+import { AuditItem } from "./components/AuditItem";
 import { ThemeContext } from "../../context/theme/themeContext";
 import {
   ADMIN_FILTER_PLACEHOLDER,
-  ADMIN_LOGS_MESSAGES,
+  ADMIN_AUDIT_MESSAGES,
   EXPORT_FILE_NAME,
-} from "./constants/AdminLogs.constants";
-import { useLogsFetch } from "./hooks/useLogsFetch";
+} from "./constants/AdminAudit.constants";
+import { useAuditsFetch } from "./hooks/useAuditFetch";
+import { useAllAuditsFetch } from "./hooks/useAllAuditsFetch";
 import {
   AdminHeaderWrapper,
   AdminLogsContainer,
   AdminLogsPageWrapper,
   EmptyState,
-  ButtonsLogsContainer,
+  ButtonsAuditContainer,
   HeaderContent,
   LoadingContainer,
   LogsGrid,
@@ -30,12 +31,13 @@ import {
 } from "./styles";
 import { SidebarBackdrop } from "../../shared/components/SideBar/styles";
 
-export const AdminLogsPage = () => {
+export const AdminAuditPage = () => {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
-  const { loading, logs } = useLogsFetch();
-  const { filteredData, onKeywordSelected } = useFilteredEvents<LogDTO>(logs);
+  const { loading, audits, pagination, currentPage, handlePageChange } = useAuditsFetch();
+  const { audits: allAudits } = useAllAuditsFetch();
+  const { filteredData, onKeywordSelected } = useFilteredEvents(audits as any);
 
-  const hasLogs = !loading && filteredData.length > 0;
+  const hasAudits = !loading && filteredData.length > 0;
   const isEmpty = !loading && filteredData.length === 0;
 
   const { theme } = useContext(ThemeContext);
@@ -59,42 +61,52 @@ export const AdminLogsPage = () => {
           <PageHeader>
             <HeaderContent>
               <PageTitle $theme={theme}>
-                {ADMIN_LOGS_MESSAGES.PAGE_TITLE}
+                {ADMIN_AUDIT_MESSAGES.PAGE_TITLE}
               </PageTitle>
-              <ButtonsLogsContainer>
+              <ButtonsAuditContainer>
                 <FilterToolbar
                   placeholder={ADMIN_FILTER_PLACEHOLDER}
                   onKeywordSelected={onKeywordSelected}
                 />
                 <ExportButton
-                  data={logs}
+                  data={allAudits}
                   fileName={EXPORT_FILE_NAME}
-                  disabled={loading || logs.length === 0}
+                  disabled={loading || allAudits.length === 0}
                 />
-              </ButtonsLogsContainer>
+              </ButtonsAuditContainer>
             </HeaderContent>
           </PageHeader>
 
           <MainContent>
             {loading && (
               <LoadingContainer>
-                <p>{ADMIN_LOGS_MESSAGES.LOADING}</p>
+                <p>{ADMIN_AUDIT_MESSAGES.LOADING}</p>
               </LoadingContainer>
             )}
 
             {isEmpty && (
               <EmptyState>
-                <h3>{ADMIN_LOGS_MESSAGES.EMPTY_TITLE}</h3>
-                <p>{ADMIN_LOGS_MESSAGES.EMPTY_DESCRIPTION}</p>
+                <h3>{ADMIN_AUDIT_MESSAGES.EMPTY_TITLE}</h3>
+                <p>{ADMIN_AUDIT_MESSAGES.EMPTY_DESCRIPTION}</p>
               </EmptyState>
             )}
 
-            {hasLogs && (
+            {hasAudits && (
               <LogsGrid $theme={theme}>
-                {filteredData.map((log) => (
-                  <LogItem key={log.id} log={log} />
+                {(filteredData as any[]).map((audit: any) => (
+                  <AuditItem key={audit.id} log={audit} />
                 ))}
               </LogsGrid>
+            )}
+
+            {hasAudits && pagination.totalPages > 1 && (
+              <Pagination
+                currentPage={currentPage}
+                totalPages={pagination.totalPages}
+                onPageChange={handlePageChange}
+                theme={theme}
+                isLoading={loading}
+              />
             )}
           </MainContent>
         </PageInner>

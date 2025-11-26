@@ -7,17 +7,21 @@ import type { ThemeType } from "../../theme/Types";
 import { themes } from "../../theme/Theme";
 import { media } from "../../shared/styles/media";
 
-// Color Constants
 const COLOR_GRAY_MEDIUM = "#9ca3af";
 const COLOR_GRAY_TEXT = "#64748b";
 const COLOR_GRAY_DARK_TEXT = "#475569";
 const COLOR_BORDER_LIGHT = "#e2e8f0";
 const COLOR_BG_DARK = "#374151";
-const COLOR_BG_LIGHT = "#fff";
 const COLOR_WHITE = "#ffffff";
 const COLOR_TEXT_DARK = "#0f172a";
 const COLOR_HOVER_DARK = "#4b5563";
 const COLOR_HOVER_LIGHT = "#f8fafc";
+const COLOR_BORDER_DARK = "#4b5563";
+const COLOR_BORDER_HOVER_DARK = "#6b7280";
+const COLOR_BORDER_HOVER_LIGHT = "#cbd5e1";
+const COLOR_BG_ACTIVE_DARK = "#1e3a8a";
+const COLOR_BG_ACTIVE_LIGHT = "#3b82f6";
+const COLOR_TEXT_BUTTON_DARK = "#e2e8f0";
 
 export const AdminLogsPageWrapper = styled.div`
   display: flex;
@@ -124,7 +128,7 @@ export const LogsGrid = styled.div<{ $theme: ThemeType }>`
   overflow-x: hidden;
 `;
 
-export const LogHeader = styled.div`
+export const AuditHeader = styled.div`
   display: flex;
   align-items: center;
   gap: 16px;
@@ -160,7 +164,7 @@ export const TagContainer = styled.div`
   }
 `;
 
-export const LogInfo = styled.div`
+export const AuditInfo = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -170,7 +174,7 @@ export const LogInfo = styled.div`
   overflow: hidden;
 `;
 
-export const LogTitle = styled.h3<{ $theme: ThemeType }>`
+export const AuditTitle = styled.h3<{ $theme: ThemeType }>`
   font-size: 16px;
   font-weight: 600;
   color: ${({ $theme }) => themes[$theme].TEXT_COLOR};
@@ -187,7 +191,7 @@ export const LogTitle = styled.h3<{ $theme: ThemeType }>`
   }
 `;
 
-export const LogUser = styled.p<{ $theme: ThemeType }>`
+export const AuditUser = styled.p<{ $theme: ThemeType }>`
   font-size: 14px;
   font-weight: 400;
   color: ${({ $theme }) => themes[$theme].TEXT_COLOR};
@@ -203,7 +207,7 @@ export const LogUser = styled.p<{ $theme: ThemeType }>`
   }
 `;
 
-export const LogTimestamp = styled.span`
+export const AuditTimestamp = styled.span`
   font-size: 12px;
   color: ${COLOR_GRAY_MEDIUM};
   font-weight: 500;
@@ -245,12 +249,16 @@ export const EmptyState = styled.div`
   }
 `;
 
-export const ButtonsLogsContainer = styled.div`
+export const ButtonsAuditContainer = styled.div`
   display: flex;
   gap: 12px;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
+
+  & > :last-child {
+    margin-top: 0.1rem;
+  }
 
   ${media.md} {
     flex-direction: column;
@@ -268,24 +276,76 @@ export const ButtonsLogsContainer = styled.div`
   }
 `;
 
-export const filterButtonStyle = css<{ $theme: ThemeType }>`
-  height: 40px;
-  padding: 0 14px;
-  border: 1px solid
-    ${({ $theme }) => ($theme === "dark" ? COLOR_GRAY_MEDIUM : COLOR_BORDER_LIGHT)};
-  border-radius: 10px;
-  background: ${({ $theme }) => ($theme === "dark" ? COLOR_BG_DARK : COLOR_BG_LIGHT)};
-  color: ${({ $theme }) => ($theme === "dark" ? COLOR_WHITE : COLOR_TEXT_DARK)};
-  transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
-  &:hover {
-    background: ${({ $theme }) => ($theme === "dark" ? COLOR_HOVER_DARK : COLOR_HOVER_LIGHT)};
-  }
-`;
-
-export const LogItemCardStyle = css`
+export const AuditItemCardStyle = css`
   padding: 16px 20px;
   align-items: stretch;
   max-width: 100%;
   overflow: hidden;
   box-sizing: border-box;
+`;
+
+export const PaginationContainer = styled.div<{ $theme: ThemeType }>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  padding: 24px 0;
+  margin-top: 24px;
+  flex-wrap: wrap;
+
+  ${media.md} {
+    gap: 8px;
+    padding: 16px 0;
+  }
+`;
+
+export const PageButton = styled.button<{ $active?: boolean; $theme: ThemeType }>`
+  min-width: 40px;
+  height: 40px;
+  padding: 0 12px;
+  border: 1px solid ${({ $theme }) => ($theme === "dark" ? COLOR_BORDER_DARK : COLOR_BORDER_LIGHT)};
+  background: ${({ $active, $theme }) =>
+    $active
+      ? ($theme === "dark" ? COLOR_BG_ACTIVE_DARK : COLOR_BG_ACTIVE_LIGHT)
+      : ($theme === "dark" ? COLOR_BG_DARK : COLOR_HOVER_LIGHT)};
+  color: ${({ $active, $theme }) =>
+    $active
+      ? COLOR_WHITE
+      : $theme === "dark"
+        ? COLOR_TEXT_BUTTON_DARK
+        : COLOR_TEXT_DARK};
+  border-radius: 8px;
+  cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
+  font-weight: ${({ $active }) => ($active ? "600" : "500")};
+  transition: all 0.2s ease;
+  opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
+
+  &:hover:not(:disabled) {
+    background: ${({ $theme }) =>
+      $theme === "dark" ? COLOR_HOVER_DARK : COLOR_HOVER_LIGHT};
+    border-color: ${({ $theme }) =>
+      $theme === "dark" ? COLOR_BORDER_HOVER_DARK : COLOR_BORDER_HOVER_LIGHT};
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+
+  ${media.md} {
+    min-width: 36px;
+    height: 36px;
+    font-size: 14px;
+    padding: 0 8px;
+  }
+`;
+
+export const PageInfo = styled.span<{ $theme: ThemeType }>`
+  color: ${({ $theme }) => themes[$theme].TEXT_COLOR};
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+
+  ${media.md} {
+    font-size: 12px;
+  }
 `;
