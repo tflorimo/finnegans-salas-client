@@ -1,7 +1,7 @@
 export const ROOM_ENDPOINTS = {
   getRoomById: (roomId: string) => `/rooms/${roomId}`,
   getRooms: () => `/rooms`,
-  checkInEvent: (roomId: string, eventId: string) => `/rooms/${roomId}/events/${eventId}/checkin`, // Body: { userEmail: string }
+  checkInEvent: (roomId: string, eventId: string) => `/rooms/${roomId}/events/${eventId}/checkin`, 
 } as const;
 
 export const ROOM_ERROR_MESSAGES = {
