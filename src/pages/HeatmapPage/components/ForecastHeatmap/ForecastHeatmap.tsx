@@ -2,18 +2,26 @@ import ReactECharts from "echarts-for-react";
 import { useContext, useMemo } from "react";
 import { ThemeContext } from "../../../../context/theme/themeContext";
 import { themes } from "../../../../theme/Theme";
-import { LoadingContainer } from "../../../AdminLogs/styles";
 import { HEATMAP_OPTION_GRID_STYLES, HEATMAP_TEXTS } from "../../constants/Heatmap.constants";
 import { useHourlyForecastHeatmap } from "../../hooks/useHourlyForecastHeatmap";
 import type { HeatmapPoint } from "../../types/HeatmapPage.types";
 import {
+    ChartStyle,
     HEAT_MAP_COLORS,
     HeatmapContainer,
     HeatmapWrapper,
     LegendColor,
     LegendContainer,
     LegendItem,
+    LoadingBox,
 } from "./styles";
+
+// @TODO CHECK
+const escapeHtml = (text: string | number): string => {
+    const div = document.createElement('div');
+    div.textContent = String(text);
+    return div.innerHTML;
+};
 
 export const ForecastHeatmap = ({
     roomSelected,
@@ -37,10 +45,16 @@ export const ForecastHeatmap = ({
 
                     if (!data?.info) return "";
                     const { roomName, date, hour, percentage, } = data.info;
+                    
+                    const safeRoomName = escapeHtml(roomName);
+                    const safeDate = escapeHtml(date);
+                    const safeHour = escapeHtml(hour);
+                    const safePercentage = escapeHtml(percentage);
+                    
                     return `
-            <b>${roomName}</b><br/>
-            ${date} - ${hour}:00<br/>
-            Disponibilidad: ${percentage}%
+            <b>${safeRoomName}</b><br/>
+            ${safeDate} - ${safeHour}:00<br/>
+            Disponibilidad: ${safePercentage}%
         `;
                 },
             },
@@ -94,9 +108,9 @@ export const ForecastHeatmap = ({
     );
 
     if (loading || rooms.length === 0 || yAxisLabels.length === 0) {
-        return <LoadingContainer>
+        return <LoadingBox>
             <p>{HEATMAP_TEXTS.loadingMessage}</p>
-        </LoadingContainer>;
+        </LoadingBox>;
     }
 
     return (
@@ -125,7 +139,7 @@ export const ForecastHeatmap = ({
                     option={option}
                     notMerge
                     lazyUpdate
-                    style={{ width: "100%", height: "100%" }}
+                    style={ChartStyle}
                 />
             </HeatmapWrapper>
         </HeatmapContainer>
