@@ -1,9 +1,9 @@
 export type ResponseStatus = 'accepted' | 'declined' | 'tentative' | 'needsAction';
 
 export enum CheckInStatus {
-    PENDING = 'pending',
-    CHECKED_IN = 'checked_in',
-    EXPIRED = 'expired'
+    PENDING = 'PENDING',
+    CHECKED_IN = 'CHECKED_IN',
+    EXPIRED = 'EXPIRED'
 }
 
 export enum OverlapStatus {
