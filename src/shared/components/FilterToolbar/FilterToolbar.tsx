@@ -1,17 +1,20 @@
 import { Filter } from "lucide-react";
-import { useState, useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button } from "../../../components/Button/Button";
 import { ButtonVariant } from "../../../components/Button/types";
-import { InputSearch } from "../../../components/InputSearch/InputSearch";
+import { ThemeContext } from "../../../context/theme/themeContext";
 import { ADMIN_EVENTS_MESSAGES } from "../../../pages/AdminEvents/constants/AdminEvents.constants";
 import { Toolbar } from "../../../pages/AdminEvents/styles";
+import { ChildrenContent, getFilterButtonStyle } from "./styles";
 import type { FilterToolbarProps } from "./types";
-import { ThemeContext } from "../../../context/theme/themeContext";
-import { getFilterButtonStyle } from "./styles";
 
-export const FilterToolbar = ({ placeholder, onKeywordSelected }: FilterToolbarProps) => {
-  const [showFilters, setShowFilters] = useState<boolean>(false);
+export const FilterToolbar = ({ children, clearFilters = false }: FilterToolbarProps) => {
+  const [showFilters, setShowFilters] = useState<boolean>(clearFilters);
   const { theme } = useContext(ThemeContext);
+
+  useEffect(() => {
+    setShowFilters(clearFilters);
+  }, [clearFilters]);
 
   return (
     <Toolbar>
@@ -22,11 +25,9 @@ export const FilterToolbar = ({ placeholder, onKeywordSelected }: FilterToolbarP
         onClick={() => setShowFilters((prev) => !prev)}
         customStyle={getFilterButtonStyle(theme)}
       />
-      {showFilters && <InputSearch
-        placeholder={placeholder}
-        onFilter={onKeywordSelected}
-        theme={theme}
-      />}
+      <ChildrenContent>
+        {showFilters && children}
+      </ChildrenContent>
     </Toolbar>
   );
 };
