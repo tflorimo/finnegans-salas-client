@@ -1,5 +1,5 @@
 export const ADMIN_ENDPOINTS = {
-  getAllEventsAdmin: () => `/events`, 
+  getAllEvents: () => `/events`, 
   getAudits: () => `/audits`, 
 } as const;
 
