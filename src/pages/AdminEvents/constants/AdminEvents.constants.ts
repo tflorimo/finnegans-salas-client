@@ -44,14 +44,14 @@ export const EVENT_FILTER_OPTIONS = [
 ]
 
 export const ATTENDEE_STATUS_TAG_MAP: Record<ResponseStatus, Tags> = {
-  accepted: Tags.success,
-  declined: Tags.danger,
+  accepted: Tags.blueOutput,
+  declined: Tags.dangerOutput,
   tentative: Tags.warning,
-  needsAction: Tags.info,
+  needsAction: Tags.warning,
 };
 
 export const CHECK_IN_STATUS_TAG_MAP: Record<CheckInStatus, { text: string; type: Tags }> = {
-  CHECKED_IN: { text: EVENT_MODAL.CHECK_IN_DONE, type: Tags.success },
+  CHECKED_IN: { text: EVENT_MODAL.CHECK_IN_DONE, type: Tags.succesOutput },
   PENDING: { text: EVENT_MODAL.CHECK_IN_PENDING, type: Tags.warning },
-  EXPIRED: { text: EVENT_MODAL.CHECK_IN_EXPIRED, type: Tags.danger },
+  EXPIRED: { text: EVENT_MODAL.CHECK_IN_EXPIRED, type: Tags.dangerOutput },
 };
