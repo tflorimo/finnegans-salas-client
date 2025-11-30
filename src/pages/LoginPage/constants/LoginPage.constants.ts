@@ -25,7 +25,7 @@ export const LOGIN_PAGE_TEXTS = {
   },
   ERROR_MODAL: {
     TITLE_AUTH_ERROR: "Acceso denegado",
-    TITLE_LOGIN_REQUIRED: "Inicio de sesión requerido",
+    TITLE_LOGIN_REQUIRED: "Autenticación Requerida",
     BUTTON_TEXT: "Entendido",
   },
   ALT_TEXT: {
