@@ -11,7 +11,7 @@ export const HEAT_MAP_COLORS = {
 
 export const HeatmapContainer = styled.div<{ $theme: ThemeType }>`
     width: auto;
-    height: auto;
+    height: 100vh;
     border-radius: 16px;
     display: flex;
     flex-direction: column;
@@ -30,11 +30,17 @@ export const Title = styled.h1`
   font-size: 2rem;
   font-weight: 700;
   margin: 0;
+  ${media.sm} {
+    font-size: 1.5rem;
+  }
 `;
 
 export const Subtitle = styled.p`
   font-size: 0.95rem;
   margin: 0;
+  ${media.sm} {
+    font-size: 0.8rem;
+  }
 `;
 
 export const SelectFilterContainer = styled.div`

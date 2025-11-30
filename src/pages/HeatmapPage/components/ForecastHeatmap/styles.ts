@@ -59,6 +59,7 @@ export const HeatmapWrapper = styled.div`
     height: 580px;
     border-radius: 12px;
     overflow: hidden;
+    margin-bottom: 1rem;
 `;
 
 export const ChartStyle = {
