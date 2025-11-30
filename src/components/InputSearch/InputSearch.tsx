@@ -1,5 +1,5 @@
 import { LucideSearch, LucideX } from "lucide-react";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 
 import { IconButton, InputContainer, SearchInput } from "./styles";
 import type { InputSearchProps } from "./types";
@@ -8,19 +8,41 @@ export const InputSearch: React.FC<InputSearchProps> = ({
     onFilter,
     placeholder = "Buscar...",
     theme,
+    debounceTime = 1000,
+    showClearButton = false,
 }) => {
     const [query, setQuery] = useState<string>("");
+    const [debouncedValue, setDebouncedValue] = useState<string>("");
 
-    const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        const newValue = e.target.value;
-        setQuery(newValue);
-        onFilter(newValue);
-    }, [onFilter]);
+    const onFilterRef = useRef(onFilter);
 
-    const handleClear = () => {
+    onFilterRef.current = onFilter;
+
+    const handleChange = useCallback(
+        (e: React.ChangeEvent<HTMLInputElement>) => {
+            const newValue = e.target.value;
+            setQuery(newValue);
+        },
+        []
+    );
+
+    const handleClear = useCallback(() => {
         setQuery("");
-        onFilter("");
-    };
+        setDebouncedValue("");
+        onFilterRef.current("");
+    }, [onFilterRef]);
+
+    useEffect(() => {
+        const handler = setTimeout(() => {
+            setDebouncedValue(query);
+        }, debounceTime);
+
+        return () => clearTimeout(handler);
+    }, [query, debounceTime]);
+
+    useEffect(() => {
+        onFilterRef.current(debouncedValue);
+    }, [debouncedValue]);
 
     return (
         <form onSubmit={(e) => e.preventDefault()}>
@@ -33,7 +55,7 @@ export const InputSearch: React.FC<InputSearchProps> = ({
                     onChange={handleChange}
                     placeholder={placeholder}
                 />
-                {query && (
+                {showClearButton && query && (
                     <IconButton $theme={theme} type="button" onClick={handleClear}>
                         <LucideX size={16} />
                     </IconButton>

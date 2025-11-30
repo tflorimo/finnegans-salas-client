@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 import { SECONDARY_COLOR, WHITE_COLOR } from "../../assets/colors/global-colors";
 import { media } from "../../shared/styles/media";
 import type { ThemeType } from "../../theme/Types";
@@ -28,7 +29,6 @@ export const InputContainer = styled.div<{ $theme?: ThemeType }>`
   display: flex;
   align-items: center;
   gap: 8px;
-  width: 100%;
   color: ${({ $theme }) => $theme === "dark" ? COLOR_WHITE : INPUT_SEARCH_COLORS.containerColor};
   background-color: ${({ $theme }) => $theme === "dark" ? COLOR_DARK_BG : WHITE_COLOR};
   border: 1px solid ${({ $theme }) => $theme === "dark" ? COLOR_GRAY_BORDER : INPUT_SEARCH_COLORS.boder};
