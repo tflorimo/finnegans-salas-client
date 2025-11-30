@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 import { BLACK_COLOR } from "../../assets/colors/global-colors";
 import type { ThemeType } from "../../theme/Types";
 
@@ -50,3 +51,8 @@ export const ArrowIcon = styled.span<{ $theme?: ThemeType }>`
   color: ${({ $theme }) => $theme === "dark" ? "#ffffff" : INPUT_COLORS.arrowColor};
   transition: color 0.3s ease;
 `;
+
+export const SelectLabel = styled.span<{ $theme?: ThemeType }>`
+  font-size: 14px;
+  color: ${({ $theme }) => $theme === "dark" ? "#ffffff" : BLACK_COLOR};
+`

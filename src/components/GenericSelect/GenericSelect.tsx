@@ -1,5 +1,6 @@
 import { LucideChevronDown } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
 import { ArrowIcon, SelectContainer, StyledSelect } from "./styles";
 import type { Base, GenericSelectProps } from "./types";
 
@@ -22,9 +23,16 @@ export const GenericSelect = <TValue extends Base>(
         }
     };
 
+    useEffect(() => {
+        setCurrent(selected);
+    }, [selected]);
+
     return (
         <SelectContainer>
             <StyledSelect $theme={theme} value={current ? getStringFromValue(current) : ""} onChange={onSelectChange}>
+                <option value="" disabled hidden>
+                    {props.placeholder ?? "Seleccione una opción"}
+                </option>
                 {values.map((value) => (
                     <option key={getStringFromValue(value)} value={getStringFromValue(value)}>
                         {formatLabel(value)}
