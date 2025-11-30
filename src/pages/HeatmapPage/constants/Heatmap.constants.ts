@@ -17,6 +17,7 @@ export const HEATMAP_TEXTS = {
     pageTitle: "Disponibilidad Semanal",
     pageSubtitle: "Mapa de calor de disponibilidad de salas por día y horario",
     loadingMessage: "Cargando mapa de calor...",
+    emptyMessage: "No hay datos para mostrar...",
     leyendHighAvailability: "Alta",
     leyendMidHighAvailability: "Media-Alta",
     leyendMidAvailability: "Media",
