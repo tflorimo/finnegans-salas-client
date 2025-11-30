@@ -20,7 +20,8 @@ interface UsePaginationReturn<T> extends UsePaginationState<T> {
 
 export const usePagination = <T,>(
   fetchFn: (page: number, perPage: number) => Promise<PaginatedResponse<T>>,
-  perPage: number = 10
+  perPage: number = 10,
+  search: unknown = undefined
 ): UsePaginationReturn<T> => {
   const [loading, setLoading] = useState<boolean>(true);
   const [data, setData] = useState<T[]>([]);
@@ -57,6 +58,11 @@ export const usePagination = <T,>(
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    setCurrentPage(1);
+    fetchData(1);
+  }, [search]);
 
   useEffect(() => {
     fetchData(currentPage);

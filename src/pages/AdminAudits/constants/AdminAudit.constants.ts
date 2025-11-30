@@ -5,8 +5,17 @@ export const ADMIN_AUDIT_MESSAGES = {
   EMPTY_TITLE: 'No hay auditorías disponibles',
   EMPTY_DESCRIPTION: 'No se encontraron registros de auditoría en el sistema.',
   PAGE_TITLE: 'Auditorías del Sistema',
-  EXPORT_BUTTON: 'Exportar Auditorías'
+  EXPORT_BUTTON: 'Exportar Auditorías',
+  ADMIN_FILTER_INPUT_PLACEHOLDER: 'Buscar por descripcion de auditoria...',
+  ADMIN_FILTER_SELECT_PLACEHOLDER: "Filtrar por tipo de Accion...",
+  EXPORT_FILE_NAME: 'system-audits',
+  CLEAN_FILTERS: 'Limpiar Filtros',
 };
+
+export const AUDIT_FILTER_OPTIONS = [
+  { id: 'action', value: 'Acciones' },
+  { id: 'info', value: 'Descripción' },
+]
 
 export const AUDIT_ACTION_LABELS: Record<string, string> = {
   LOGIN_SUCCESS: 'Login Exitoso',
@@ -57,6 +66,4 @@ export const AUDIT_COLOR_MAP: Record<string, TagsTypes> = {
   'ROOM_RESTORED': 'blueOutput',
 };
 
-export const ADMIN_FILTER_PLACEHOLDER = 'Buscar por acción, email o sala...';
-
-export const EXPORT_FILE_NAME = 'system-audits';
+export const AUDIT_SEARCH_TIMEOUT = 2000;

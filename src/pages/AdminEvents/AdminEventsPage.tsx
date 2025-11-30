@@ -1,49 +1,99 @@
-import { useContext, useState } from "react";
-import { SideBar } from "../../shared/components/SideBar/SideBar";
-import Header from "../../shared/components/Header/Header";
+import { Trash } from "lucide-react";
+import { useCallback, useContext, useState } from "react";
+
+import { Button } from "../../components/Button/Button";
+import { ButtonVariant } from "../../components/Button/types";
+import { GenericSelect } from "../../components/GenericSelect/GenericSelect";
+import { InputSearch } from "../../components/InputSearch/InputSearch";
+import { ThemeContext } from "../../context/theme/themeContext";
+import type { EventListItemDTO } from "../../services/admin/audits/types";
 import { BackButton } from "../../shared/components/BackButton/BackButton";
-import { FilterToolbar } from "../../shared/components/FilterToolbar/FilterToolbar";
 import { ExportButton } from "../../shared/components/ExportButton";
+import { FilterToolbar } from "../../shared/components/FilterToolbar/FilterToolbar";
+import { getFilterButtonStyle } from "../../shared/components/FilterToolbar/styles";
+import Header from "../../shared/components/Header/Header";
 import { Pagination } from "../../shared/components/Pagination/Pagination";
+import { SideBar } from "../../shared/components/SideBar/SideBar";
+import { SidebarBackdrop } from "../../shared/components/SideBar/styles";
+import { useGetRooms } from "../HomePage/hooks/useGetRooms";
 import { EventDetailsModal } from "./components/EventDetailsModal";
 import { EventsTable } from "./components/EventsTable";
 import {
   ADMIN_EVENTS_MESSAGES,
-  EVENT_FILTER_PLACEHOLDER,
-  EXPORT_FILE_NAME,
+  EVENT_FILTER_OPTIONS
 } from "./constants/AdminEvents.constants";
 import { useEventsFetch } from "./hooks/useEventsFetch";
-import { useAllEventsFetch } from "./hooks/useAllEventsFetch";
-import { useFilteredEvents } from "./hooks/useFilteredEvents";
 import {
   AdminEventsContainer,
   AdminEventsPageWrapper,
   AdminHeaderWrapper,
   ButtonsEventsContainer,
+  EmptyState,
   HeaderContent,
+  LoadingContainer,
   PageHeader,
   PageInner,
   PageTitle,
   TableWrapper,
-  LoadingContainer,
-  EmptyState,
 } from "./styles";
-import { ThemeContext } from "../../context/theme/themeContext";
-import { SidebarBackdrop } from "../../shared/components/SideBar/styles";
-import type { EventListItemDTO } from "../../services/admin/audits/types";
 
 export const AdminEventsPage = () => {
   const { theme } = useContext(ThemeContext);
 
+  const [filterSelected, setFilterSelected] = useState<string>("");
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(false);
-  const [selectedEvent, setSelectedEvent] = useState<EventListItemDTO | null>(null);
+  const [selectedEvent, setSelectedEvent] = useState<EventListItemDTO | null>(
+    null
+  );
+  const [selectValue, setSelectValue] = useState<
+    | {
+      id: string;
+      value: string;
+    }
+    | undefined
+  >(undefined);
 
-  const { loading, events, pagination, currentPage, handlePageChange } = useEventsFetch();
-  const { events: allEvents } = useAllEventsFetch();
-  const { filteredData, onKeywordSelected } = useFilteredEvents<any>(events as any);
+  const { roomsData } = useGetRooms();
+  const {
+    loading,
+    events,
+    pagination,
+    currentPage,
+    handlePageChange,
+    setSearch,
+    clearFilters,
+  } = useEventsFetch();
 
-  const hasEvents = !loading && filteredData.length > 0;
-  const isEmpty = !loading && filteredData.length === 0;
+  const hasEvents = !loading && events.length > 0;
+  const isEmpty = !loading && events.length === 0;
+
+  const roomNamesData = roomsData.map((room) => ({
+    id: room.email,
+    value: room.name,
+  }));
+
+  const handleFilterByRoomName = useCallback(
+    (text: string) => {
+      if (filterSelected) {
+        setSearch({ key: filterSelected, value: text });
+      }
+    },
+    [filterSelected]
+  );
+
+  const handleChangeSelectData = useCallback(
+    (value: { id: string; value: string }) => {
+      setFilterSelected(value.id);
+      setSelectValue(value);
+    },
+    []
+  );
+
+  const handlerClearFilters = useCallback(() => {
+    clearFilters();
+    setFilterSelected("");
+    setSelectValue(undefined);
+  }, []);
 
   return (
     <AdminEventsPageWrapper>
@@ -70,14 +120,46 @@ export const AdminEventsPage = () => {
                 {ADMIN_EVENTS_MESSAGES.PAGE_TITLE}
               </PageTitle>
               <ButtonsEventsContainer>
-                <FilterToolbar
-                  placeholder={EVENT_FILTER_PLACEHOLDER}
-                  onKeywordSelected={onKeywordSelected}
-                />
+                <FilterToolbar>
+                  <GenericSelect
+                    theme={theme}
+                    values={EVENT_FILTER_OPTIONS}
+                    formatLabel={(value) => value.value}
+                    onChange={handleChangeSelectData}
+                    selected={selectValue}
+                  />
+                  {filterSelected === "title" && (
+                    <InputSearch
+                      placeholder={ADMIN_EVENTS_MESSAGES.PAGE_TITLE}
+                      onFilter={handleFilterByRoomName}
+                      theme={theme}
+                    />
+                  )}
+                  {filterSelected === "roomEmail" && (
+                    <GenericSelect
+                      placeholder={ADMIN_EVENTS_MESSAGES.EVENT_FILTER_PLACEHOLDER}
+                      theme={theme}
+                      values={roomNamesData}
+                      formatLabel={(value) => value.value}
+                      onChange={(value) =>
+                        setSearch({ key: filterSelected, value: value.id })
+                      }
+                    />
+                  )}
+                  {filterSelected && (
+                    <Button
+                      text={ADMIN_EVENTS_MESSAGES.CLEAN_FILTERS}
+                      icon={<Trash size={16} />}
+                      variant={ButtonVariant.light}
+                      onClick={handlerClearFilters}
+                      customStyle={getFilterButtonStyle(theme)}
+                    />
+                  )}
+                </FilterToolbar>
                 <ExportButton
-                  data={allEvents}
-                  fileName={EXPORT_FILE_NAME}
-                  disabled={loading || allEvents.length === 0}
+                  data={events}
+                  fileName={ADMIN_EVENTS_MESSAGES.EXPORT_FILE_NAME}
+                  disabled={loading || events.length === 0}
                 />
               </ButtonsEventsContainer>
             </HeaderContent>
@@ -100,8 +182,10 @@ export const AdminEventsPage = () => {
             <>
               <TableWrapper>
                 <EventsTable
-                  events={filteredData as any}
-                  onView={(ev) => setSelectedEvent(ev as unknown as EventListItemDTO)}
+                  events={events as any}
+                  onView={(ev) =>
+                    setSelectedEvent(ev as unknown as EventListItemDTO)
+                  }
                 />
               </TableWrapper>
 

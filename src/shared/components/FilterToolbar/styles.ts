@@ -1,6 +1,6 @@
-import { css } from "styled-components";
-import type { ThemeType } from "../../../theme/Types";
+import styled, { css } from "styled-components";
 import { themes } from "../../../theme/Theme";
+import type { ThemeType } from "../../../theme/Types";
 
 export const getFilterButtonStyle = (theme: ThemeType) => css`
   height: 40px;
@@ -12,3 +12,11 @@ export const getFilterButtonStyle = (theme: ThemeType) => css`
   transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
   &:hover { background: ${theme === "dark" ? "#4b5563" : "#f8fafc"}; }
 `;
+
+export const ChildrenContent = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+`

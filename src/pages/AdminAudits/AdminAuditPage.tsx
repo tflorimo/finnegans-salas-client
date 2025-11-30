@@ -1,26 +1,34 @@
-import { useContext, useState } from "react";
-import { BackButton } from "../../shared/components/BackButton/BackButton";
-import { FilterToolbar } from "../../shared/components/FilterToolbar/FilterToolbar";
-import { ExportButton } from "../../shared/components/ExportButton";
-import { Pagination } from "../../shared/components/Pagination/Pagination";
-import Header from "../../shared/components/Header/Header";
-import { SideBar } from "../../shared/components/SideBar/SideBar";
-import { useFilteredEvents } from "../AdminEvents/hooks/useFilteredEvents";
-import { AuditItem } from "./components/AuditItem";
+import { Trash } from "lucide-react";
+import { useCallback, useContext, useMemo, useState } from "react";
+
+import { Button } from "../../components/Button/Button";
+import { ButtonVariant } from "../../components/Button/types";
+import { GenericSelect } from "../../components/GenericSelect/GenericSelect";
+import { InputSearch } from "../../components/InputSearch/InputSearch";
 import { ThemeContext } from "../../context/theme/themeContext";
+import type { AuditDTO } from "../../services/admin/audits/types";
+import { BackButton } from "../../shared/components/BackButton/BackButton";
+import { ExportButton } from "../../shared/components/ExportButton";
+import { FilterToolbar } from "../../shared/components/FilterToolbar/FilterToolbar";
+import { getFilterButtonStyle } from "../../shared/components/FilterToolbar/styles";
+import Header from "../../shared/components/Header/Header";
+import { Pagination } from "../../shared/components/Pagination/Pagination";
+import { SideBar } from "../../shared/components/SideBar/SideBar";
+import { SidebarBackdrop } from "../../shared/components/SideBar/styles";
+import { AuditItem } from "./components/AuditItem";
 import {
-  ADMIN_FILTER_PLACEHOLDER,
   ADMIN_AUDIT_MESSAGES,
-  EXPORT_FILE_NAME,
+  AUDIT_ACTION_LABELS,
+  AUDIT_FILTER_OPTIONS,
+  AUDIT_SEARCH_TIMEOUT
 } from "./constants/AdminAudit.constants";
 import { useAuditsFetch } from "./hooks/useAuditFetch";
-import { useAllAuditsFetch } from "./hooks/useAllAuditsFetch";
 import {
   AdminHeaderWrapper,
   AdminLogsContainer,
   AdminLogsPageWrapper,
-  EmptyState,
   ButtonsAuditContainer,
+  EmptyState,
   HeaderContent,
   LoadingContainer,
   LogsGrid,
@@ -29,18 +37,64 @@ import {
   PageInner,
   PageTitle,
 } from "./styles";
-import { SidebarBackdrop } from "../../shared/components/SideBar/styles";
 
 export const AdminAuditPage = () => {
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
-  const { loading, audits, pagination, currentPage, handlePageChange } = useAuditsFetch();
-  const { audits: allAudits } = useAllAuditsFetch();
-  const { filteredData, onKeywordSelected } = useFilteredEvents(audits as any);
-
-  const hasAudits = !loading && filteredData.length > 0;
-  const isEmpty = !loading && filteredData.length === 0;
-
   const { theme } = useContext(ThemeContext);
+
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const [filterSelected, setFilterSelected] = useState<string>("");
+  const [selectValue, setSelectValue] = useState<
+    | {
+      id: string;
+      value: string;
+    }
+    | undefined
+  >(undefined);
+
+  const {
+    loading,
+    audits,
+    pagination,
+    currentPage,
+    handlePageChange,
+    setSearch,
+    clearFilters,
+  } = useAuditsFetch();
+
+  const hasAudits = !loading && audits.length > 0;
+  const isEmpty = !loading && audits.length === 0;
+
+  const actionEvents = useMemo(() => {
+    return Object.keys(AUDIT_ACTION_LABELS).map((action) => ({
+      id: action,
+      value: AUDIT_ACTION_LABELS[action],
+    }));
+  }, []);
+
+  const handleChangeSelectData = useCallback(
+    (value: { id: string; value: string }) => {
+      if (value) {
+        setFilterSelected(value.id);
+        setSelectValue(value);
+      }
+    },
+    []
+  );
+
+  const handleFilterByDescription = useCallback(
+    (text: string) => {
+      if (filterSelected) {
+        setSearch({ key: filterSelected, value: text });
+      }
+    },
+    [filterSelected]
+  );
+
+  const handlerClearFilters = useCallback(() => {
+    clearFilters();
+    setFilterSelected("");
+    setSelectValue(undefined);
+  }, []);
 
   return (
     <AdminLogsPageWrapper>
@@ -64,14 +118,47 @@ export const AdminAuditPage = () => {
                 {ADMIN_AUDIT_MESSAGES.PAGE_TITLE}
               </PageTitle>
               <ButtonsAuditContainer>
-                <FilterToolbar
-                  placeholder={ADMIN_FILTER_PLACEHOLDER}
-                  onKeywordSelected={onKeywordSelected}
-                />
+                <FilterToolbar>
+                  <GenericSelect
+                    theme={theme}
+                    values={AUDIT_FILTER_OPTIONS}
+                    formatLabel={(value) => value.value}
+                    onChange={handleChangeSelectData}
+                    selected={selectValue}
+                  />
+                  {filterSelected === "info" && (
+                    <InputSearch
+                      placeholder={ADMIN_AUDIT_MESSAGES.ADMIN_FILTER_INPUT_PLACEHOLDER}
+                      onFilter={handleFilterByDescription}
+                      theme={theme}
+                      debounceTime={AUDIT_SEARCH_TIMEOUT}
+                    />
+                  )}
+                  {filterSelected === "action" && (
+                    <GenericSelect
+                      placeholder={ADMIN_AUDIT_MESSAGES.ADMIN_FILTER_SELECT_PLACEHOLDER}
+                      theme={theme}
+                      values={actionEvents}
+                      formatLabel={(value) => value.value}
+                      onChange={(value) =>
+                        setSearch({ key: filterSelected, value: value.id })
+                      }
+                    />
+                  )}
+                  {filterSelected && (
+                    <Button
+                      text={ADMIN_AUDIT_MESSAGES.CLEAN_FILTERS}
+                      icon={<Trash />}
+                      variant={ButtonVariant.light}
+                      onClick={handlerClearFilters}
+                      customStyle={getFilterButtonStyle(theme)}
+                    />
+                  )}
+                </FilterToolbar>
                 <ExportButton
-                  data={allAudits}
-                  fileName={EXPORT_FILE_NAME}
-                  disabled={loading || allAudits.length === 0}
+                  data={audits}
+                  fileName={ADMIN_AUDIT_MESSAGES.EXPORT_FILE_NAME}
+                  disabled={loading || audits.length === 0}
                 />
               </ButtonsAuditContainer>
             </HeaderContent>
@@ -93,7 +180,7 @@ export const AdminAuditPage = () => {
 
             {hasAudits && (
               <LogsGrid $theme={theme}>
-                {(filteredData as any[]).map((audit: any) => (
+                {audits.map((audit: AuditDTO) => (
                   <AuditItem key={audit.id} log={audit} />
                 ))}
               </LogsGrid>
