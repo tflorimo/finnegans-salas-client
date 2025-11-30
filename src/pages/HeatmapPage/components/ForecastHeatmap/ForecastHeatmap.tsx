@@ -45,12 +45,12 @@ export const ForecastHeatmap = ({
 
                     if (!data?.info) return "";
                     const { roomName, date, hour, percentage, } = data.info;
-                    
+
                     const safeRoomName = escapeHtml(roomName);
                     const safeDate = escapeHtml(date);
                     const safeHour = escapeHtml(hour);
                     const safePercentage = escapeHtml(percentage);
-                    
+
                     return `
             <b>${safeRoomName}</b><br/>
             ${safeDate} - ${safeHour}:00<br/>
@@ -107,9 +107,15 @@ export const ForecastHeatmap = ({
         [rooms, yAxisLabels, data, theme]
     );
 
-    if (loading || rooms.length === 0 || yAxisLabels.length === 0) {
+    if (loading) {
         return <LoadingBox>
             <p>{HEATMAP_TEXTS.loadingMessage}</p>
+        </LoadingBox>;
+    }
+
+    if (!rooms.length || !yAxisLabels.length) {
+        return <LoadingBox>
+            <p>{HEATMAP_TEXTS.emptyMessage}</p>
         </LoadingBox>;
     }
 
