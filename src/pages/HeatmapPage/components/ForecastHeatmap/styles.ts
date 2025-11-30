@@ -18,7 +18,6 @@ const COLOR_GRAY_TEXT = "#64748b";
 export const HeatmapContainer = styled.div`
     width: auto;
     height: auto;
-    padding: 20px;
     border-radius: 16px;
     display: flex;
     flex-direction: column;
@@ -37,6 +36,7 @@ export const LegendContainer = styled.div<{ $theme: ThemeType }>`
     align-items: center;
     color: ${({ $theme }) => themes[$theme].TEXT_COLOR};
     gap: 24px;
+    margin: 1rem 1rem;
 `;
 
 export const LegendItem = styled.div`
