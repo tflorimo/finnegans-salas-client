@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 import { SECONDARY_COLOR, WHITE_COLOR } from "../../assets/colors/global-colors";
-import { media } from "../../shared/styles/media";
 import type { ThemeType } from "../../theme/Types";
 
 const COLOR_WHITE = "#ffffff";
@@ -25,6 +24,10 @@ const INPUT_SEARCH_COLORS = {
   placeholderColor: COLOR_PLACEHOLDER
 };
 
+export const FormContainer = styled.form`
+  width: 100%;
+`
+
 export const InputContainer = styled.div<{ $theme?: ThemeType }>`
   display: flex;
   align-items: center;
@@ -38,11 +41,6 @@ export const InputContainer = styled.div<{ $theme?: ThemeType }>`
   &:focus-within {
     border-color: ${INPUT_SEARCH_COLORS.borderFocus};
     box-shadow: 0 0 0 1px ${INPUT_SEARCH_COLORS.boxShadowFocus};
-  }
-
-  ${media.md} {
-    width: 90%;
-    align-self: center;
   }
 `;
 

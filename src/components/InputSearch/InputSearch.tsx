@@ -1,7 +1,7 @@
 import { LucideSearch, LucideX } from "lucide-react";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
-import { IconButton, InputContainer, SearchInput } from "./styles";
+import { FormContainer, IconButton, InputContainer, SearchInput } from "./styles";
 import type { InputSearchProps } from "./types";
 
 export const InputSearch: React.FC<InputSearchProps> = ({
@@ -45,7 +45,7 @@ export const InputSearch: React.FC<InputSearchProps> = ({
     }, [debouncedValue]);
 
     return (
-        <form onSubmit={(e) => e.preventDefault()}>
+        <FormContainer onSubmit={(e) => e.preventDefault()}>
             <InputContainer $theme={theme}>
                 <LucideSearch size={18} />
                 <SearchInput
@@ -61,6 +61,6 @@ export const InputSearch: React.FC<InputSearchProps> = ({
                     </IconButton>
                 )}
             </InputContainer>
-        </form>
+        </FormContainer>
     );
 };
