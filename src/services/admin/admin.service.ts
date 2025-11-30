@@ -1,23 +1,24 @@
-import { ADMIN_ENDPOINTS, ADMIN_ERROR_MESSAGES } from "../../constants/admin.constants";
-import { getErrorMessage } from "../../api/axios/axios.utils";
 import axiosInstance from "../../api/axios/axios.instance";
-import type { EventListResponseDTO } from "./audits/types";
-import type { AuditListResponseDTO } from "./audits/types";
+import { getErrorMessage } from "../../api/axios/axios.utils";
+import { ADMIN_ENDPOINTS, ADMIN_ERROR_MESSAGES } from "../../constants/admin.constants";
+import type { AuditListResponseDTO, EventListResponseDTO } from "./audits/types";
 
-const buildPaginatedUrl = (baseUrl: string, page?: number, perPage?: number): string => {
+const buildPaginatedUrl = (baseUrl: string, page?: number, perPage?: number, search?: { key: string, value: string }): string => {
   const params = new URLSearchParams();
   if (page) params.append('page', String(page));
   if (perPage) params.append('perPage', String(perPage));
-  
+  if (search?.key) params.append('searchKey', String(search.key));
+  if (search?.value) params.append('searchValue', String(search.value));
+
   const query = params.toString();
   return query ? `${baseUrl}?${query}` : baseUrl;
 };
 
 export const adminService = {
 
-  async getEvents(page?: number, perPage?: number): Promise<EventListResponseDTO> {
+  async getEvents(page?: number, perPage?: number, search?: { key: string, value: string }): Promise<EventListResponseDTO> {
     try {
-      const url = buildPaginatedUrl(ADMIN_ENDPOINTS.getAllEventsAdmin(), page, perPage);
+      const url = buildPaginatedUrl(ADMIN_ENDPOINTS.getAllEventsAdmin(), page, perPage, search);
       const { data } = await axiosInstance.get<EventListResponseDTO>(url);
       return data;
     } catch (error) {
@@ -36,9 +37,9 @@ export const adminService = {
     }
   },
 
-  async getAudits(page?: number, perPage?: number): Promise<AuditListResponseDTO> {
+  async getAudits(page?: number, perPage?: number, search?: { key: string, value: string }): Promise<AuditListResponseDTO> {
     try {
-      const url = buildPaginatedUrl(ADMIN_ENDPOINTS.getAudits(), page, perPage);
+      const url = buildPaginatedUrl(ADMIN_ENDPOINTS.getAudits(), page, perPage, search);
       const { data } = await axiosInstance.get<AuditListResponseDTO>(url);
       return data;
     } catch (error) {
