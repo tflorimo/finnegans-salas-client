@@ -1,11 +1,11 @@
 import styled, { css } from "styled-components";
 import {
-  SIDEBAR_WIDTH,
   SIDEBAR_COLLAPSED_WIDTH,
+  SIDEBAR_WIDTH,
 } from "../../shared/components/SideBar/styles";
-import type { ThemeType } from "../../theme/Types";
-import { themes } from "../../theme/Theme";
 import { media } from "../../shared/styles/media";
+import { themes } from "../../theme/Theme";
+import type { ThemeType } from "../../theme/Types";
 
 const COLOR_GRAY_MEDIUM = "#9ca3af";
 const COLOR_GRAY_TEXT = "#64748b";
@@ -43,11 +43,11 @@ export const AdminHeaderWrapper = styled.div<{ $collapsed: boolean }>`
 
   ${media.md} {
     left: ${({ $collapsed }) =>
-      $collapsed ? `${SIDEBAR_COLLAPSED_WIDTH}px` : "0"};
+    $collapsed ? `${SIDEBAR_COLLAPSED_WIDTH}px` : "0"};
     width: ${({ $collapsed }) =>
-      $collapsed
-        ? `calc(100vw - ${SIDEBAR_COLLAPSED_WIDTH}px)`
-        : "100vw"};
+    $collapsed
+      ? `calc(100vw - ${SIDEBAR_COLLAPSED_WIDTH}px)`
+      : "100vw"};
   }
 `;
 
@@ -72,11 +72,11 @@ export const AdminLogsContainer = styled.div<{ $collapsed: boolean }>`
 
   ${media.md} {
     margin-left: ${({ $collapsed }) =>
-      $collapsed ? `${SIDEBAR_COLLAPSED_WIDTH}px` : "0"};
+    $collapsed ? `${SIDEBAR_COLLAPSED_WIDTH}px` : "0"};
     width: ${({ $collapsed }) =>
-      $collapsed
-        ? `calc(100% - ${SIDEBAR_COLLAPSED_WIDTH}px)`
-        : "100%"};
+    $collapsed
+      ? `calc(100% - ${SIDEBAR_COLLAPSED_WIDTH}px)`
+      : "100%"};
     padding: 5px 16px 10px 16px;
   }
 `;
@@ -264,10 +264,11 @@ export const ButtonsAuditContainer = styled.div`
     flex-direction: column;
     align-items: flex-start;
     gap: 0.75rem;
+    width: 100%;
 
     & > * {
       width: 100%;
-      max-width: 360px;
+      flex-wrap: wrap;
     }
 
     & > :last-child {
@@ -322,9 +323,9 @@ export const PageButton = styled.button<{ $active?: boolean; $theme: ThemeType }
 
   &:hover:not(:disabled) {
     background: ${({ $theme }) =>
-      $theme === "dark" ? COLOR_HOVER_DARK : COLOR_HOVER_LIGHT};
+    $theme === "dark" ? COLOR_HOVER_DARK : COLOR_HOVER_LIGHT};
     border-color: ${({ $theme }) =>
-      $theme === "dark" ? COLOR_BORDER_HOVER_DARK : COLOR_BORDER_HOVER_LIGHT};
+    $theme === "dark" ? COLOR_BORDER_HOVER_DARK : COLOR_BORDER_HOVER_LIGHT};
   }
 
   &:disabled {
