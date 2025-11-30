@@ -2,26 +2,27 @@ import { X } from "lucide-react";
 import { useContext } from "react";
 import { CardContainer } from "../../../components/CardContainer/CardContainer";
 import { Tag } from "../../../components/Tag/Tag";
+import { ThemeContext } from "../../../context/theme/themeContext";
 import type { EventResponseDTO } from "../../../shared/types/event.types";
 import { formatTimeRange } from "../../../shared/utils/format.utils";
-import { formatDate, formatTime } from "../utils/dateUtils";
-import { ThemeContext } from "../../../context/theme/themeContext";
-import {
-  Overlay,
-  ModalBody,
-  ModalHeader,
-  CloseBtn,
-  ModalCardStyle,
-  FieldsWrapper,
-  Field,
-  AttendeeList,
-} from "../styles";
-import { 
-  EVENT_MODAL, 
-  ATTENDEE_STATUS_TAG_MAP, 
-  CHECK_IN_STATUS_TAG_MAP 
-} from "../constants/AdminEvents.constants";
 import { truncateTextByLength } from "../../../shared/utils/text.utils";
+import {
+  ATTENDEE_STATUS_TAG_MAP,
+  CHECK_IN_STATUS_TAG_MAP,
+  EVENT_MODAL,
+  RESPONSE_STATUS_LABELS_MAP
+} from "../constants/AdminEvents.constants";
+import {
+  AttendeeList,
+  CloseBtn,
+  Field,
+  FieldsWrapper,
+  ModalBody,
+  ModalCardStyle,
+  ModalHeader,
+  Overlay,
+} from "../styles";
+import { formatDate, formatTime } from "../utils/dateUtils";
 interface EventDetailsModalProps {
   event: EventResponseDTO;
   onClose: () => void;
@@ -106,7 +107,7 @@ export const EventDetailsModal = ({ event, onClose }: EventDetailsModalProps) =>
                     <li key={attendee.email}>
                       <span>{attendee.email}</span>
                       <Tag
-                        text={attendee.responseStatus}
+                        text={RESPONSE_STATUS_LABELS_MAP[attendee.responseStatus]}
                         type={ATTENDEE_STATUS_TAG_MAP[attendee.responseStatus]}
                       />
                     </li>
