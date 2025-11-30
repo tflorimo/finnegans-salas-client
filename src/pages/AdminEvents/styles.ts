@@ -1,8 +1,8 @@
 import styled, { css } from "styled-components";
-import { SIDEBAR_WIDTH, SIDEBAR_COLLAPSED_WIDTH } from "../../shared/components/SideBar/styles";
-import type { ThemeType } from '../../theme/Types';
-import { themes } from '../../theme/Theme';
+import { SIDEBAR_COLLAPSED_WIDTH, SIDEBAR_WIDTH } from "../../shared/components/SideBar/styles";
 import { media } from "../../shared/styles/media";
+import { themes } from '../../theme/Theme';
+import type { ThemeType } from '../../theme/Types';
 
 export const AdminEventsPageWrapper = styled.div`
   display: flex;
@@ -24,11 +24,11 @@ export const AdminHeaderWrapper = styled.div<{ $collapsed: boolean }>`
 
   ${media.md} {
     left: ${({ $collapsed }) =>
-      $collapsed ? `${SIDEBAR_COLLAPSED_WIDTH}px` : "0"};
+    $collapsed ? `${SIDEBAR_COLLAPSED_WIDTH}px` : "0"};
     width: ${({ $collapsed }) =>
-      $collapsed
-        ? `calc(100vw - ${SIDEBAR_COLLAPSED_WIDTH}px)`
-        : "100vw"};
+    $collapsed
+      ? `calc(100vw - ${SIDEBAR_COLLAPSED_WIDTH}px)`
+      : "100vw"};
   }
 `;
 
@@ -49,11 +49,11 @@ export const AdminEventsContainer = styled.div<{ $collapsed: boolean }>`
 
   ${media.md} {
     margin-left: ${({ $collapsed }) =>
-      $collapsed ? `${SIDEBAR_COLLAPSED_WIDTH}px` : "0"};
+    $collapsed ? `${SIDEBAR_COLLAPSED_WIDTH}px` : "0"};
     width: ${({ $collapsed }) =>
-      $collapsed
-        ? `calc(100% - ${SIDEBAR_COLLAPSED_WIDTH}px)`
-        : "100%"};
+    $collapsed
+      ? `calc(100% - ${SIDEBAR_COLLAPSED_WIDTH}px)`
+      : "100%"};
     padding: 5px 16px 10px 16px;
   }
 `;
@@ -99,7 +99,6 @@ export const ButtonsEventsContainer = styled.div`
 
     & > * {
       width: 100%;
-      max-width: 360px;
     }
 
     & > :last-child {
@@ -121,6 +120,10 @@ export const Toolbar = styled.div`
   gap: 12px;
   align-items: center;
   flex-wrap: wrap;
+  ${media.sm} {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 `;
 
 export const Table = styled.table<{ $theme: ThemeType }>`
