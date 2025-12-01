@@ -7,6 +7,7 @@ import { GenericSelect } from "../../components/GenericSelect/GenericSelect";
 import { InputSearch } from "../../components/InputSearch/InputSearch";
 import { ThemeContext } from "../../context/theme/themeContext";
 import { adminService } from "../../services/admin/admin.service";
+import { roomService } from "../../services/rooms/room.service";
 import { BackButton } from "../../shared/components/BackButton/BackButton";
 import { ExportButton } from "../../shared/components/ExportButton";
 import { FilterToolbar } from "../../shared/components/FilterToolbar/FilterToolbar";
@@ -15,6 +16,7 @@ import Header from "../../shared/components/Header/Header";
 import { Pagination } from "../../shared/components/Pagination/Pagination";
 import { SideBar } from "../../shared/components/SideBar/SideBar";
 import { SidebarBackdrop } from "../../shared/components/SideBar/styles";
+import { generateQRsPDF } from "../../shared/utils/qrPdfExport.utils";
 import { AUDIT_SEARCH_TIMEOUT } from "../AdminAudits/constants/AdminAudit.constants";
 import { useGetRooms } from "../HomePage/hooks/useGetRooms";
 import { EventDetailsModal } from "./components/EventDetailsModal";
@@ -102,11 +104,22 @@ export const AdminEventsPage = () => {
     return response.items || [];
   }, []);
 
+  const handleDownloadQRs = useCallback(async () => {
+    try {
+      const rooms = await roomService.getRooms();
+      await generateQRsPDF(rooms);
+    } catch (error) {
+      console.error("Error downloading QRs:", error);
+      alert("No se pudieron descargar los códigos QR");
+    }
+  }, []);
+
   return (
     <AdminEventsPageWrapper>
       <SideBar
         isCollapsed={isSidebarCollapsed}
         onToggle={() => setIsSidebarCollapsed((prevState) => !prevState)}
+        onDownloadQRs={handleDownloadQRs}
       />
 
       <SidebarBackdrop
