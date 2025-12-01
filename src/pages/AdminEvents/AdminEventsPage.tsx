@@ -15,6 +15,7 @@ import Header from "../../shared/components/Header/Header";
 import { Pagination } from "../../shared/components/Pagination/Pagination";
 import { SideBar } from "../../shared/components/SideBar/SideBar";
 import { SidebarBackdrop } from "../../shared/components/SideBar/styles";
+import { AUDIT_SEARCH_TIMEOUT } from "../AdminAudits/constants/AdminAudit.constants";
 import { useGetRooms } from "../HomePage/hooks/useGetRooms";
 import { EventDetailsModal } from "./components/EventDetailsModal";
 import { EventsTable } from "./components/EventsTable";
@@ -133,6 +134,7 @@ export const AdminEventsPage = () => {
                       placeholder={ADMIN_EVENTS_MESSAGES.PAGE_TITLE}
                       onFilter={handleFilterByRoomName}
                       theme={theme}
+                      debounceTime={AUDIT_SEARCH_TIMEOUT}
                     />
                   )}
                   {filterSelected === "roomEmail" && (

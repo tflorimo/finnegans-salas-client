@@ -2,8 +2,8 @@ export const HEATMAP_ENDPOINTS = {
     getRoomsForecast: () => `/forecast/fetch`,
 } as const;
 
-const INITIAL_HOUR = 9;
-const CANT_HOURS_DAY = 9;
+const INITIAL_HOUR = 8;
+const CANT_HOURS_DAY = 10;
 
 export const WEEK_DAYS_ORDER = ["lun", "mar", "mié", "jue", "vie"];
 
@@ -17,6 +17,7 @@ export const HEATMAP_TEXTS = {
     pageTitle: "Disponibilidad Semanal",
     pageSubtitle: "Mapa de calor de disponibilidad de salas por día y horario",
     loadingMessage: "Cargando mapa de calor...",
+    emptyMessage: "No hay datos para mostrar...",
     leyendHighAvailability: "Alta",
     leyendMidHighAvailability: "Media-Alta",
     leyendMidAvailability: "Media",

@@ -50,6 +50,13 @@ export const ATTENDEE_STATUS_TAG_MAP: Record<ResponseStatus, Tags> = {
   needsAction: Tags.info,
 };
 
+export const RESPONSE_STATUS_LABELS_MAP: Record<ResponseStatus, string> = {
+  accepted: "Aceptado",
+  declined: "Rechazado",
+  tentative: "Tentativo",
+  needsAction: "Requiere acción",
+};
+
 export const CHECK_IN_STATUS_TAG_MAP: Record<CheckInStatus, { text: string; type: Tags }> = {
   CHECKED_IN: { text: EVENT_MODAL.CHECK_IN_DONE, type: Tags.success },
   PENDING: { text: EVENT_MODAL.CHECK_IN_PENDING, type: Tags.warning },
