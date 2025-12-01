@@ -1,10 +1,17 @@
-import { ROOM_PAGE_COLORS, RoomEventItemStyles, RoomEventTimeSectionStyles, FinishedEventIconWrapper, EventIconWrapper, InProgressEventIconWrapper } from "../styles";
+import {
+  ROOM_PAGE_COLORS,
+  RoomEventItemStyles,
+  RoomEventTimeSectionStyles,
+  FinishedEventIconWrapper,
+  EventIconWrapper,
+  InProgressEventIconWrapper
+} from "../styles";
 import type { RoomEventTimeProps } from "../types/HomePage.types";
 import { truncateTextByLength } from "../../../shared/utils/text.utils";
 import { EventStatusIcon } from "../../../shared/components/EventStatusIcon";
 
 export const RoomEventItem = ({ event, currentEventId }: RoomEventTimeProps) => {
-  const startTime = event.startTime; 
+  const startTime = event.startTime;
   const endTime = event.endTime;
 
   return (

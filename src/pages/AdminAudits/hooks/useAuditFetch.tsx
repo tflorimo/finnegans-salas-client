@@ -1,9 +1,9 @@
 import { useCallback, useState } from 'react';
 
 import { adminService } from '../../../services/admin/admin.service';
-import type { AuditDTO } from '../../../services/admin/audits/types';
 import { usePagination } from '../../../shared/hooks/usePagination';
 import type { SearchParam } from '../../AdminEvents/types/AdminEvents.types';
+import type { AuditDTO } from '../../../services/admin/admin.types';
 
 export const useAuditsFetch = () => {
 

@@ -1,12 +1,10 @@
 import { Trash } from "lucide-react";
 import { useCallback, useContext, useMemo, useState } from "react";
-
 import { Button } from "../../components/Button/Button";
 import { ButtonVariant } from "../../components/Button/types";
 import { GenericSelect } from "../../components/GenericSelect/GenericSelect";
 import { InputSearch } from "../../components/InputSearch/InputSearch";
 import { ThemeContext } from "../../context/theme/themeContext";
-import type { AuditDTO } from "../../services/admin/audits/types";
 import { adminService } from "../../services/admin/admin.service";
 import { BackButton } from "../../shared/components/BackButton/BackButton";
 import { ExportButton } from "../../shared/components/ExportButton";
@@ -38,6 +36,7 @@ import {
   PageInner,
   PageTitle,
 } from "./styles";
+import type { AuditDTO } from "../../services/admin/admin.types";
 
 export const AdminAuditPage = () => {
   const { theme } = useContext(ThemeContext);
