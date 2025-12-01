@@ -16,7 +16,6 @@ import {
     LoadingBox,
 } from "./styles";
 
-// @TODO CHECK
 const escapeHtml = (text: string | number): string => {
     const div = document.createElement('div');
     div.textContent = String(text);
