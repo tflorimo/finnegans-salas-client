@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
-import { QRCheckInHandler } from "../pages/RoomPage/components/QRCheckInHandler";
+
 import { NotFoundPage } from "../pages/NotFoundPage";
+import { QRCheckInHandler } from "../pages/RoomPage/components/QRCheckInHandler";
 import Header from "../shared/components/Header/Header";
 
 export const QRRoutes = () => {

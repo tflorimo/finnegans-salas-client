@@ -1,9 +1,10 @@
-import { Avatar, ResInfo, ResRight, ReservationItem, FinishedEventIcon, InProgressEventIcon } from "../styles";
-import { initials, getDayName } from "../utils/RoomPageUtils";
-import { truncateTextByLength } from "../../../shared/utils/text.utils";
-import { ThemeContext } from "../../../context/theme/themeContext";
 import { useContext } from "react";
+
+import { ThemeContext } from "../../../context/theme/themeContext";
 import { EventStatusIcon } from "../../../shared/components/EventStatusIcon";
+import { truncateTextByLength } from "../../../shared/utils/text.utils";
+import { Avatar, FinishedEventIcon, InProgressEventIcon, ResInfo, ResRight, ReservationItem } from "../styles";
+import { getDayName, initials } from "../utils/RoomPageUtils";
 
 interface ReservationItemComponentProps {
   organizer: string;
@@ -11,7 +12,7 @@ interface ReservationItemComponentProps {
   end: string | Date | undefined;
   date: Date | string;
   title: string;
-  endTime: Date | string; 
+  endTime: Date | string;
   startTime: Date | string;
   eventId: string;
   currentEventId?: string;
@@ -27,7 +28,7 @@ export const ReservationItemComponent = ({
   eventId,
   currentEventId,
 }: ReservationItemComponentProps) => {
-  const {theme} = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
   return (
     <ReservationItem $theme={theme}>
       <Avatar>{initials(organizer)}</Avatar>

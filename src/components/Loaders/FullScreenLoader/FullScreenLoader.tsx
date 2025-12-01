@@ -1,8 +1,5 @@
 import { Overlay, Spinner } from "./styles";
-
-interface FullScreenLoaderProps {
-  isLoading: boolean;
-}
+import type { FullScreenLoaderProps } from "./types";
 
 export const FullScreenLoader = ({ isLoading }: FullScreenLoaderProps) => {
   if (!isLoading) return null;

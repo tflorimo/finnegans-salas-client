@@ -1,14 +1,15 @@
 import { Users } from "lucide-react";
-import { RoomStatusTag } from "./RoomStatusTag";
+import { useContext } from "react";
+
+import { ThemeContext } from "../../../context/theme/themeContext";
 import { ROOM_PAGE_MESSAGES } from "../constants/RoomPage.constants";
 import {
+  RoomCapacityInfo,
   RoomHeaderContainer,
   RoomHeaderInfo,
   RoomTitle,
-  RoomCapacityInfo,
 } from "../styles";
-import { ThemeContext } from "../../../context/theme/themeContext";
-import { useContext } from "react";
+import { RoomStatusTag } from "./RoomStatusTag";
 
 interface RoomHeaderProps {
   name?: string;
@@ -18,7 +19,7 @@ interface RoomHeaderProps {
 }
 
 export const RoomHeader = ({ name, capacity, isBusy, loading }: RoomHeaderProps) => {
-  const {theme} = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
   return (
     <RoomHeaderContainer>
       <RoomHeaderInfo>

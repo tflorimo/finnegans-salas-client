@@ -1,6 +1,7 @@
 import QRCodeLib from "react-qr-code";
-import { QRContainer } from "../styles";
+
 import { QR_CODE_CONFIG, QR_ROUTES } from "../constants/RoomPage.constants";
+import { QRContainer } from "../styles";
 
 interface QRCodeSectionProps {
   roomEmail: string;

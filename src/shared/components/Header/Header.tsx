@@ -1,8 +1,10 @@
 import { LogOut, Settings, Sun } from "lucide-react";
 import { useContext } from "react";
 import { NavLink } from "react-router-dom";
+
 import logoFinnegas from "../../../assets/images/isotipo-celeste.svg";
 import { AuthContext } from "../../../context/auth/authContext";
+import { ThemeContext } from "../../../context/theme/themeContext";
 import { HEADER_TEXTS } from "./constants";
 import {
   TopBar,
@@ -10,7 +12,6 @@ import {
   TopBarLeft,
   TopBarRight,
 } from "./styles";
-import { ThemeContext } from "../../../context/theme/themeContext";
 
 /**
  * @description Header component that displays the top navigation bar with logo and admin controls.
@@ -19,7 +20,7 @@ import { ThemeContext } from "../../../context/theme/themeContext";
 export const Header = () => {
 
   const { logout, userRole } = useContext(AuthContext)
-  const {theme, toggleTheme } = useContext(ThemeContext);
+  const { theme, toggleTheme } = useContext(ThemeContext);
 
   const isAdmin = userRole === "admin";
 
@@ -34,7 +35,7 @@ export const Header = () => {
           </div>
         </TopBarLeft>
         <TopBarRight $theme={theme}>
-          <Sun onClick={toggleTheme}/>
+          <Sun onClick={toggleTheme} />
           <NavLink
             to="/admin/audits"
             style={({ isActive, isPending, isTransitioning }) => {

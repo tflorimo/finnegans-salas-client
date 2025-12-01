@@ -2,14 +2,7 @@ import styled from "styled-components";
 
 import { BLACK_COLOR } from "../../assets/colors/global-colors";
 import type { ThemeType } from "../../theme/Types";
-
-const INPUT_COLORS = {
-  boder: "#dcdcdc",
-  borderHover: "#c7c7c7",
-  borderFocus: "#1a73e8",
-  boxShadowFocus: "rgba(26, 115, 232, 0.2)",
-  arrowColor: "#5f6368",
-};
+import { INPUT_COLORS } from "./types";
 
 export const SelectContainer = styled.div`
   position: relative;

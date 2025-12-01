@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
-import type { ThemeType } from "../../../theme/Types";
+
 import { themes } from "../../../theme/Theme";
+import type { ThemeType } from "../../../theme/Types";
 import { media, mediaMin } from "../../styles/media";
 
 export const SIDEBAR_WIDTH = 240;
@@ -27,7 +28,7 @@ export const getBaseButtonStyles = (isActive: boolean, theme: ThemeType, isColla
   svg {
     color: inherit;
   }
-  ${isActive 
+  ${isActive
     ? css`
         background-color: ${theme === "dark" ? "#374151" : "#007bff"};
         color: #ffffff;
@@ -67,14 +68,14 @@ export const SideBarContainer = styled.aside<{ $theme: ThemeType, $collapsed: bo
   /* DESKTOP / TABLET */
   ${mediaMin.mdPlus} {
     width: ${({ $collapsed }) =>
-      $collapsed ? `${SIDEBAR_COLLAPSED_WIDTH}px` : `${SIDEBAR_WIDTH}px`};
+    $collapsed ? `${SIDEBAR_COLLAPSED_WIDTH}px` : `${SIDEBAR_WIDTH}px`};
     transform: translateX(0);
   }
 
   /* MOBILE */
   ${media.md} {
     width: ${({ $collapsed }) =>
-      $collapsed ? `${SIDEBAR_COLLAPSED_WIDTH}px` : `${SIDEBAR_WIDTH}px`};
+    $collapsed ? `${SIDEBAR_COLLAPSED_WIDTH}px` : `${SIDEBAR_WIDTH}px`};
     height: 100vh;
     transform: translateX(0);
   }

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 import {
   EVENT_STATUS_FINISHED_COLOR,
   EVENT_STATUS_IN_PROGRESS_COLOR,

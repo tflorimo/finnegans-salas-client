@@ -1,11 +1,12 @@
-import { Clock, CheckCircle } from "lucide-react";
-import { getEventStatus } from "../../utils/event.utils";
-import type { EventStatusIconProps } from "./types";
+import { CheckCircle, Clock } from "lucide-react";
+
 import {
   EVENT_STATUS_FINISHED_COLOR,
   EVENT_STATUS_IN_PROGRESS_COLOR,
   EVENT_STATUS_UPCOMING_COLOR,
 } from "../../../assets/colors/global-colors";
+import { getEventStatus } from "../../utils/event.utils";
+import type { EventStatusIconProps } from "./types";
 
 export const EventStatusIcon = ({
   startTime,
@@ -21,7 +22,7 @@ export const EventStatusIcon = ({
   UpcomingWrapper,
 }: EventStatusIconProps) => {
   const eventStatus = getEventStatus(startTime, endTime);
-  
+
   const isCurrentEvent = eventId && currentEventId && eventId === currentEventId;
 
   if (eventStatus === 'finished') {

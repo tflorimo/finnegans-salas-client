@@ -1,13 +1,13 @@
-import { useCallback, useState, useEffect, type ReactNode } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import { authService } from "../../services/auth/auth.service";
+import { useCallback, useEffect, useState, type ReactNode } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { setUnauthenticatedHandler } from "../../api/axios/axios.instance";
-import { setAuthHeader, clearAuthHeader } from "../../api/axios/axios.utils";
+import { clearAuthHeader, setAuthHeader } from "../../api/axios/axios.utils";
+import { authService } from "../../services/auth/auth.service";
+import { decodeJwt } from "../../shared/utils/decodeJwt.utils";
 import {
   clearNavigationState,
   setCurrentPath,
 } from "../../shared/utils/localStorage.utils";
-import { decodeJwt } from "../../shared/utils/decodeJwt.utils";
 import { AuthContext } from "./authContext";
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
@@ -20,8 +20,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [hasRedirected] = useState(false);
 
   useEffect(() => {
-    if (authToken && location.pathname !== "/login" && 
-      location.pathname !== "/" && 
+    if (authToken && location.pathname !== "/login" &&
+      location.pathname !== "/" &&
       location.pathname !== "/auth/callback") {
       setCurrentPath(location.pathname);
     }
@@ -42,10 +42,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const initializeAuth = async () => {
       try {
         const newToken = await authService.refreshAccessToken();
-        
+
         if (newToken) {
           const decoded = decodeJwt(newToken);
-          
+
           if (decoded && decoded.email) {
             setAuthTokenState(newToken);
             const email = (decoded.email as string) || null;
@@ -62,6 +62,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         }
       } catch (error) {
         clearAuthHeader();
+        throw new Error(`${error}`)
       } finally {
         setIsInitializing(false);
       }

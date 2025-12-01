@@ -1,4 +1,4 @@
-import { PaginationContainer, PageButton, PageInfo } from "../styles";
+import { PageButton, PageInfo, PaginationContainer } from "../styles";
 import type { PaginationControlsProps } from "../types/AuditItem.types";
 
 export const PaginationControls = ({
@@ -10,7 +10,7 @@ export const PaginationControls = ({
 }: PaginationControlsProps) => {
   const maxVisiblePages = 5;
   let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
-  let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+  const endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
 
   if (endPage - startPage < maxVisiblePages - 1) {
     startPage = Math.max(1, endPage - maxVisiblePages + 1);

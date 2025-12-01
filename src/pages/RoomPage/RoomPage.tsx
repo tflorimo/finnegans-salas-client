@@ -1,23 +1,25 @@
-import { useState } from "react";
 import { Calendar } from "lucide-react";
+import { useContext, useState } from "react";
+
 import { Button } from "../../components/Button/Button";
 import { CardContainer } from "../../components/CardContainer/CardContainer";
 import { Tag } from "../../components/Tag/Tag";
+import { ThemeContext } from "../../context/theme/themeContext";
 import { BackButton } from "../../shared/components/BackButton/BackButton";
+import type { CheckInStatus } from "../../shared/types/event.types";
+import { truncateText } from "../../shared/utils/text.utils";
+import { formatTime } from "../HomePage/utils/formatTime.utils";
+import { CheckInMessageModal } from "./components/CheckInMessageModal";
 import { EquipmentItem } from "./components/EquipmentItem";
 import { QRCode } from "./components/QRCode";
 import { ReservationItemComponent } from "./components/ReservationItemComponent";
 import { RoomHeader } from "./components/RoomHeader";
-import { CheckInMessageModal } from "./components/CheckInMessageModal";
-import { ROOM_PAGE_MESSAGES, CHECK_IN_STATUS_DISPLAY } from "./constants/RoomPage.constants";
+import { CHECK_IN_STATUS_DISPLAY, ROOM_PAGE_MESSAGES } from "./constants/RoomPage.constants";
 import { useCheckIn } from "./hooks/useCheckIn";
-import { useGetRoom } from "./hooks/useGetRoom";
 import { useFilteredReservations } from "./hooks/useFilteredReservations";
-import { renderStatusTag, sortEligibleEvents } from "./utils/RoomPageUtils";
-import { truncateText } from "../../shared/utils/text.utils";
-import { formatTime } from "../HomePage/utils/formatTime.utils";
-import type { CheckInStatus } from "../../shared/types/event.types";
+import { useGetRoom } from "./hooks/useGetRoom";
 import {
+  CheckInSectionStyle,
   CheckInSubtitle,
   ColumnaLateral,
   ColumnaPrincipal,
@@ -25,27 +27,25 @@ import {
   CurrentStatusCardStyle,
   EquipmentContainer,
   ErrorMessage,
-  NoReservationsMessage,
-  ReservationsSectionSeparator,
-  ReservationSectionTitle,
-  TitleStyle,
   FilaEstado,
+  NoEquipmentMessage,
+  NoReservationsMessage,
   PageInner,
   QRCardStyle,
-  ReservationsCardStyle,
+  QRDescriptionText,
   ReservationList,
+  ReservationSectionTitle,
+  ReservationsCardStyle,
+  ReservationsSectionSeparator,
   RoomInfoCardStyle,
   RoomPageContainer,
-  NoEquipmentMessage,
+  TitleStyle,
   getCheckInButtonStyle,
-  CheckInSectionStyle,
-  QRDescriptionText,
 } from "./styles";
-import { ThemeContext } from "../../context/theme/themeContext";
-import { useContext } from "react";
+import { renderStatusTag, sortEligibleEvents } from "./utils/RoomPageUtils";
 
 export const RoomPage = () => {
-  const {theme} = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
   const { loading, roomData, error, updateRoomData } = useGetRoom();
   const { todayReservations, weekReservations, finishedReservations } = useFilteredReservations(roomData?.events);
   const [clickedEventIds, setClickedEventIds] = useState<Set<string>>(new Set());
@@ -141,7 +141,7 @@ export const RoomPage = () => {
             </CardContainer>
 
             <CardContainer customStyle={ReservationsCardStyle}>
-              <TitleStyle $theme={theme}/>
+              <TitleStyle $theme={theme} />
               <ReservationSectionTitle $theme={theme}>
                 <Calendar />
                 {ROOM_PAGE_MESSAGES.TODAY_RESERVATIONS_TITLE}

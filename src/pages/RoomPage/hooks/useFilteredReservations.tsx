@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+
 import type { EventResponseDTO } from "../../../shared/types/event.types";
 import { isEventFinished } from "../../../shared/utils/event.utils";
 interface UseFilteredReservationsReturn {
@@ -33,7 +34,7 @@ export const useFilteredReservations = (
       .filter((event) => {
         const eventStartTime = new Date(event.startTime);
         const eventEndTime = new Date(event.endTime);
-        
+
         return eventStartTime >= tomorrow && eventEndTime > now;
       })
       .sort((a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime());

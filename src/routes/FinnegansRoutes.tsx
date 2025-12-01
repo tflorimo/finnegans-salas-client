@@ -1,12 +1,13 @@
 import { Route, Routes } from "react-router-dom"
-import { AdminEventsPage } from "../pages/AdminEvents/AdminEventsPage"
+
 import { AdminAuditPage } from "../pages/AdminAudits/AdminAuditPage"
+import { AdminEventsPage } from "../pages/AdminEvents/AdminEventsPage"
 import { HeatmapPage } from "../pages/HeatmapPage/HeatmapPage"
-import { HomePage } from "../pages/HomePage"
+import HomePage from "../pages/HomePage/HomePage"
+import { NotFoundPage } from "../pages/NotFoundPage"
 import { RoomPage } from "../pages/RoomPage/RoomPage"
 import { AdminRoute } from "../router/AdminRouter"
 import Header from "../shared/components/Header/Header"
-import { NotFoundPage } from "../pages/NotFoundPage"
 
 export const FinnegansRoutes = () => {
   return (

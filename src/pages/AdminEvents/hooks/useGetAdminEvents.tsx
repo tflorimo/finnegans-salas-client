@@ -19,7 +19,7 @@ export const useGetAdminEvents = () => {
             setLoading(true);
             setError(null);
 
-            const response = await adminService.getAllEventsAdmin();
+            const response = await adminService.getAllEvents();
             const events = (Array.isArray(response) ? response : []) as EventResponseDTO[];
 
             if (!events.length) {
