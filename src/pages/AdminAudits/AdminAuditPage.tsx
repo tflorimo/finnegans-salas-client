@@ -7,6 +7,7 @@ import { GenericSelect } from "../../components/GenericSelect/GenericSelect";
 import { InputSearch } from "../../components/InputSearch/InputSearch";
 import { ThemeContext } from "../../context/theme/themeContext";
 import type { AuditDTO } from "../../services/admin/audits/types";
+import { adminService } from "../../services/admin/admin.service";
 import { BackButton } from "../../shared/components/BackButton/BackButton";
 import { ExportButton } from "../../shared/components/ExportButton";
 import { FilterToolbar } from "../../shared/components/FilterToolbar/FilterToolbar";
@@ -96,6 +97,11 @@ export const AdminAuditPage = () => {
     setSelectValue(undefined);
   }, []);
 
+  const handleExportAllAudits = useCallback(async () => {
+    const response = await adminService.getAllAudits();
+    return response.items || [];
+  }, []);
+
   return (
     <AdminLogsPageWrapper>
       <SideBar
@@ -158,7 +164,8 @@ export const AdminAuditPage = () => {
                 <ExportButton
                   data={audits}
                   fileName={ADMIN_AUDIT_MESSAGES.EXPORT_FILE_NAME}
-                  disabled={loading || audits.length === 0}
+                  disabled={loading}
+                  onClick={handleExportAllAudits}
                 />
               </ButtonsAuditContainer>
             </HeaderContent>

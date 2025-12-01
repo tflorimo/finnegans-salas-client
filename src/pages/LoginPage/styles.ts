@@ -6,9 +6,6 @@ const COLOR_PRIMARY_BLUE = "#1d4ed8";
 const COLOR_TEXT_WHITE = "#ffffffff";
 const COLOR_TEXT_WHITE_SUBTLE = "#ffffffb4";
 
-const COLOR_FOOTER_TEXT = "#ffffffff";
-const COLOR_FOOTER_LINK = "#b6b6b6ff";
-
 const COLOR_CARD_TEXT = "#0f172a";
 const COLOR_CARD_BACKGROUND = "#23688a";
 
@@ -86,18 +83,6 @@ export const LoginHeader = styled.header`
     margin: 0;
     color: ${COLOR_TEXT_WHITE_SUBTLE};
     font-size: 14px;
-  }
-`;
-
-export const LoginFooter = styled.footer`
-  margin-top: 16px;
-  text-align: center;
-  color: ${COLOR_FOOTER_TEXT};
-  font-size: 12px;
-
-  a {
-    color: ${COLOR_FOOTER_LINK};
-    text-decoration: underline;
   }
 `;
 

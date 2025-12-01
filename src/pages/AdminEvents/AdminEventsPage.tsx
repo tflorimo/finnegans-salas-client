@@ -7,6 +7,7 @@ import { GenericSelect } from "../../components/GenericSelect/GenericSelect";
 import { InputSearch } from "../../components/InputSearch/InputSearch";
 import { ThemeContext } from "../../context/theme/themeContext";
 import type { EventListItemDTO } from "../../services/admin/audits/types";
+import { adminService } from "../../services/admin/admin.service";
 import { BackButton } from "../../shared/components/BackButton/BackButton";
 import { ExportButton } from "../../shared/components/ExportButton";
 import { FilterToolbar } from "../../shared/components/FilterToolbar/FilterToolbar";
@@ -96,6 +97,11 @@ export const AdminEventsPage = () => {
     setSelectValue(undefined);
   }, []);
 
+  const handleExportAllEvents = useCallback(async () => {
+    const response = await adminService.getAllEvents();
+    return response.items || [];
+  }, []);
+
   return (
     <AdminEventsPageWrapper>
       <SideBar
@@ -161,7 +167,8 @@ export const AdminEventsPage = () => {
                 <ExportButton
                   data={events}
                   fileName={ADMIN_EVENTS_MESSAGES.EXPORT_FILE_NAME}
-                  disabled={loading || events.length === 0}
+                  disabled={loading}
+                  onClick={handleExportAllEvents}
                 />
               </ButtonsEventsContainer>
             </HeaderContent>
