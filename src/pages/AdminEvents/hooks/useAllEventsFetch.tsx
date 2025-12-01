@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { adminService } from '../../../services/admin/admin.service';
-import type { EventListItemDTO } from '../../../services/admin/audits/types';
+import type { EventListItemDTO } from '../../../services/admin/admin.types';
 
 export const useAllEventsFetch = () => {
   const [events, setEvents] = useState<EventListItemDTO[]>([]);

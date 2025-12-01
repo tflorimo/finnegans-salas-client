@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { adminService } from '../../../services/admin/admin.service';
-import type { AuditDTO } from '../../../services/admin/audits/types';
+import type { AuditDTO } from '../../../services/admin/admin.types';
 
 export const useAllAuditsFetch = () => {
   const [audits, setAudits] = useState<AuditDTO[]>([]);

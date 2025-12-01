@@ -10,12 +10,12 @@ export const HEAT_MAP_COLORS = {
 };
 
 export const HeatmapContainer = styled.div<{ $theme: ThemeType }>`
-    width: auto;
-    height: 100vh;
+    width: 100%;
+    height: auto;
     border-radius: 16px;
     display: flex;
     flex-direction: column;
-    color: ${({ $theme }) => themes[$theme].TEXT_COLOR}
+    color: ${({ $theme }) => themes[$theme].TEXT_COLOR};
     gap: 16px;
 `;
 
@@ -61,13 +61,10 @@ export const Card = styled.div<{ $theme: ThemeType }>`
   display: flex;
   flex-direction: column;
   gap: 18px;
-  max-width: 1600px;
-  margin: 0 1rem;
-  overflow-x: auto;
-  overflow-y: hidden;
+  flex: 1;
+  margin: 0 1rem 1rem 1rem;
+  overflow-x: visible;
   ${media.sm} {
-    width: auto;
-    overflow-x: auto;
-    overflow-y: hidden;
+    overflow-x: visible;
   }
 `;
