@@ -93,6 +93,7 @@ export const PageHeader = styled.header`
   display: flex;
   flex-direction: column;
   gap: 0px;
+  margin-bottom: 0.5rem;
 `;
 
 export const HeaderContent = styled.div`
