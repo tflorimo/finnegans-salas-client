@@ -1,4 +1,4 @@
-import type { AuditDTO } from '../../../services/admin/audits/types';
+import type { AuditDTO } from "../../../services/admin/admin.types";
 
 export interface AuditItemProps {
   log: AuditDTO;

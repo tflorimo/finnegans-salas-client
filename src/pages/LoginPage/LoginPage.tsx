@@ -13,7 +13,6 @@ import {
   GoogleButtonStyle,
   ImageFinnegans,
   LoginCardStyle,
-  LoginFooter,
   LoginHeader,
   LoginPageContainer,
   LogoGoogle,
@@ -104,13 +103,6 @@ export const LoginPage = () => {
             onClick={handleGoogleLogin}
             customStyle={GoogleButtonStyle}
           />
-
-          <LoginFooter>
-            <p>
-              {LOGIN_PAGE_TEXTS.FOOTER.DISCLAIMER} <a href="#">{LOGIN_PAGE_TEXTS.FOOTER.TERMS_LINK}</a>{" "}
-              {LOGIN_PAGE_TEXTS.FOOTER.AND} <a href="#">{LOGIN_PAGE_TEXTS.FOOTER.PRIVACY_LINK}</a>.
-            </p>
-          </LoginFooter>
         </CardContainer>
       </LoginPageContainer>
     </>

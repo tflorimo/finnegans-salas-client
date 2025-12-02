@@ -1,12 +1,12 @@
 import { Trash } from "lucide-react";
 import { useCallback, useContext, useMemo, useState } from "react";
-
 import { Button } from "../../components/Button/Button";
 import { ButtonVariant } from "../../components/Button/types";
 import { GenericSelect } from "../../components/GenericSelect/GenericSelect";
 import { InputSearch } from "../../components/InputSearch/InputSearch";
 import { ThemeContext } from "../../context/theme/themeContext";
-import type { AuditDTO } from "../../services/admin/audits/types";
+import { adminService } from "../../services/admin/admin.service";
+import { roomService } from "../../services/rooms/room.service";
 import { BackButton } from "../../shared/components/BackButton/BackButton";
 import { ExportButton } from "../../shared/components/ExportButton";
 import { FilterToolbar } from "../../shared/components/FilterToolbar/FilterToolbar";
@@ -15,6 +15,7 @@ import Header from "../../shared/components/Header/Header";
 import { Pagination } from "../../shared/components/Pagination/Pagination";
 import { SideBar } from "../../shared/components/SideBar/SideBar";
 import { SidebarBackdrop } from "../../shared/components/SideBar/styles";
+import { generateQRsPDF } from "../../shared/utils/qrPdfExport.utils";
 import { AuditItem } from "./components/AuditItem";
 import {
   ADMIN_AUDIT_MESSAGES,
@@ -37,6 +38,7 @@ import {
   PageInner,
   PageTitle,
 } from "./styles";
+import type { AuditDTO } from "../../services/admin/admin.types";
 
 export const AdminAuditPage = () => {
   const { theme } = useContext(ThemeContext);
@@ -96,11 +98,27 @@ export const AdminAuditPage = () => {
     setSelectValue(undefined);
   }, []);
 
+  const handleExportAllAudits = useCallback(async () => {
+    const response = await adminService.getAllAudits();
+    return response.items || [];
+  }, []);
+
+  const handleDownloadQRs = useCallback(async () => {
+    try {
+      const rooms = await roomService.getRooms();
+      await generateQRsPDF(rooms);
+    } catch (error) {
+      console.error("Error downloading QRs:", error);
+      alert("No se pudieron descargar los códigos QR");
+    }
+  }, []);
+
   return (
     <AdminLogsPageWrapper>
       <SideBar
         isCollapsed={isSidebarCollapsed}
         onToggle={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+        onDownloadQRs={handleDownloadQRs}
       />
       <SidebarBackdrop
         $isOpen={!isSidebarCollapsed}
@@ -158,7 +176,8 @@ export const AdminAuditPage = () => {
                 <ExportButton
                   data={audits}
                   fileName={ADMIN_AUDIT_MESSAGES.EXPORT_FILE_NAME}
-                  disabled={loading || audits.length === 0}
+                  disabled={loading}
+                  onClick={handleExportAllAudits}
                 />
               </ButtonsAuditContainer>
             </HeaderContent>

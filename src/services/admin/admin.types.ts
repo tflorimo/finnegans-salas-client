@@ -1,4 +1,4 @@
-import type { AttendeeDTO, CheckInStatus, OverlapStatus } from "../../../shared/types/event.types";
+import type { EventResponseDTO, AttendeeDTO, CheckInStatus, OverlapStatus } from "../../shared/types/event.types";
 
 export interface AuditDTO {
   id: number;
@@ -66,4 +66,14 @@ export enum AuditAction {
   ROOM_DELETED = "ROOM_DELETED",
   ROOM_BUSY = "ROOM_BUSY",
   ROOM_AVAILABLE = "ROOM_AVAILABLE",
+}
+
+export interface FlatEvent extends Pick<EventResponseDTO,
+  'id' |
+  'title' |
+  'roomName' |
+  'startTime' |
+  'endTime' > {
+  date: string;
+  attendeesCount: number;
 }

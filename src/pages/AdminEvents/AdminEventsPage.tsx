@@ -6,7 +6,8 @@ import { ButtonVariant } from "../../components/Button/types";
 import { GenericSelect } from "../../components/GenericSelect/GenericSelect";
 import { InputSearch } from "../../components/InputSearch/InputSearch";
 import { ThemeContext } from "../../context/theme/themeContext";
-import type { EventListItemDTO } from "../../services/admin/audits/types";
+import { adminService } from "../../services/admin/admin.service";
+import { roomService } from "../../services/rooms/room.service";
 import { BackButton } from "../../shared/components/BackButton/BackButton";
 import { ExportButton } from "../../shared/components/ExportButton";
 import { FilterToolbar } from "../../shared/components/FilterToolbar/FilterToolbar";
@@ -15,6 +16,7 @@ import Header from "../../shared/components/Header/Header";
 import { Pagination } from "../../shared/components/Pagination/Pagination";
 import { SideBar } from "../../shared/components/SideBar/SideBar";
 import { SidebarBackdrop } from "../../shared/components/SideBar/styles";
+import { generateQRsPDF } from "../../shared/utils/qrPdfExport.utils";
 import { AUDIT_SEARCH_TIMEOUT } from "../AdminAudits/constants/AdminAudit.constants";
 import { useGetRooms } from "../HomePage/hooks/useGetRooms";
 import { EventDetailsModal } from "./components/EventDetailsModal";
@@ -37,6 +39,7 @@ import {
   PageTitle,
   TableWrapper,
 } from "./styles";
+import type { EventListItemDTO } from "../../services/admin/admin.types";
 
 export const AdminEventsPage = () => {
   const { theme } = useContext(ThemeContext);
@@ -96,11 +99,27 @@ export const AdminEventsPage = () => {
     setSelectValue(undefined);
   }, []);
 
+  const handleExportAllEvents = useCallback(async () => {
+    const response = await adminService.getAllEvents();
+    return response.items || [];
+  }, []);
+
+  const handleDownloadQRs = useCallback(async () => {
+    try {
+      const rooms = await roomService.getRooms();
+      await generateQRsPDF(rooms);
+    } catch (error) {
+      console.error("Error downloading QRs:", error);
+      alert("No se pudieron descargar los códigos QR");
+    }
+  }, []);
+
   return (
     <AdminEventsPageWrapper>
       <SideBar
         isCollapsed={isSidebarCollapsed}
         onToggle={() => setIsSidebarCollapsed((prevState) => !prevState)}
+        onDownloadQRs={handleDownloadQRs}
       />
 
       <SidebarBackdrop
@@ -161,7 +180,8 @@ export const AdminEventsPage = () => {
                 <ExportButton
                   data={events}
                   fileName={ADMIN_EVENTS_MESSAGES.EXPORT_FILE_NAME}
-                  disabled={loading || events.length === 0}
+                  disabled={loading}
+                  onClick={handleExportAllEvents}
                 />
               </ButtonsEventsContainer>
             </HeaderContent>

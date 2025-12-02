@@ -2,8 +2,6 @@ import { HOURS_RANGE, WEEK_DAYS_ORDER } from "../../constants/Heatmap.constants"
 import type { HeatmapPoint, HeatmapStructure, RoomHourlyForecastDTO } from "../../types/HeatmapPage.types";
 import { parseDatetime } from "../date.utils";
 
-
-
 export const hourlyForecastAdapter = {
     toHeatmapStructure(roomForecasts: RoomHourlyForecastDTO[]): HeatmapStructure {
         if (!roomForecasts || roomForecasts.length === 0) {
@@ -16,7 +14,7 @@ export const hourlyForecastAdapter = {
 
         const yAxisLabels = HOURS_RANGE.map(
             (hour) => `${hour.toString().padStart(2, "0")}:00`
-        );
+        ).reverse();
 
         const data: HeatmapPoint[] = [];
 
@@ -32,7 +30,7 @@ export const hourlyForecastAdapter = {
 
                 if (!HOURS_RANGE.includes(hour)) return;
 
-                const yIndex = HOURS_RANGE.indexOf(hour);
+                const yIndex = HOURS_RANGE.length - 1 - HOURS_RANGE.indexOf(hour);
 
                 const percentage = Math.round((1 - forecast.occupancyPredicted) * 100);
 

@@ -3,4 +3,5 @@ export type SideBarProps = {
   onToggle: () => void;
   onLogsClick?: () => void;
   onEventsClick?: () => void;
+  onDownloadQRs?: () => void;
 };

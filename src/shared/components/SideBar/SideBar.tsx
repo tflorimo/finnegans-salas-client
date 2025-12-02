@@ -1,4 +1,4 @@
-import { BarChart3, ChevronLeft, ChevronRight, FileText } from "lucide-react";
+import { BarChart3, ChevronLeft, ChevronRight, FileText, Download } from "lucide-react";
 import { useContext, type JSX } from "react";
 import { NavLink } from "react-router-dom";
 
@@ -33,7 +33,8 @@ export const SideBar = ({
   isCollapsed,
   onToggle,
   onLogsClick,
-  onEventsClick
+  onEventsClick,
+  onDownloadQRs
 }: SideBarProps): JSX.Element => {
 
   const { theme } = useContext(ThemeContext);
@@ -95,6 +96,13 @@ export const SideBar = ({
             />
           )}
         </NavLink>
+        <Button
+          text={isCollapsed ? undefined : "Descargar QRs"}
+          icon={<Download size={18} />}
+          variant={ButtonVariant.light}
+          onClick={onDownloadQRs || (() => { })}
+          customStyle={getBaseButtonStyles(false, theme, isCollapsed)}
+        />
       </SideBarNav>
     </SideBarContainer>
   );

@@ -14,6 +14,10 @@ export const NotFoundContainer = styled.div<{ $theme: ThemeType }>`
   background: ${({ $theme }) => themes[$theme].BACKGROUND_COLOR};
   padding: 2rem;
   transition: background 0.3s ease;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
 `;
 
 export const NotFoundContent = styled.div<{ $theme: ThemeType }>`
@@ -24,6 +28,16 @@ export const NotFoundContent = styled.div<{ $theme: ThemeType }>`
   border-radius: 16px;
   box-shadow: 0 4px 20px ${BOX_SHADOW_COLOR};
   transition: background 0.3s ease;
+
+  @media (max-width: 768px) {
+    padding: 2rem;
+    max-width: 90%;
+  }
+
+  @media (max-width: 480px) {
+    padding: 1.5rem;
+    max-width: 95%;
+  }
 `;
 
 export const NotFoundCode = styled.h1<{ $theme: ThemeType }>`
@@ -35,6 +49,14 @@ export const NotFoundCode = styled.h1<{ $theme: ThemeType }>`
   -webkit-text-fill-color: transparent;
   background-clip: text;
   line-height: 1;
+
+  @media (max-width: 768px) {
+    font-size: 5rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 3rem;
+  }
 `;
 
 export const NotFoundTitle = styled.h2<{ $theme: ThemeType }>`
@@ -43,6 +65,16 @@ export const NotFoundTitle = styled.h2<{ $theme: ThemeType }>`
   color: ${({ $theme }) => themes[$theme].TEXT_COLOR};
   margin: 1.5rem 0 1rem;
   transition: color 0.3s ease;
+
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+    margin: 1rem 0 0.75rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.25rem;
+    margin: 0.75rem 0 0.5rem;
+  }
 `;
 
 export const NotFoundMessage = styled.p<{ $theme: ThemeType }>`
@@ -52,6 +84,16 @@ export const NotFoundMessage = styled.p<{ $theme: ThemeType }>`
   margin: 0 0 2rem;
   line-height: 1.6;
   transition: color 0.3s ease;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+    margin: 0 0 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.875rem;
+    margin: 0 0 1.25rem;
+  }
 `;
 
 export const HomeButton = styled.button`
@@ -75,5 +117,15 @@ export const HomeButton = styled.button`
 
   &:active {
     transform: translateY(0);
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.625rem 1.25rem;
+    font-size: 0.875rem;
   }
 `;

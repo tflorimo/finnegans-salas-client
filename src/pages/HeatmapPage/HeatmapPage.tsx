@@ -29,7 +29,7 @@ export const HeatmapPage = () => {
                 <Subtitle>{HEATMAP_TEXTS.pageSubtitle}</Subtitle>
             </HeaderSection>
             {allRooms.length ? <SelectFilterContainer>
-                <GenericSelect theme={theme} values={allRooms} formatLabel={(value) => value.roomName} onChange={(value) => setRoomSelected(value.roomEmail)} selected={roomSelected} />
+                <GenericSelect theme={theme} values={allRooms} formatLabel={(value) => value.roomName} onChange={(value) => setRoomSelected(value.roomEmail)} selected={allRooms.find(room => room.roomEmail === roomSelected)} />
             </SelectFilterContainer> : undefined}
             <Card $theme={theme}>
                 <ForecastHeatmap roomSelected={roomSelected} />

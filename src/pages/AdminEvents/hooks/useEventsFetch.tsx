@@ -1,8 +1,8 @@
 import { useCallback, useState } from 'react';
 import { adminService } from '../../../services/admin/admin.service';
-import type { EventListItemDTO } from '../../../services/admin/audits/types';
 import { usePagination } from '../../../shared/hooks/usePagination';
 import type { SearchParam } from '../types/AdminEvents.types';
+import type { EventListItemDTO } from '../../../services/admin/admin.types';
 
 export const useEventsFetch = () => {
   const [search, setSearch] = useState<SearchParam>(undefined);
