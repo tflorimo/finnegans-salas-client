@@ -72,7 +72,7 @@ export const HomePage = () => {
         {/* Filtros */}
         <SelectActionsContainer>
           <SelectFilterContainer>
-            <Funnel size={20} color={theme === "dark" ? "#ffffff" : ROOM_PAGE_COLORS.roomBoxShadow} />
+            <Funnel size={35} color={theme === "dark" ? "#ffffff" : ROOM_PAGE_COLORS.roomBoxShadow} />
 
             <GenericSelect
               values={ROOM_SELECT_OPTIONS}
