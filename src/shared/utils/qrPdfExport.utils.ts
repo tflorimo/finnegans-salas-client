@@ -21,6 +21,7 @@ export const generateQRsPDF = async (rooms: RoomResponseDTO[]): Promise<void> =>
       orientation: "portrait",
       unit: "mm",
       format: "a4",
+      compress: false, 
     });
 
     const pageWidth = pdf.internal.pageSize.getWidth();
@@ -42,11 +43,16 @@ export const generateQRsPDF = async (rooms: RoomResponseDTO[]): Promise<void> =>
       url: `${baseUrl}/qr-checkin/${encodeRoomEmailForQR(room.email)}`,
     }));
 
+    const qrScale = 4; 
+    const containerSize = 200 * qrScale;
+    
     const container = document.createElement("div");
-    container.style.width = "200px";
-    container.style.height = "200px";
+    container.style.width = `${containerSize}px`;
+    container.style.height = `${containerSize}px`;
     container.style.position = "absolute";
     container.style.top = "-9999px";
+    container.style.left = "-9999px";
+    container.style.backgroundColor = WHITE_COLOR;
     document.body.appendChild(container);
 
     const root = createRoot(container);
@@ -65,8 +71,8 @@ export const generateQRsPDF = async (rooms: RoomResponseDTO[]): Promise<void> =>
       root.render(
         React.createElement(QRCodeLib, {
           value: roomData[i].url,
-          size: 200,
-          level: "M",
+          size: containerSize, // Renderizar con escala 4x
+          level: "H", 
           bgColor: WHITE_COLOR,
           fgColor: BLACK_COLOR,
         })
@@ -74,9 +80,15 @@ export const generateQRsPDF = async (rooms: RoomResponseDTO[]): Promise<void> =>
 
       await new Promise(requestAnimationFrame);
 
-      const canvas = await html2canvas(container);
+      const canvas = await html2canvas(container, {
+        scale: 2, 
+        logging: false,
+        useCORS: true,
+        backgroundColor: WHITE_COLOR,
+        allowTaint: true,
+      });
 
-      const imgData = canvas.toDataURL("image/png");
+      const imgData = canvas.toDataURL("image/png", 1.0);
 
       pdf.addImage(imgData, "PNG", x, y, qrSize, qrSize);
       pdf.setFontSize(8);
