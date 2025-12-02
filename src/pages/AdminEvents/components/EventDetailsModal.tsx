@@ -1,0 +1,123 @@
+import { X } from "lucide-react";
+import { useContext } from "react";
+import { CardContainer } from "../../../components/CardContainer/CardContainer";
+import { Tag } from "../../../components/Tag/Tag";
+import { ThemeContext } from "../../../context/theme/themeContext";
+import type { EventResponseDTO } from "../../../shared/types/event.types";
+import { formatTimeRange } from "../../../shared/utils/format.utils";
+import { truncateTextByLength } from "../../../shared/utils/text.utils";
+import {
+  ATTENDEE_STATUS_TAG_MAP,
+  CHECK_IN_STATUS_TAG_MAP,
+  EVENT_MODAL,
+  RESPONSE_STATUS_LABELS_MAP
+} from "../constants/AdminEvents.constants";
+import {
+  AttendeeList,
+  CloseBtn,
+  Field,
+  FieldsWrapper,
+  ModalBody,
+  ModalCardStyle,
+  ModalHeader,
+  Overlay,
+} from "../styles";
+import { formatDate, formatTime } from "../utils/dateUtils";
+interface EventDetailsModalProps {
+  event: EventResponseDTO;
+  onClose: () => void;
+}
+
+export const EventDetailsModal = ({ event, onClose }: EventDetailsModalProps) => {
+  const { theme } = useContext(ThemeContext);
+  const handleOverlayClick: React.MouseEventHandler<HTMLDivElement> = () => onClose();
+  const stop: React.MouseEventHandler<HTMLDivElement> = (e) => e.stopPropagation();
+
+  const checkInTag = CHECK_IN_STATUS_TAG_MAP[event.checkInStatus];
+  const filteredAttendees = event.attendees.filter(
+    (attendee) => attendee.email !== event.roomEmail
+  );
+
+  return (
+    <Overlay onClick={handleOverlayClick} aria-modal="true" role="dialog">
+      <ModalBody $theme={theme} onClick={stop}>
+        <CardContainer customStyle={ModalCardStyle}>
+          <ModalHeader $theme={theme}>
+            <h3 title={event.title}>{truncateTextByLength(event.title, 40)}</h3>
+            <CloseBtn $theme={theme} aria-label="Cerrar" onClick={onClose}>
+              <X size={18} />
+            </CloseBtn>
+          </ModalHeader>
+
+          <FieldsWrapper>
+            <Field $theme={theme}>
+              <label>{EVENT_MODAL.DATE}</label>
+              <div>{formatDate(event.startTime)}</div>
+            </Field>
+
+            <Field $theme={theme}>
+              <label>{EVENT_MODAL.TIME}</label>
+              <div>{formatTimeRange(event.startTime, event.endTime)}</div>
+            </Field>
+
+            <Field $theme={theme}>
+              <label>{EVENT_MODAL.ROOM}</label>
+              <div>{event.roomName}</div>
+            </Field>
+
+            <Field $theme={theme}>
+              <label>{EVENT_MODAL.ID}</label>
+              <div>{event.roomEmail}</div>
+            </Field>
+
+            <Field $theme={theme}>
+              <label>{EVENT_MODAL.CREATOR_MAIL}</label>
+              <div>{event.creatorMail}</div>
+            </Field>
+
+            <Field $theme={theme}>
+              <label>{EVENT_MODAL.CREATOR_NAME}</label>
+              <div>{event.creatorName}</div>
+            </Field>
+
+            <Field $theme={theme}>
+              <label>{EVENT_MODAL.CHECK_IN}</label>
+              <div>
+                <Tag
+                  text={checkInTag.text}
+                  type={checkInTag.type}
+                />
+              </div>
+            </Field>
+
+            {event.deletedAt && (
+              <Field $theme={theme}>
+                <label>{EVENT_MODAL.DELETED_AT}</label>
+                <div>{formatDate(event.deletedAt)} - {formatTime(event.deletedAt)}</div>
+              </Field>
+            )}
+
+            <Field $theme={theme}>
+              <label>{EVENT_MODAL.ATTENDEES}</label>
+              {filteredAttendees.length === 0 ? (
+                <div>{EVENT_MODAL.WITHOUT_ATTENDEES}</div>
+              ) : (
+                <AttendeeList $theme={theme}>
+                  {filteredAttendees.map((attendee) => (
+                    <li key={attendee.email}>
+                      <span>{attendee.email}</span>
+                      <Tag
+                        text={RESPONSE_STATUS_LABELS_MAP[attendee.responseStatus]}
+                        type={ATTENDEE_STATUS_TAG_MAP[attendee.responseStatus]}
+                      />
+                    </li>
+                  ))}
+                </AttendeeList>
+              )}
+            </Field>
+          </FieldsWrapper>
+        </CardContainer>
+      </ModalBody>
+    </Overlay>
+  );
+};
