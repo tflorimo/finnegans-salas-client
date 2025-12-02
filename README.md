@@ -376,25 +376,6 @@ const handlePageChange = (newPage: number) => {
 
 ---
 
-## 🌍 Despliegue
-
-### Plataforma
-
-**Hosting**: Vercel (recomendado) o Netlify
-
-### Build y Deploy
-
-```bash
-# Build optimizado
-npm run build            # Genera /dist
-
-# Deploy a Vercel
-vercel deploy            # Automático desde git
-
-# Deploy a Netlify
-netlify deploy           # CLI o git push a main
-```
-
 ### Consideraciones de Producción
 
 - **Environment Variables**: Diferentes por stage (dev, staging, prod)
