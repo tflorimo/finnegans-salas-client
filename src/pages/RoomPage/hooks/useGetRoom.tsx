@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
+
+import { roomService } from "../../../services/rooms/room.service";
 import type { RoomResponseDTO } from "../../../shared/types/room.types";
 import { decodeRoomId } from "../../../shared/utils/roomURL.utils";
-import { roomService } from "../../../services/rooms/room.service";
 interface UseGetRoomReturn {
   loading: boolean;
   roomData: RoomResponseDTO | undefined;
@@ -14,7 +15,7 @@ export const useGetRoom = (): UseGetRoomReturn => {
   const location = useLocation();
   const { id } = useParams<{ id: string }>();
   const initialRoomData = (location.state as { room?: RoomResponseDTO })?.room ?? undefined;
-  
+
   const [roomData, setRoomData] = useState<RoomResponseDTO | undefined>(initialRoomData);
   const [loading, setLoading] = useState<boolean>(!initialRoomData && !!id);
   const [error, setError] = useState<string | null>(null);
@@ -50,7 +51,7 @@ export const useGetRoom = (): UseGetRoomReturn => {
     } else {
       fetchRoomData();
     }
-  }, [id]); 
+  }, [id]);
 
   useEffect(() => {
     const newRoomData = (location.state as { room?: RoomResponseDTO })?.room;

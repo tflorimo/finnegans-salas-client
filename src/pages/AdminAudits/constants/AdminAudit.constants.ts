@@ -66,4 +66,4 @@ export const AUDIT_COLOR_MAP: Record<string, TagsTypes> = {
   'ROOM_RESTORED': 'blueOutput',
 };
 
-export const AUDIT_SEARCH_TIMEOUT = 2000;
+export const AUDIT_SEARCH_TIMEOUT = 1500;

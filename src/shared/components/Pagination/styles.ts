@@ -1,6 +1,7 @@
 import styled from 'styled-components';
-import type { ThemeType } from '../../../theme/Types';
+
 import { themes } from '../../../theme/Theme';
+import type { ThemeType } from '../../../theme/Types';
 
 const COLOR_BORDER_LIGHT = "#e2e8f0";
 const COLOR_BG_DARK = "#374151";
@@ -54,9 +55,9 @@ export const PageButton = styled.button<{ $active?: boolean; $theme: ThemeType }
 
   &:hover:not(:disabled) {
     background: ${({ $theme }) =>
-      $theme === "dark" ? COLOR_HOVER_DARK : COLOR_HOVER_LIGHT};
+    $theme === "dark" ? COLOR_HOVER_DARK : COLOR_HOVER_LIGHT};
     border-color: ${({ $theme }) =>
-      $theme === "dark" ? COLOR_BORDER_HOVER_DARK : COLOR_BORDER_HOVER_LIGHT};
+    $theme === "dark" ? COLOR_BORDER_HOVER_DARK : COLOR_BORDER_HOVER_LIGHT};
   }
 
   &:disabled {

@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
-import type { ThemeType } from "../../../theme/Types";
+
 import { themes } from "../../../theme/Theme";
+import type { ThemeType } from "../../../theme/Types";
 
 export const EXPORT_BUTTON_STYLE = (disabled: boolean, theme: ThemeType) => css`
   height: 40px;
@@ -81,7 +82,7 @@ export const ModalButton = styled.button<{ $theme: ThemeType }>`
   }
 `;
 
-export const CancelButton = styled(ModalButton)<{ $theme: ThemeType }>`
+export const CancelButton = styled(ModalButton) <{ $theme: ThemeType }>`
   background: ${({ $theme }) => $theme === "dark" ? "#374151" : "#f1f5f9"};
   border-color: ${({ $theme }) => themes[$theme].BORDER_COLOR};
   

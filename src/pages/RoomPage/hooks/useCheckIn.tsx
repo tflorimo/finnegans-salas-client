@@ -1,10 +1,11 @@
-import { useContext, useState, useCallback } from "react";
+import { useCallback, useContext, useState } from "react";
+
 import { AuthContext } from "../../../context/auth/authContext";
 import { roomService } from "../../../services/rooms/room.service";
-import { findAllCheckInEligibleEvents, isCheckInAlreadyDoneError } from "../utils/CheckIn.utils";
-import type { RoomResponseDTO } from "../../../shared/types/room.types";
 import type { EventResponseDTO } from "../../../shared/types/event.types";
+import type { RoomResponseDTO } from "../../../shared/types/room.types";
 import type { CheckInState, CheckInValidation, UseCheckInParams } from "../types/RoomPage.types";
+import { findAllCheckInEligibleEvents, isCheckInAlreadyDoneError } from "../utils/CheckIn.utils";
 
 export const useCheckIn = ({ onSuccess }: UseCheckInParams = {}) => {
   const { userEmail } = useContext(AuthContext);

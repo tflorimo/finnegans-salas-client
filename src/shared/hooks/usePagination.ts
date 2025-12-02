@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+
 import type { PaginatedResponse } from '../types/pagination.types';
 
 interface UsePaginationState<T> {

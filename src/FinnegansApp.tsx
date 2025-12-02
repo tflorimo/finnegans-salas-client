@@ -8,7 +8,7 @@ export const FinnegansApp = () => {
     <ThemeProvider>
       <AuthProvider>
         <Layout>
-        <AppRouter />
+          <AppRouter />
         </Layout>
       </AuthProvider>
     </ThemeProvider>

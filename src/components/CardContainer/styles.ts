@@ -1,12 +1,8 @@
-import styled, { type CSSProp } from "styled-components";
-import { DARK_COLOR } from "../../assets/colors/global-colors";
-import type { ThemeType } from "../../theme/Types";
-import { themes } from "../../theme/Theme";
+import styled from "styled-components";
 
-type CardContainerStyledProps = {
-  $customStyle?: CSSProp;
-  $theme: ThemeType;
-};
+import { DARK_COLOR } from "../../assets/colors/global-colors";
+import { themes } from "../../theme/Theme";
+import type { CardContainerStyledProps } from "./types";
 
 export const CardContainerStyled = styled.div<CardContainerStyledProps>`
   display: flex;

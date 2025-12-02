@@ -1,10 +1,11 @@
-import { useState, useCallback, useEffect, useContext, useRef } from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+
 import { AuthContext } from "../../../context/auth/authContext";
 import { roomService } from "../../../services/rooms/room.service";
-import { findUserEligibleEvent, validateCheckInEligibility, isCheckInAlreadyDoneError } from "../utils/QR.utils";
 import { QR_MESSAGES, QR_ROUTES } from "../constants/RoomPage.constants";
 import type { CheckInResult, QRCheckInState } from "../types/RoomPage.types";
+import { findUserEligibleEvent, isCheckInAlreadyDoneError, validateCheckInEligibility } from "../utils/QR.utils";
 
 export const useQRCheckIn = (roomEmailProp?: string) => {
     const navigate = useNavigate();
@@ -64,7 +65,7 @@ export const useQRCheckIn = (roomEmailProp?: string) => {
 
             try {
                 const roomData = await roomService.getRoom(roomEmail);
-                
+
                 if (isCheckInAlreadyDoneError(errorMessage)) {
                     return {
                         success: true,
@@ -72,7 +73,7 @@ export const useQRCheckIn = (roomEmailProp?: string) => {
                         roomData: roomData,
                     };
                 }
-                
+
                 return {
                     success: false,
                     message: errorMessage,
@@ -123,7 +124,7 @@ export const useQRCheckIn = (roomEmailProp?: string) => {
         if (hasExecuted.current) {
             return;
         }
-        
+
         hasExecuted.current = true;
         executeCheckIn();
     }, [executeCheckIn]);

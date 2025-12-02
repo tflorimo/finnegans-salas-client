@@ -1,8 +1,10 @@
 import { BarChart3, ChevronLeft, ChevronRight, FileText, Download } from "lucide-react";
 import { useContext, type JSX } from "react";
 import { NavLink } from "react-router-dom";
+
 import { Button } from "../../../components/Button/Button";
 import { ButtonVariant } from "../../../components/Button/types";
+import { ThemeContext } from "../../../context/theme/themeContext";
 import {
   SideBarContainer,
   SideBarHeader,
@@ -13,7 +15,6 @@ import {
   getBaseButtonStyles
 } from "./styles";
 import type { SideBarProps } from "./types";
-import { ThemeContext } from "../../../context/theme/themeContext";
 
 /**
  * @description SideBar component that provides collapsible navigation with toggle functionality.
@@ -36,7 +37,7 @@ export const SideBar = ({
   onDownloadQRs
 }: SideBarProps): JSX.Element => {
 
-  const {theme} = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
 
   return (
     <SideBarContainer $collapsed={isCollapsed} $theme={theme}>

@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import type { ThemeType } from "../../../theme/Types";
+
 import { themes } from "../../../theme/Theme";
+import type { ThemeType } from "../../../theme/Types";
 import { media } from "../../styles/media";
 
 const TOPBAR_BG_LIGHT = "#f0f4f8";

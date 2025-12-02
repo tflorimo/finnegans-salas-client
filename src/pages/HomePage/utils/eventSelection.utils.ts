@@ -21,7 +21,7 @@ export const selectDisplayEvents = (
         isEventFinished(event.originalEndTime || event.endTime)
     );
 
-    let selectedEvents: FormattedEventDTO[] = [];
+    const selectedEvents: FormattedEventDTO[] = [];
     const addedIds = new Set<string>();
 
     if (currentEventId) {
@@ -39,7 +39,7 @@ export const selectDisplayEvents = (
 
             const additionalNeeded = Math.min(2, remainingUpcoming.length);
             const additionalEvents = remainingUpcoming.slice(0, additionalNeeded);
-            
+
             additionalEvents.forEach(event => {
                 if (!addedIds.has(event.id)) {
                     selectedEvents.push(event);
@@ -50,7 +50,7 @@ export const selectDisplayEvents = (
     } else {
         const maxEvents = Math.min(3, upcomingAndCurrentEvents.length);
         const eventsToAdd = upcomingAndCurrentEvents.slice(0, maxEvents);
-        
+
         eventsToAdd.forEach(event => {
             if (!addedIds.has(event.id)) {
                 selectedEvents.push(event);
@@ -62,14 +62,14 @@ export const selectDisplayEvents = (
     while (selectedEvents.length < 3 && finishedEvents.length > 0) {
         const neededCount = 3 - selectedEvents.length;
         const finishedToAdd = finishedEvents.slice(-neededCount).reverse();
-        
+
         finishedToAdd.forEach(event => {
             if (!addedIds.has(event.id) && selectedEvents.length < 3) {
                 selectedEvents.push(event);
                 addedIds.add(event.id);
             }
         });
-        
+
         break;
     }
 

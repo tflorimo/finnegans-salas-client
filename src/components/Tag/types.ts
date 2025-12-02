@@ -8,6 +8,11 @@ export type TagProps = {
   text: string;
 };
 
+export interface TagStylesProps {
+  $type: TagsTypes;
+  $customStyle?: CSSProp;
+}
+
 export enum Tags {
   success = "success",
   danger = "danger",
