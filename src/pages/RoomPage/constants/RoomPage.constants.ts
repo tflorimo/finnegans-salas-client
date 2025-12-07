@@ -12,7 +12,7 @@ export const ROOM_PAGE_MESSAGES = {
   NO_EQUIPMENT: "Sin equipamiento registrado",
   QR_TITLE: "Confirmanos tu presencia escaneando el código QR",
   CHECK_IN_TITLE: "Check-in",
-  CHECK_IN_SUBTITLE: "Check-in disponible 10 minutos anteshasta 15 minutos después del inicio del evento. Si el check-in no es realizado, la sala continuará visualizándose libre.",
+  CHECK_IN_SUBTITLE: "Check-in disponible 10 minutos antes hasta 15 minutos después del inicio del evento. Si el check-in no es realizado, la sala continuará visualizándose libre.",
   CHECK_IN_BUTTON: "Hacer Check-in",
   CHECK_IN_STATUS_LABEL: "Check-in:",
   NO_CHECK_IN_EVENTS_AVAILABLE: "No hay eventos disponibles para check-in en este momento",
