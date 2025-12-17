@@ -19,6 +19,15 @@ Resolver la problemática de gestión centralizada de espacios de conferencias, 
 - **Managers**: Para análisis de disponibilidad de espacios
 
 ---
+## Capturas de pantalla
+
+<img width="1359" height="646" alt="Captura de pantalla 2025-11-29 134431" src="https://github.com/user-attachments/assets/b91487be-9123-433f-b3bf-8edb0f2b43cb" />
+<img width="1346" height="646" alt="Captura de pantalla 2025-11-27 175839" src="https://github.com/user-attachments/assets/ca9c6b40-a638-43c2-9589-0fc2d4ff8322" />
+<img width="1344" height="645" alt="Captura de pantalla 2025-11-27 181838" src="https://github.com/user-attachments/assets/3d5b3475-808e-4d42-833d-4429cc3bf926" />
+<img width="1344" height="647" alt="Captura de pantalla 2025-11-26 223147" src="https://github.com/user-attachments/assets/0dc58046-ac0f-4ab0-af07-a8fc257cb388" />
+<img width="1343" height="645" alt="Captura de pantalla 2025-11-27 194335" src="https://github.com/user-attachments/assets/bd09d825-7975-4e71-90a5-8030ebaeef6b" />
+
+---
 
 ## 🛠 Tech Stack
 
